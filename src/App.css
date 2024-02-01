@@ -1,0 +1,19 @@
+
+.loginFormContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 70vh;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5vh;
+}
+
+.loginInputs {
+  margin-bottom: 5vh;
+}
+
