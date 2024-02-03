@@ -20,10 +20,11 @@
 
 /* Navbar CSS */
 .navbar-menu {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
+  display: inline-flex;
+  margin: 0 auto ;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px; 
+  width: 100%;
 }
 
 .navbar-menu li {
@@ -41,3 +42,4 @@
   font-weight: bold;
   text-decoration: underline;
 }
+
