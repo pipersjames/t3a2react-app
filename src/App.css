@@ -1,4 +1,4 @@
-
+/* Login Page CSS */
 .loginFormContainer {
   display: flex;
   align-items: center;
@@ -19,3 +19,25 @@
 
 
 /* Navbar CSS */
+.navbar-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.navbar-menu li {
+  margin-right: 1rem;
+}
+
+.navbar-menu li a {
+  color: #475fae;
+  text-decoration: none;
+}
+
+/* Style for active NavLink */
+.navbar-menu li a.active {
+  color: red; 
+  font-weight: bold;
+  text-decoration: underline;
+}
