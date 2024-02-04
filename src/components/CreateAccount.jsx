@@ -80,7 +80,7 @@ export default function CreateAccount() {
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <input 
-                    type="text" 
+                    type="password" 
                     name="password" 
                     id="passwordInput" 
                     value={password} 
@@ -88,9 +88,9 @@ export default function CreateAccount() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <input 
-                    type="text" 
+                    type="password" 
                     name="passwordconfirm" 
-                    id="passwordInput" 
+                    id="passwordConfirmInput" 
                     value={passwordConfirm} 
                     className="newUserInputs"
                     onChange={(e) => setPasswordConfirm(e.target.value)}
