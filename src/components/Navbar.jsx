@@ -7,10 +7,10 @@ export default function Navbar() {
             <div className = "navbar-menu">
                 <ul>
                     <li>
-                        <NavLink to='/Home' activeClassName="active">Home</NavLink>
+                        <NavLink to='/' activeClassName="active">Home</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/Form Builder' activeClassName="active">Form Builder</NavLink>
+                        <NavLink to='/FormBuilder' activeClassName="active">Form Builder</NavLink>
                     </li>
                     <li>
                         <NavLink to='/Forms' activeClassName="active">Forms</NavLink>
