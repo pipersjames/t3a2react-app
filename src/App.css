@@ -25,19 +25,25 @@
   right: 20px;
   display: flex;
   justify-content: flex-end;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  background-color: rgb(113, 113, 177);
 }
 
 .hamburger-icon {
   display: none; /* Initially hide the hamburger icon */
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+  font-size: 25px;
+  margin-top: 20px;
+}
+
+/*  */
+.navbar-items {
+  display:absolute; /* Initially hide the navbar items */
+  position: absolute;
+  top: 20px; /* Adjust as needed */
+  background-color: rgb(179, 179, 203);
+  border-radius: 0 0 20px 20px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .navbar-menu ul {
@@ -57,12 +63,14 @@
 .navbar-menu ul li a {
   text-decoration: none;
   padding: 10px 15px;
-  border-radius: 20px;
+  display: inline-block; /* Ensure the anchor elements are displayed as block elements */
+  text-align: center; /* Align the text to the center */
+
 }
 
 .navbar-menu ul li a.active {
   font-weight: bold; 
-  color: rgb(80, 32, 236);
+  color: rgb(196, 75, 155);
 }
 
 /*  */
@@ -70,15 +78,9 @@
 @media screen and (max-width: 768px) {
   .navbar-menu ul {
     display: none; /* Hide the navbar items by default on small screens */
-    position: absolute;
-    top: 50px; /* Adjust as needed */
-    right: 0;
-    background-color: rgb(113, 113, 177);
-    border-radius: 0 0 20px 20px; /* Apply rounded corners to the dropdown */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for a dropdown effect */
   }
 
-  .navbar-menu.open ul {
+  .navbar-items.open {
     display: flex; /* Show the navbar items when the menu is open */
     flex-direction: column;
   }
