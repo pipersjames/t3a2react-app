@@ -32,6 +32,14 @@
   background-color: rgb(113, 113, 177);
 }
 
+.hamburger-icon {
+  display: none; /* Initially hide the hamburger icon */
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 .navbar-menu ul {
   display: flex;
   list-style-type: none;
@@ -57,3 +65,25 @@
   color: rgb(80, 32, 236);
 }
 
+/*  */
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .navbar-menu ul {
+    display: none; /* Hide the navbar items by default on small screens */
+    position: absolute;
+    top: 50px; /* Adjust as needed */
+    right: 0;
+    background-color: rgb(113, 113, 177);
+    border-radius: 0 0 20px 20px; /* Apply rounded corners to the dropdown */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for a dropdown effect */
+  }
+
+  .navbar-menu.open ul {
+    display: flex; /* Show the navbar items when the menu is open */
+    flex-direction: column;
+  }
+
+  .hamburger-icon {
+    display: block; /* Display the hamburger icon on small screens */
+  }
+}
