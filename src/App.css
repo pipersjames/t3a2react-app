@@ -20,26 +20,40 @@
 
 /* Navbar CSS */
 .navbar-menu {
-  display: inline-flex;
-  margin: 0 auto ;
-  padding: 10px 10px 10px 10px;
-  border-radius: 5px; 
-  width: 100%;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: rgb(113, 113, 177);
 }
 
-.navbar-menu li {
-  margin-right: 1rem;
+.navbar-menu ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
 }
 
-.navbar-menu li a {
-  color: #475fae;
+.navbar-menu ul li {
+  margin-right: 10px;
+}
+
+.navbar-menu ul li:last-child {
+  margin-right: 0;
+}
+
+.navbar-menu ul li a {
   text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 20px;
 }
 
-/* Style for active NavLink */
-.navbar-menu li a.active {
-  color: red; 
-  font-weight: bold;
-  text-decoration: underline;
+.navbar-menu ul li a.active {
+  font-weight: bold; 
+  color: rgb(80, 32, 236);
 }
 
