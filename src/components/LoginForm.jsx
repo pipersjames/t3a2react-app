@@ -1,5 +1,5 @@
 import { useState } from "react"
-//import Cookies from 'js-cookie'
+import Cookies from 'js-cookie'
 import { useNavigate} from 'react-router-dom'
 
 export default function LoginForm() {
@@ -11,27 +11,25 @@ export default function LoginForm() {
 
     const handleSubmit  = async (event) => {
         event.preventDefault()
-
-        navigate('/')
     
-    //     try {
-    //         const response = await fetch("apiEndPoint/login")
+        try {
+            const response = await fetch("https://stream-linedd-8391d4c8cf39.herokuapp.com/users/login")
 
-    //         if (response.ok) {
-    //             const data = await response.json()
-    //             const token = data.token
+            if (response.ok) {
+                const data = await response.json()
+                const token = data.token
 
-    //             Cookies.set('jwt', token, { secure: true, sameSite: 'Strict', expires: 7 })
+                Cookies.set('jwt', token, { secure: true, sameSite: 'Strict', expires: 7 })
 
-    //             history.push('/')
+                navigate('/')
 
-    //         } else {
-    //             console.error('Authentication failed')
-    //         } 
+            } else {
+                console.error('Authentication failed')
+            } 
 
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
+        } catch (error) {
+            console.error(error)
+        }
      }
 
 
