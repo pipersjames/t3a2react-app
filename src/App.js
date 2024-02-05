@@ -7,9 +7,18 @@ import HomePage from './pages/HomePage';
 
 
 function App() {
+
+const renderNavbar = () => {
+  const hiddenRoutes = ['/login', '/create-new-user'];
+    if (!hiddenRoutes.includes(window.location.pathname)) {
+      return <Navbar/>
+    }
+    return null
+  }
+
   return (
     <div className="App">
-      <Navbar/>
+      {renderNavbar()}
       <Routes>
         <Route path="/login" element={<LoginForm/>}/>
         <Route path='/create-new-user' element={<CreateAccount/>}/>
