@@ -1,30 +1,31 @@
 import React from 'react';
-import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 export default function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
-
     return (
-        <nav>
-            <div className="navbar-menu">
-                <button className="hamburger-icon" onClick={() => setIsOpen(!isOpen)}>☰</button>
-                <div className={`navbar-items ${isOpen ? 'open' : ''}`}>
-                    <ul>
-                        <li>
-                            <NavLink to='/' activeClassName="active">Home</NavLink>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div className="container">
+                <NavLink className="navbar-brand" to="/">Stream-Lined</NavLink>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav ms-auto">
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/" activeClassName="active">Home</NavLink>
                         </li>
-                        <li>
-                            <NavLink to='/FormBuilder' activeClassName="active">Form Builder</NavLink>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/FormBuilder" activeClassName="active">Form Builder</NavLink>
                         </li>
-                        <li>
-                            <NavLink to='/Forms' activeClassName="active">Forms</NavLink>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/Forms" activeClassName="active">Forms</NavLink>
                         </li>
-                        <li>
-                            <NavLink to='/Actions' activeClassName="active">Actions</NavLink>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/Actions" activeClassName="active">Actions</NavLink>
                         </li>
-                        <li>
-                            <NavLink to='/Logout' activeClassName="active">Logout</NavLink>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/Logout" activeClassName="active">Logout</NavLink>
                         </li>
                     </ul>
                 </div>
@@ -32,4 +33,3 @@ export default function Navbar() {
         </nav>
     )
 }
-
