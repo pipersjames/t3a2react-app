@@ -53,54 +53,83 @@ export default function CreateAccount() {
             console.error(error)
         }
      }
+
     return (
-        <div className="createUserContainer">
-            <h2>Stream-Lined</h2>
-            <h1>Create New Account</h1>
-            <form autoComplete="on" className="newUserForm" onSubmit={handleSubmit}>
-                <input type="text" 
-                    name="fname" 
-                    id="fnameInput" 
-                    value={fname} 
-                    className="newUserInputs"
-                    onChange={(e) => setFname(e.target.value)}
-                />
-                <input type="text" 
-                    name="lname" 
-                    id="lnameInput" 
-                    value={lname} 
-                    className="newUserInputs"
-                    onChange={(e) => setLname(e.target.value)}
-                />
-                <input type="text" 
-                    name="email" 
-                    id="emailInput" 
-                    value={email} 
-                    className="newUserInputs"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input 
-                    type="password" 
-                    name="password" 
-                    id="passwordInput" 
-                    value={password} 
-                    className="newUserInputs"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <input 
-                    type="password" 
-                    name="passwordconfirm" 
-                    id="passwordConfirmInput" 
-                    value={passwordConfirm} 
-                    className="newUserInputs"
-                    onChange={(e) => setPasswordConfirm(e.target.value)}
-                />
-                <input 
-                    type="submit" 
-                    value="submit"
-                    className="loginButton"
-                />
-            </form>
+      <div className="createAccountContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5">
+        <div className="container">
+      <div className="row justify-content-center border rounded p-4">
+        <div className="col-md-5">
+          <h2 className="text-center mt-3">Stream-Lined</h2>
+          <h1 className="text-center mt-2 mb-5">Create New Account</h1>
+          <form autoComplete="on" className="newUserForm" onSubmit={handleSubmit}>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="fnameInput"
+                placeholder="First Name"
+                value={fname}
+                onChange={(e) => setFname(e.target.value)}
+              />
+              <label htmlFor="fnameInput" className="custom-colorchange">First Name</label>
+            </div>
+
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="lnameInput"
+                placeholder="Last Name"
+                value={lname}
+                onChange={(e) => setLname(e.target.value)}
+              />
+              <label htmlFor="lnameInput" className="custom-colorchange">Last Name</label>
+            </div>
+
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="emailInput"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="emailInput" className="custom-colorchange">Email</label>
+            </div>
+
+            <div className="form-floating mb-3">
+              <input
+                type="password"
+                className="form-control"
+                id="passwordInput"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <label htmlFor="passwordInput" className="custom-colorchange">Password</label>
+            </div>
+
+            <div className="form-floating mb-4">
+              <input
+                type="password"
+                className="form-control"
+                id="passwordConfirmInput"
+                placeholder="Confirm Password"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+              />
+              <label htmlFor="passwordConfirmInput" className="custom-colorchange">Confirm Password</label>
+            </div>
+            <div className="text-center mb-3 ">
+                <button type="submit" className="btn btn-primary btn-lg">
+                Create New Account
+                </button>
+            </div>
+          </form>
         </div>
-    ) 
+      </div>
+    </div>
+  </div>
+  );
 }

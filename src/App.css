@@ -1,3 +1,7 @@
+/* entire APP */
+
+
+
 /* Login Page CSS */
 .loginFormContainer {
   display: flex;
@@ -17,4 +21,26 @@
   margin-bottom: 5vh;
 }
 
+/*CreateAccount CSS*/
+.custom-colorchange {
+  color: #3498db;
+}
 
+.form-control:focus + .custom-colorchange,
+.form-control:not(:placeholder-shown) + .custom-colorchange {
+  color: #7f8c8d;
+}
+
+.createAccountContainer {
+  background-image: url('./assets/seamless.jpg');
+  background-size: cover;
+  background-position: center;
+  margin: 0; 
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.row {
+  background-color: whitesmoke
+}

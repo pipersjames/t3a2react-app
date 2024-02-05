@@ -14,3 +14,5 @@ react-router-dom
 #### Attributions
 
 Favicon - <a href="https://www.flaticon.com/free-icons/document" title="document icons">Document icons created by smalllikeart - Flaticon</a>
+
+Login Background - Image by <a href="https://pixabay.com/users/prawny-162579/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1082217">Prawny</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1082217">Pixabay</a>
