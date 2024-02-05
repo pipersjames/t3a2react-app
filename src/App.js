@@ -6,7 +6,6 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 
 
-
 function App() {
 
 const renderNavbar = () => {
@@ -16,7 +15,6 @@ const renderNavbar = () => {
     }
     return null
   }
-
 
   return (
     <div className="App">
