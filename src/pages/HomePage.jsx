@@ -5,10 +5,10 @@ import { Container, Row, Col } from 'react-bootstrap'; // Import Container, Row,
 
 export default function HomePage(){
     return(
-        <div>
-            <Container fluid>
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Container>
                 <Row>
-                    <Col lg={4} style={{ marginTop: '20px', transform: 'translateY(-50%)' }}>
+                    <Col lg={4} style={{ marginTop: '20px' }}>
                         <SavedProgress />
                     </Col>    
                     <Col lg={5} style={{ marginTop: '20px' }}>
