@@ -1,58 +1,61 @@
 import Cookies from "js-cookie"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import { ApiContext } from "../contexts/ApiProvider"
 
 export default function CreateAccount() {
     
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+
+  const { apiUrl } = useContext(ApiContext) 
 
 
-    const [fname, setFname] = useState('')
-    const [lname, setLname] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [fname, setFname] = useState('')
+  const [lname, setLname] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
 
-    const handleSubmit  = async (event) => {
-        event.preventDefault()
+  const handleSubmit  = async (event) => {
+      event.preventDefault()
 
-        if (password !== passwordConfirm) {
-            window.alert("password did not match, please try again")
-            return
-        }
+      if (password !== passwordConfirm) {
+          window.alert("password did not match, please try again")
+          return
+      }
 
-        const newUserData = {
-            fname : fname,
-            lname: lname,
-            email: email,
-            password: password 
-        }
+      const newUserData = {
+          fname : fname,
+          lname: lname,
+          email: email,
+          password: password 
+      }
+      console.log(apiUrl)
+      try {
+          const response = await fetch(`${apiUrl}/users/create-new-user`, {
+              method: "POST",
+              headers: {
+              "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newUserData)
+          })
 
-        try {
-            const response = await fetch("https://stream-linedd-8391d4c8cf39.herokuapp.com/users/create-new-user", {
-               method: "POST",
-               headers: {
-                "Content-Type": "application/json",
-               },
-               body: JSON.stringify(newUserData)
-            })
+          if (response.ok) {
+              const data = await response.json()
+              const token = data.token
 
-            if (response.ok) {
-                const data = await response.json()
-                const token = data.token
+              Cookies.set('jwt', token, { secure: true, sameSite: 'Strict', expires: 7 })
 
-                Cookies.set('jwt', token, { secure: true, sameSite: 'Strict', expires: 7 })
+              navigate('/')
 
-                navigate('/')
+          } else {
+              console.error('Authentication failed')
+          } 
 
-            } else {
-                console.error('Authentication failed')
-            } 
-
-        } catch (error) {
-            console.error(error)
-        }
-     }
+      } catch (error) {
+          console.error(error)
+    }
+  }
 
     return (
       <div className="createAccountContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5">
