@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import { Container } from 'react-bootstrap';
+
 
 function SavedProgress() {
   // State to hold saved data and selected item id
@@ -26,16 +28,18 @@ function SavedProgress() {
 
       
     return (
-    <div>
-        <h2>Saved In Progress</h2>
-        <ul>
-        {savedData.map(item => (
-            <li key={item.id} onClick={() => handleItemClick(item.id)} style={{ cursor: 'pointer', fontWeight: selectedItemId === item.id ? 'bold' : 'normal' }}>
-            {item.title}
-            </li>
-        ))}
-        </ul>
-    </div>
+      <Container>
+        <div style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }}>
+            <h2>Saved In Progress</h2>
+            <ul>
+            {savedData.map(item => (
+                <li key={item.id} onClick={() => handleItemClick(item.id)} style={{ cursor: 'pointer', fontWeight: selectedItemId === item.id ? 'bold' : 'normal' }}>
+                {item.title}
+                </li>
+            ))}
+            </ul>
+        </div>
+      </Container>
     );
 }
 
