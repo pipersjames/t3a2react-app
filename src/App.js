@@ -4,6 +4,7 @@ import CreateAccount from './components/CreateAccount';
 import LoginForm from './components/LoginForm';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
+import FormBuilder from './pages/FormBuilder';
 
 
 function App() {
@@ -23,6 +24,7 @@ const renderNavbar = () => {
         <Route path="/login" element={<LoginForm/>}/>
         <Route path='/create-new-user' element={<CreateAccount/>}/>
         <Route path ='/' element={<HomePage/>}/>
+        <Route path ='/formbuilder' element={<FormBuilder/>}/>
       </Routes>
     </div>
   );
