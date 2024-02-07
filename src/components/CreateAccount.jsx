@@ -30,7 +30,7 @@ export default function CreateAccount() {
           email: email,
           password: password 
       }
-      console.log(apiUrl)
+
       try {
           const response = await fetch(`${apiUrl}/users/create-new-user`, {
               method: "POST",
@@ -42,9 +42,10 @@ export default function CreateAccount() {
 
           if (response.ok) {
               const data = await response.json()
-              const token = data.token
+              console.log(data)
+              const jwt = data.jwt
 
-              Cookies.set('jwt', token, { secure: true, sameSite: 'Strict', expires: 7 })
+              Cookies.set('jwt', jwt, { secure: true, sameSite: 'Strict', expires: 3 })
 
               navigate('/')
 
