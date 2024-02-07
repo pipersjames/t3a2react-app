@@ -17,9 +17,9 @@ export default function LoginForm() {
 
             if (response.ok) {
                 const data = await response.json()
-                const token = data.token
+                const jwt = data.jwt
 
-                Cookies.set('jwt', token, { secure: true, sameSite: 'Strict', expires: 7 })
+                Cookies.set('jwt', jwt, { secure: true, sameSite: 'Strict', expires: 3 })
 
                 navigate('/')
 
