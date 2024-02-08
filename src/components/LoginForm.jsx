@@ -13,7 +13,19 @@ export default function LoginForm() {
         event.preventDefault()
     
         try {
-            const response = await fetch("https://stream-linedd-8391d4c8cf39.herokuapp.com/users/login")
+            const response = await fetch("https://stream-linedd-8391d4c8cf39.herokuapp.com/users/login", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            })
+
+            console.log(response)
+
 
             if (response.ok) {
                 const data = await response.json()
@@ -46,7 +58,7 @@ export default function LoginForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 />
                 <input 
-                type="text" 
+                type="password" 
                 name="passwordInput" 
                 id="passwordInput" 
                 value={password} 
