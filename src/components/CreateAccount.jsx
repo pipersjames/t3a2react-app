@@ -1,6 +1,6 @@
 import Cookies from "js-cookie"
 import { useState, useContext } from "react"
-import { useNavigate } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { ApiContext } from "../contexts/ApiProvider"
 
 export default function CreateAccount() {
@@ -130,6 +130,10 @@ export default function CreateAccount() {
                 <button type="submit" className="btn btn-primary btn-lg">
                 Create New Account
                 </button>
+                <div className="d-flex mt-4 justify-content-center">
+                <p>Have an account?</p>
+                <NavLink to="/login">Sign up</NavLink>
+                </div>
             </div>
           </form>
         </div>

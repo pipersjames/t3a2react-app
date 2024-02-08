@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Cookies from 'js-cookie'
-import { useNavigate} from 'react-router-dom'
+import { NavLink, useNavigate} from 'react-router-dom'
 
 export default function LoginForm() {
     
@@ -61,7 +61,7 @@ export default function LoginForm() {
                 type="password" 
                 name="passwordInput" 
                 id="passwordInput" 
-                value={password} 
+                value={String(password)} 
                 className="loginInputs"
                 onChange={(e) => setPassword(e.target.value)}
                 />
@@ -71,7 +71,12 @@ export default function LoginForm() {
                 className="loginButton"
                 />
             </form>
-            <a href="url">Forgot your password?</a> {/*url link to account recovery page*/ }
+            <NavLink to="url">Forgot your password?</NavLink> {/*url link to account recovery page*/ }
+            <div className="d-flex mt-4 justify-content-center">
+                <p>Don't have an account?</p>
+                <NavLink to="/create-new-user">Sign up</NavLink>
+            </div>
+            
         </div>
     ) 
 }
