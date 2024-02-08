@@ -1,23 +1,14 @@
 import React from 'react';
 
-const AccordionTable = () => {
+const AccordionTable = ({ items }) => {
   return (
-    <div className="container mt-5">
-        <div className="row justify-content-start"> {/* Align the row content to the left */}
-            <div className="col-md-4"> {/* Take up 8 out of 12 columns */}
-            <h3>Basic</h3>
-            <ul>
-                <li>Full Name</li>
-                <li>Email</li>
-                <li>Short answer</li>
-                <li>Long answer</li>
-                <li>Single choice</li>
-                <li>Multiple choice</li>
-                <li>File upload</li>
-                <li>Date/Time</li>
-            </ul>
-            </div>
-        </div>
+    <div className="d-inline-block border p-3 mb-5"> {/* Use d-inline-block class */}
+      <h3 className="mb-4">Basic</h3>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 };
