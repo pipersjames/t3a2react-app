@@ -48,15 +48,38 @@ const FormBuilder = () => {
     return ['user1', 'user2', 'user3'];
   };
 
-// Function to handle adding a component to the form
-const handleAddComponent = (component) => {
+
+  // Function to handle adding a component to the form
+const handleAddComponent = (componentName) => {
+  // Determine the component type based on the component name
+  let componentType;
+  switch (componentName) {
+    case 'Full Name':
+      componentType = FullNameInput;
+      break;
+    // Add cases for other components as needed
+    default:
+      console.error(`Component type for "${componentName}" not found.`);
+      return;
+  }
+
   // Check if the component is already added
-  if (!formComponents.some((comp) => comp.type === FullNameInput)) {
-    // Add FullNameInput component to formComponents array
-    setFormComponents([...formComponents, <FullNameInput key={formComponents.length} />]);
+  if (!formComponents.some((comp) => comp.type === componentType)) {
+    // Add component to formComponents array
+    setFormComponents([...formComponents, { type: componentType, key: formComponents.length }]);
   }
 };
 
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const componentType = event.dataTransfer.getData("text/plain");
+    handleAddComponent(componentType);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <Layout>
@@ -66,7 +89,7 @@ const handleAddComponent = (component) => {
             {/* Pass handleAddComponent as a prop to AccordionTable */}
             <AccordionTable items={accordionItems} onItemClick={handleAddComponent} />
           </div>
-          <div className="col-md-9">
+          <div className="col-md-9" onDrop={handleDrop} onDragOver={handleDragOver}>
             <div className="row">
               <div className="col-md-6 mb-3">
                 <div className="form-group">
@@ -98,7 +121,7 @@ const handleAddComponent = (component) => {
               {/* Render added form components */}
               {formComponents.map((component, index) => (
                 <div key={index} className="col-md-6 mb-3">
-                  {React.cloneElement(component, { onChange: handleFullNameChange })}
+                  {React.createElement(component.type, { key: component.key, onChange: handleFullNameChange })}
                 </div>
               ))}
             </div>
