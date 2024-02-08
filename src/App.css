@@ -37,9 +37,12 @@
   background-position: center;
   margin: 0; 
   padding: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
 }
+
+
+
 
 .row {
   background-color: whitesmoke

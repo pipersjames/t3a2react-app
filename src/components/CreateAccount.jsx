@@ -9,7 +9,6 @@ export default function CreateAccount() {
 
   const { apiUrl } = useContext(ApiContext) 
 
-
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
   const [email, setEmail] = useState('')
@@ -44,9 +43,11 @@ export default function CreateAccount() {
               const data = await response.json()
               console.log(data)
               const jwt = data.jwt
-
+              
+              //production cookie
               Cookies.set('jwt', jwt, { secure: true, sameSite: 'Strict', expires: 3 })
-
+              //development cookie
+              //Cookies.set('jwt', jwt, {expires: 3 })
               navigate('/')
 
           } else {
@@ -59,7 +60,7 @@ export default function CreateAccount() {
   }
 
     return (
-      <div className="createAccountContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5">
+      <div className="createAccountContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5 overflow-auto">
         <div className="container">
       <div className="row justify-content-center border rounded p-4">
         <div className="col-md-5">
