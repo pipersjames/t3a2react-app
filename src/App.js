@@ -5,6 +5,7 @@ import LoginForm from './components/LoginForm';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import AuthChecker from './components/AuthChecker';
+import FormBuilder from './pages/FormBuilder';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         )}
       >
         <Route path ='/' element={<HomePage/>}/>
+        <Route path ='/formbuilder' element={<FormBuilder/>}/>
       </Route>
         <Route path="/login" element={<LoginForm/>}/>
         <Route path='/create-new-user' element={<CreateAccount/>}/>
