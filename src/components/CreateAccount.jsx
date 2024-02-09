@@ -1,6 +1,6 @@
 import Cookies from "js-cookie"
 import { useState, useContext } from "react"
-import { useNavigate } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { ApiContext } from "../contexts/ApiProvider"
 
 export default function CreateAccount() {
@@ -8,7 +8,6 @@ export default function CreateAccount() {
   const navigate = useNavigate()
 
   const { apiUrl } = useContext(ApiContext) 
-
 
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
@@ -30,7 +29,7 @@ export default function CreateAccount() {
           email: email,
           password: password 
       }
-      console.log(apiUrl)
+
       try {
           const response = await fetch(`${apiUrl}/users/create-new-user`, {
               method: "POST",
@@ -42,11 +41,14 @@ export default function CreateAccount() {
 
           if (response.ok) {
               const data = await response.json()
-              const token = data.token
-
-              Cookies.set('jwt', token, { secure: true, sameSite: 'Strict', expires: 7 })
-
-              navigate('/')
+              console.log(data)
+              const jwt = data.jwt
+              
+              //production cookie
+              Cookies.set('jwt', jwt, { secure: true, sameSite: 'Strict', expires: 3 })
+              //development cookie
+              //Cookies.set('jwt', jwt, {expires: 3 })
+              navigate('/home')
 
           } else {
               console.error('Authentication failed')
@@ -58,9 +60,9 @@ export default function CreateAccount() {
   }
 
     return (
-      <div className="createAccountContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5">
+      <div className="createAccountContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5 overflow-auto">
         <div className="container">
-      <div className="row justify-content-center border rounded p-4">
+      <div className="accountBox row justify-content-center border rounded p-4">
         <div className="col-md-5">
           <h2 className="text-center mt-3">Stream-Lined</h2>
           <h1 className="text-center mt-2 mb-5">Create New Account</h1>
@@ -128,6 +130,10 @@ export default function CreateAccount() {
                 <button type="submit" className="btn btn-primary btn-lg">
                 Create New Account
                 </button>
+                <div className="d-flex mt-4 justify-content-center">
+                <p>Have an account?</p>
+                <NavLink to="/">Sign up</NavLink>
+                </div>
             </div>
           </form>
         </div>
