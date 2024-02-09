@@ -4,6 +4,7 @@ import AccordionTable from '../components/AccordionTable';
 import FullNameInput from '../components/FullNameInput'; 
 import EmailInput from '../components/EmailInput';
 import ShortDescription from '../components/ShortDescription';
+import LongDescription from '../components/LongDescription';
 
 const FormBuilder = () => {
   // State variables for form name, list of usernames, and accordion items
@@ -64,6 +65,9 @@ const FormBuilder = () => {
         break;
       case 'Short answer':
         componentType = ShortDescription;
+        break;
+      case 'Long answer':
+        componentType = LongDescription;
         break;
       // Add cases for other components as needed
       default:
