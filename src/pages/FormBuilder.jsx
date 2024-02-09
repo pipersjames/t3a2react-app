@@ -24,8 +24,6 @@ const FormBuilder = () => {
           'Email',
           'Short answer',
           'Long answer',
-          'Single choice',
-          'Multiple choice',
           'File upload',
           'Date/Time'
         ]);
