@@ -20,10 +20,10 @@ function App() {
           </>
         )}
       >
-        <Route path ='/' element={<HomePage/>}/>
+        <Route path ='/home' element={<HomePage/>}/>
         <Route path ='/formbuilder' element={<FormBuilder/>}/>
       </Route>
-        <Route path="/login" element={<LoginForm/>}/>
+        <Route path="/" element={<LoginForm/>}/>
         <Route path='/create-new-user' element={<CreateAccount/>}/>
       </Routes>
     </div>

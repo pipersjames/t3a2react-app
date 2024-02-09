@@ -33,7 +33,7 @@ export default function LoginForm() {
 
                 Cookies.set('jwt', jwt, { secure: true, sameSite: 'Strict', expires: 3 })
 
-                navigate('/')
+                navigate('/home')
 
             } else {
                 console.error('Authentication failed')

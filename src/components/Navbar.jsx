@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import Cookies from 'js-cookie';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -8,6 +9,10 @@ export default function Navbar() {
     const toggleNavbar = () => {
         setIsOpen(!isOpen);
     };
+
+    const handleLogout = () => {
+        Cookies.remove('jwt')
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -19,7 +24,7 @@ export default function Navbar() {
                 <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/" activeclassname="active">Home</NavLink>
+                            <NavLink className="nav-link" to="/home" activeclassname="active">Home</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/FormBuilder" activeclassname="active">Form Builder</NavLink>
@@ -31,7 +36,7 @@ export default function Navbar() {
                             <NavLink className="nav-link" to="/Actions" activeclassname="active">Actions</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/Logout" activeclassname="active">Logout</NavLink>
+                            <NavLink className="nav-link" to="/" activeclassname="active" onClick={handleLogout}>Logout</NavLink>
                         </li>
                     </ul>
                 </div>
