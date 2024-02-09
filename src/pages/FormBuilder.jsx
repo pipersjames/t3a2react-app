@@ -9,6 +9,7 @@ const FormBuilder = () => {
   const [usernames, setUsernames] = useState([]);
   const [accordionItems, setAccordionItems] = useState([]);
   const [formComponents, setFormComponents] = useState([]); // State to store form components
+  const [assignedTo, setAssignedTo] = useState(''); // State for assignedTo input value
 
   // useEffect hook to fetch usernames from the database
   useEffect(() => {
@@ -39,37 +40,35 @@ const FormBuilder = () => {
     // Handle changes in the FullNameInput component
   };
 
-  // Function to handle username select change
-  const handleUsernameSelectChange = (event) => {
-    console.log('Selected username:', event.target.value);
+  // Function to handle username input change
+  const handleAssignedToChange = (event) => {
+    setAssignedTo(event.target.value);
   };
 
   const fetchUsernamesFromDatabase = async () => {
     return ['user1', 'user2', 'user3'];
   };
 
-
   // Function to handle adding a component to the form
-const handleAddComponent = (componentName) => {
-  // Determine the component type based on the component name
-  let componentType;
-  switch (componentName) {
-    case 'Full Name':
-      componentType = FullNameInput;
-      break;
-    // Add cases for other components as needed
-    default:
-      console.error(`Component type for "${componentName}" not found.`);
-      return;
-  }
+  const handleAddComponent = (componentName) => {
+    // Determine the component type based on the component name
+    let componentType;
+    switch (componentName) {
+      case 'Full Name':
+        componentType = FullNameInput;
+        break;
+      // Add cases for other components as needed
+      default:
+        console.error(`Component type for "${componentName}" not found.`);
+        return;
+    }
 
-  // Check if the component is already added
-  if (!formComponents.some((comp) => comp.type === componentType)) {
-    // Add component to formComponents array
-    setFormComponents([...formComponents, { type: componentType, key: formComponents.length }]);
-  }
-};
-
+    // Check if the component is already added
+    if (!formComponents.some((comp) => comp.type === componentType)) {
+      // Add component to formComponents array
+      setFormComponents([...formComponents, { type: componentType, key: formComponents.length }]);
+    }
+  };
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -80,6 +79,11 @@ const handleAddComponent = (componentName) => {
   const handleDragOver = (event) => {
     event.preventDefault();
   };
+
+  // Filter usernames based on the assignedTo input value
+  const filteredUsernames = usernames.filter(username =>
+    username.toLowerCase().includes(assignedTo.toLowerCase())
+  );
 
   return (
     <Layout>
@@ -105,17 +109,21 @@ const handleAddComponent = (componentName) => {
               </div>
               <div className="col-md-6 mb-3">
                 <div className="form-group">
-                  <label htmlFor="username">Assigned To:</label>
-                  <select
+                  <label htmlFor="assignedTo">Assigned To:</label>
+                  <input
+                    type="text"
                     className="form-control"
-                    id="username"
-                    onChange={handleUsernameSelectChange}
-                  >
-                    <option value="">Select Username</option>
-                    {usernames.map((username, index) => (
-                      <option key={index} value={username}>{username}</option>
+                    id="assignedTo"
+                    value={assignedTo}
+                    onChange={handleAssignedToChange}
+                    list="usernamesList"
+                  />
+                  {/* Render a datalist for the filtered usernames */}
+                  <datalist id="usernamesList">
+                    {filteredUsernames.map((username, index) => (
+                      <option key={index} value={username} />
                     ))}
-                  </select>
+                  </datalist>
                 </div>
               </div>
               {/* Render added form components */}
