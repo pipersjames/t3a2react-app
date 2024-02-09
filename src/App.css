@@ -1,20 +1,45 @@
+/* entire APP */
+
+
+
 /* Login Page CSS */
-.loginFormContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 70vh;
+.loginBox {
+  background-color: whitesmoke;
 }
 
-.loginForm {
-  display: flex;
-  flex-direction: column;
-  margin-top: 5vh;
+.loginContainer {
+  background-image: url('./assets/seamless.jpg');
+  background-size: cover;
+  background-position: center;
+  margin: 0; 
+  padding: 0;
+  height: 100dvh;
+  width: 100dvw;
 }
 
-.loginInputs {
-  margin-bottom: 5vh;
+/*CreateAccount CSS*/
+.custom-colorchange {
+  color: #3498db;
+}
+
+.form-control:focus + .custom-colorchange,
+.form-control:not(:placeholder-shown) + .custom-colorchange {
+  color: #7f8c8d;
+}
+
+.createAccountContainer {
+  background-image: url('./assets/seamless.jpg');
+  background-size: cover;
+  background-position: center;
+  margin: 0; 
+  padding: 0;
+  height: 100dvh;
+  width: 100dvw;
 }
 
 
+
+
+.accountBox {
+  background-color: whitesmoke
+}

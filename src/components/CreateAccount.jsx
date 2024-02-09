@@ -1,106 +1,144 @@
 import Cookies from "js-cookie"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState, useContext } from "react"
+import { NavLink, useNavigate } from "react-router-dom"
+import { ApiContext } from "../contexts/ApiProvider"
 
 export default function CreateAccount() {
     
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
+  const { apiUrl } = useContext(ApiContext) 
 
-    const [fname, setFname] = useState('')
-    const [lname, setLname] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [fname, setFname] = useState('')
+  const [lname, setLname] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
 
-    const handleSubmit  = async (event) => {
-        event.preventDefault()
+  const handleSubmit  = async (event) => {
+      event.preventDefault()
 
-        if (password !== passwordConfirm) {
-            window.alert("password did not match, please try again")
-            return
-        }
+      if (password !== passwordConfirm) {
+          window.alert("password did not match, please try again")
+          return
+      }
 
-        const newUserData = {
-            fname : fname,
-            lname: lname,
-            email: email,
-            password: password 
-        }
+      const newUserData = {
+          fname : fname,
+          lname: lname,
+          email: email,
+          password: password 
+      }
 
-        try {
-            const response = await fetch("https://stream-linedd-8391d4c8cf39.herokuapp.com/users/create-new-user", {
-               method: "POST",
-               headers: {
-                "Content-Type": "application/json",
-               },
-               body: JSON.stringify(newUserData)
-            })
+      try {
+          const response = await fetch(`${apiUrl}/users/create-new-user`, {
+              method: "POST",
+              headers: {
+              "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newUserData)
+          })
 
-            if (response.ok) {
-                const data = await response.json()
-                const token = data.token
+          if (response.ok) {
+              const data = await response.json()
+              console.log(data)
+              const jwt = data.jwt
+              
+              //production cookie
+              Cookies.set('jwt', jwt, { secure: true, sameSite: 'Strict', expires: 3 })
+              //development cookie
+              //Cookies.set('jwt', jwt, {expires: 3 })
+              navigate('/home')
 
-                Cookies.set('jwt', token, { secure: true, sameSite: 'Strict', expires: 7 })
+          } else {
+              console.error('Authentication failed')
+          } 
 
-                navigate('/')
+      } catch (error) {
+          console.error(error)
+    }
+  }
 
-            } else {
-                console.error('Authentication failed')
-            } 
-
-        } catch (error) {
-            console.error(error)
-        }
-     }
     return (
-        <div className="createUserContainer">
-            <h2>Stream-Lined</h2>
-            <h1>Create New Account</h1>
-            <form autoComplete="on" className="newUserForm" onSubmit={handleSubmit}>
-                <input type="text" 
-                    name="fname" 
-                    id="fnameInput" 
-                    value={fname} 
-                    className="newUserInputs"
-                    onChange={(e) => setFname(e.target.value)}
-                />
-                <input type="text" 
-                    name="lname" 
-                    id="lnameInput" 
-                    value={lname} 
-                    className="newUserInputs"
-                    onChange={(e) => setLname(e.target.value)}
-                />
-                <input type="text" 
-                    name="email" 
-                    id="emailInput" 
-                    value={email} 
-                    className="newUserInputs"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input 
-                    type="password" 
-                    name="password" 
-                    id="passwordInput" 
-                    value={password} 
-                    className="newUserInputs"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <input 
-                    type="password" 
-                    name="passwordconfirm" 
-                    id="passwordConfirmInput" 
-                    value={passwordConfirm} 
-                    className="newUserInputs"
-                    onChange={(e) => setPasswordConfirm(e.target.value)}
-                />
-                <input 
-                    type="submit" 
-                    value="submit"
-                    className="loginButton"
-                />
-            </form>
+      <div className="createAccountContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5 overflow-auto">
+        <div className="container">
+      <div className="accountBox row justify-content-center border rounded p-4">
+        <div className="col-md-5">
+          <h2 className="text-center mt-3">Stream-Lined</h2>
+          <h1 className="text-center mt-2 mb-5">Create New Account</h1>
+          <form autoComplete="on" className="newUserForm" onSubmit={handleSubmit}>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="fnameInput"
+                placeholder="First Name"
+                value={fname}
+                onChange={(e) => setFname(e.target.value)}
+              />
+              <label htmlFor="fnameInput" className="custom-colorchange">First Name</label>
+            </div>
+
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="lnameInput"
+                placeholder="Last Name"
+                value={lname}
+                onChange={(e) => setLname(e.target.value)}
+              />
+              <label htmlFor="lnameInput" className="custom-colorchange">Last Name</label>
+            </div>
+
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="emailInput"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="emailInput" className="custom-colorchange">Email</label>
+            </div>
+
+            <div className="form-floating mb-3">
+              <input
+                type="password"
+                className="form-control"
+                id="passwordInput"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <label htmlFor="passwordInput" className="custom-colorchange">Password</label>
+            </div>
+
+            <div className="form-floating mb-4">
+              <input
+                type="password"
+                className="form-control"
+                id="passwordConfirmInput"
+                placeholder="Confirm Password"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+              />
+              <label htmlFor="passwordConfirmInput" className="custom-colorchange">Confirm Password</label>
+            </div>
+            <div className="text-center mb-3 ">
+                <button type="submit" className="btn btn-primary btn-lg">
+                Create New Account
+                </button>
+                <div className="d-flex mt-4 justify-content-center">
+                <p>Have an account?</p>
+                <NavLink to="/">Sign up</NavLink>
+                </div>
+            </div>
+          </form>
         </div>
-    ) 
+      </div>
+    </div>
+  </div>
+  );
 }
