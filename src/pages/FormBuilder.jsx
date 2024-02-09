@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/layouts/Layout';
 import AccordionTable from '../components/AccordionTable';
-import FullNameInput from '../components/FullNameInput'; // Import FullNameInput component
+import FullNameInput from '../components/FullNameInput'; 
+import EmailInput from '../components/EmailInput';
 
 const FormBuilder = () => {
   // State variables for form name, list of usernames, and accordion items
@@ -56,6 +57,9 @@ const FormBuilder = () => {
     switch (componentName) {
       case 'Full Name':
         componentType = FullNameInput;
+        break;
+      case 'Email':
+        componentType = EmailInput;
         break;
       // Add cases for other components as needed
       default:

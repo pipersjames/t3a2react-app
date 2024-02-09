@@ -1,6 +1,10 @@
 import React from 'react';
 
-const EmailInput = ({ value, onChange }) => {
+const EmailInput = ({ onDragStart }) => {
+  const handleDragStart = (event) => {
+    onDragStart(event, 'Email');
+  };
+
   return (
     <div className="form-group">
       <label htmlFor="email">Email:</label>
@@ -8,8 +12,8 @@ const EmailInput = ({ value, onChange }) => {
         type="email"
         className="form-control"
         id="email"
-        value={value}
-        onChange={onChange}
+        draggable
+        onDragStart={handleDragStart}
         placeholder="Enter your email"
       />
     </div>
