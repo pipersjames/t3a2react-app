@@ -70,6 +70,11 @@ const FormBuilder = () => {
     }
   };
 
+  // Function to handle deleting a component from the form
+  const handleDeleteComponent = (index) => {
+    setFormComponents(formComponents.filter((_, i) => i !== index));
+  };
+
   const handleDrop = (event) => {
     event.preventDefault();
     const componentType = event.dataTransfer.getData("text/plain");
@@ -78,12 +83,6 @@ const FormBuilder = () => {
 
   const handleDragOver = (event) => {
     event.preventDefault();
-  };
-
-  // Function to handle clicking on an item in the AccordionTable
-  const handleItemClick = (item) => {
-    // Add the clicked item to the formComponents array
-    handleAddComponent(item);
   };
 
   // Filter usernames based on the assignedTo input value
@@ -96,8 +95,8 @@ const FormBuilder = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-3">
-            {/* Pass handleItemClick as a prop to AccordionTable */}
-            <AccordionTable items={accordionItems} onItemClick={handleItemClick} />
+            {/* Pass handleAddComponent as a prop to AccordionTable */}
+            <AccordionTable items={accordionItems} onItemClick={handleAddComponent} />
           </div>
           <div className="col-md-9" onDrop={handleDrop} onDragOver={handleDragOver}>
             <div className="row">
@@ -135,7 +134,10 @@ const FormBuilder = () => {
               {/* Render added form components */}
               {formComponents.map((component, index) => (
                 <div key={index} className="col-md-6 mb-3">
+                  {/* Render the component */}
                   {React.createElement(component.type, { key: component.key, onChange: handleFullNameChange })}
+                  {/* Render delete button for each component */}
+                  <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Delete</button>
                 </div>
               ))}
             </div>
