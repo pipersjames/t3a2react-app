@@ -80,6 +80,12 @@ const FormBuilder = () => {
     event.preventDefault();
   };
 
+  // Function to handle clicking on an item in the AccordionTable
+  const handleItemClick = (item) => {
+    // Add the clicked item to the formComponents array
+    handleAddComponent(item);
+  };
+
   // Filter usernames based on the assignedTo input value
   const filteredUsernames = usernames.filter(username =>
     username.toLowerCase().includes(assignedTo.toLowerCase())
@@ -90,8 +96,8 @@ const FormBuilder = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-3">
-            {/* Pass handleAddComponent as a prop to AccordionTable */}
-            <AccordionTable items={accordionItems} onItemClick={handleAddComponent} />
+            {/* Pass handleItemClick as a prop to AccordionTable */}
+            <AccordionTable items={accordionItems} onItemClick={handleItemClick} />
           </div>
           <div className="col-md-9" onDrop={handleDrop} onDragOver={handleDragOver}>
             <div className="row">

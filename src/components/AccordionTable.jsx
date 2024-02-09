@@ -15,6 +15,7 @@ const AccordionTable = ({ items, onItemClick }) => {
             draggable 
             onDragStart={(event) => handleDragStart(event, item)} 
             style={{ cursor: 'grab' }}
+            onClick={() => onItemClick(item)} // Add onClick handler
           >
             {item}
           </li>
