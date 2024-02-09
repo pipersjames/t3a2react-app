@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Layout from '../components/layouts/Layout';
 import AccordionTable from '../components/AccordionTable';
-import FullNameInput from '../components/FullNameInput'; // Import FullNameInput component
+import FullNameInput from '../components/FullNameInput'; 
+import EmailInput from '../components/EmailInput';
+import ShortDescription from '../components/ShortDesciption';
+import LongDescription from '../components/LongDescription';
 
 const FormBuilder = () => {
   // State variables for form name, list of usernames, and accordion items
@@ -51,6 +54,15 @@ const FormBuilder = () => {
       case 'Full Name':
         componentType = FullNameInput;
         break;
+      case 'Email':
+        componentType = EmailInput;
+        break;
+      case 'Short answer':
+        componentType = ShortDescription;
+        break;
+      case 'Long answer':
+        componentType = LongDescription;
+        break;
       // Add cases for other components as needed
       default:
         console.error(`Component type for "${componentName}" not found.`);
@@ -63,6 +75,7 @@ const FormBuilder = () => {
       setFormComponents([...formComponents, { type: componentType, key: formComponents.length }]);
     }
   }, [formComponents]);
+  
   
 
   useEffect(() => {
