@@ -3,22 +3,18 @@
 
 
 /* Login Page CSS */
-.loginFormContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 70vh;
+.loginBox {
+  background-color: whitesmoke;
 }
 
-.loginForm {
-  display: flex;
-  flex-direction: column;
-  margin-top: 5vh;
-}
-
-.loginInputs {
-  margin-bottom: 5vh;
+.loginContainer {
+  background-image: url('./assets/seamless.jpg');
+  background-size: cover;
+  background-position: center;
+  margin: 0; 
+  padding: 0;
+  height: 100dvh;
+  width: 100dvw;
 }
 
 /*CreateAccount CSS*/
@@ -44,6 +40,6 @@
 
 
 
-.row {
+.accountBox {
   background-color: whitesmoke
 }

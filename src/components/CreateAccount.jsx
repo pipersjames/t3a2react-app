@@ -62,7 +62,7 @@ export default function CreateAccount() {
     return (
       <div className="createAccountContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5 overflow-auto">
         <div className="container">
-      <div className="row justify-content-center border rounded p-4">
+      <div className="accountBox row justify-content-center border rounded p-4">
         <div className="col-md-5">
           <h2 className="text-center mt-3">Stream-Lined</h2>
           <h1 className="text-center mt-2 mb-5">Create New Account</h1>
@@ -132,7 +132,7 @@ export default function CreateAccount() {
                 </button>
                 <div className="d-flex mt-4 justify-content-center">
                 <p>Have an account?</p>
-                <NavLink to="/login">Sign up</NavLink>
+                <NavLink to="/">Sign up</NavLink>
                 </div>
             </div>
           </form>
