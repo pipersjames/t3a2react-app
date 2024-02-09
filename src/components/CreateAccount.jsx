@@ -48,7 +48,7 @@ export default function CreateAccount() {
               Cookies.set('jwt', jwt, { secure: true, sameSite: 'Strict', expires: 3 })
               //development cookie
               //Cookies.set('jwt', jwt, {expires: 3 })
-              navigate('/')
+              navigate('/home')
 
           } else {
               console.error('Authentication failed')

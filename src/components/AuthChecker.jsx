@@ -26,12 +26,12 @@ export default function AuthChecker() {
                 if (response.status === 401) {
                     console.error('Unauthorized access. Re-directing to login page')
     
-                    navigate('/login')
+                    navigate('/')
                 
                 } else if (response.status === 403) {
                     console.error('Invalid token, Re-directing to login page')
                 
-                    navigate('/login')
+                    navigate('/')
                 } else {
                     console.error('error:', response.statusText)
                 }
