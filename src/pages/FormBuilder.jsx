@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Layout from '../components/layouts/Layout';
 import AccordionTable from '../components/AccordionTable';
 import FullNameInput from '../components/FullNameInput'; 
@@ -36,11 +36,6 @@ const FormBuilder = () => {
     setFormName(event.target.value);
   };
 
-  // Function to handle full name input change
-  const handleFullNameChange = (event) => {
-    // Handle changes in the FullNameInput component
-  };
-
   // Function to handle username input change
   const handleAssignedToChange = (event) => {
     setAssignedTo(event.target.value);
@@ -50,8 +45,7 @@ const FormBuilder = () => {
     return ['user1', 'user2', 'user3'];
   };
 
-  // Function to handle adding a component to the form
-  const handleAddComponent = (componentName) => {
+  const handleAddComponent = useCallback((componentName) => {
     // Determine the component type based on the component name
     let componentType;
     switch (componentName) {
@@ -72,33 +66,35 @@ const FormBuilder = () => {
         console.error(`Component type for "${componentName}" not found.`);
         return;
     }
-
+  
     // Check if the component is already added
     if (!formComponents.some((comp) => comp.type === componentType)) {
       // Add component to formComponents array
       setFormComponents([...formComponents, { type: componentType, key: formComponents.length }]);
     }
-  };
+  }, [formComponents]);
+  
+
+  useEffect(() => {
+    // Event listener to handle the custom event emitted by EmailInput component
+    const handleEmailAdded = (event) => {
+      // Add the EmailInput component to the form when a valid email is entered
+      handleAddComponent('Email');
+    };
+
+    // Add the event listener
+    document.addEventListener('emailAdded', handleEmailAdded);
+
+    // Clean up the event listener
+    return () => {
+      document.removeEventListener('emailAdded', handleEmailAdded);
+    };
+  }, [handleAddComponent]); // Add formComponents to the dependency array
 
   // Function to handle deleting a component from the form
   const handleDeleteComponent = (index) => {
     setFormComponents(formComponents.filter((_, i) => i !== index));
   };
-
-  const handleDrop = (event) => {
-    event.preventDefault();
-    const componentType = event.dataTransfer.getData("text/plain");
-    handleAddComponent(componentType);
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  // Filter usernames based on the assignedTo input value
-  const filteredUsernames = usernames.filter(username =>
-    username.toLowerCase().includes(assignedTo.toLowerCase())
-  );
 
   return (
     <Layout>
@@ -108,7 +104,7 @@ const FormBuilder = () => {
             {/* Pass handleAddComponent as a prop to AccordionTable */}
             <AccordionTable items={accordionItems} onItemClick={handleAddComponent} />
           </div>
-          <div className="col-md-9" onDrop={handleDrop} onDragOver={handleDragOver}>
+          <div className="col-md-9">
             <div className="row">
               <div className="col-md-6 mb-3">
                 <div className="form-group">
@@ -135,7 +131,7 @@ const FormBuilder = () => {
                   />
                   {/* Render a datalist for the filtered usernames */}
                   <datalist id="usernamesList">
-                    {filteredUsernames.map((username, index) => (
+                    {usernames.map((username, index) => (
                       <option key={index} value={username} />
                     ))}
                   </datalist>
@@ -145,7 +141,7 @@ const FormBuilder = () => {
               {formComponents.map((component, index) => (
                 <div key={index} className="col-md-6 mb-3">
                   {/* Render the component */}
-                  {React.createElement(component.type, { key: component.key, onChange: handleFullNameChange })}
+                  {React.createElement(component.type, { key: component.key })}
                   {/* Render delete button for each component */}
                   <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Delete</button>
                 </div>
