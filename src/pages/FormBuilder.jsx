@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/layouts/Layout';
 import AccordionTable from '../components/AccordionTable';
-import FullNameInput from '../components/FullNameInput'; // Import FullNameInput component
+import FullNameInput from '../components/FullNameInput'; 
+import EmailInput from '../components/EmailInput';
+import ShortDescription from '../components/ShortDescription';
+import LongDescription from '../components/LongDescription';
 
 const FormBuilder = () => {
   // State variables for form name, list of usernames, and accordion items
@@ -21,8 +24,6 @@ const FormBuilder = () => {
           'Email',
           'Short answer',
           'Long answer',
-          'Single choice',
-          'Multiple choice',
           'File upload',
           'Date/Time'
         ]);
@@ -56,6 +57,15 @@ const FormBuilder = () => {
     switch (componentName) {
       case 'Full Name':
         componentType = FullNameInput;
+        break;
+      case 'Email':
+        componentType = EmailInput;
+        break;
+      case 'Short answer':
+        componentType = ShortDescription;
+        break;
+      case 'Long answer':
+        componentType = LongDescription;
         break;
       // Add cases for other components as needed
       default:
