@@ -5,6 +5,7 @@ import FullNameInput from '../components/FullNameInput';
 import EmailInput from '../components/EmailInput';
 import ShortDescription from '../components/ShortDesciption';
 import LongDescription from '../components/LongDescription';
+import FileUpload from '../components/FileUpload/FileUpload';
 
 const FormBuilder = () => {
   // State variables for form name, list of usernames, and accordion items
@@ -24,9 +25,7 @@ const FormBuilder = () => {
           'Email',
           'Short answer',
           'Long answer',
-          'Single choice',
-          'Multiple choice',
-          'File upload',
+          'File Upload',
           'Date/Time'
         ]);
       })
@@ -62,6 +61,9 @@ const FormBuilder = () => {
         break;
       case 'Long answer':
         componentType = LongDescription;
+        break;
+      case 'File Upload':
+        componentType = FileUpload;
         break;
       // Add cases for other components as needed
       default:
