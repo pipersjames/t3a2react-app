@@ -6,6 +6,7 @@ import EmailInput from '../components/EmailInput';
 import ShortDescription from '../components/ShortDesciption';
 import LongDescription from '../components/LongDescription';
 import FileUpload from '../components/fileupload/FileUpload';
+import DateTimeInput from '../components/DateTimeInput';
 
 const FormBuilder = () => {
   // State variables for form name, list of usernames, and accordion items
@@ -65,6 +66,9 @@ const FormBuilder = () => {
         break;
       case 'File Upload':
         componentType = FileUpload;
+        break;
+      case 'Date/Time':
+        componentType = DateTimeInput;
         break;
       // Add cases for other components as needed
       default:
