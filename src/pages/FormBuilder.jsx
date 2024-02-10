@@ -5,6 +5,8 @@ import FullNameInput from '../components/FullNameInput';
 import EmailInput from '../components/EmailInput';
 import ShortDescription from '../components/ShortDesciption';
 import LongDescription from '../components/LongDescription';
+import FileUpload from '../components/fileupload/FileUpload';
+import DateTimeInput from '../components/DateTimeInput';
 
 const FormBuilder = () => {
   // State variables for form name, list of usernames, and accordion items
@@ -24,9 +26,7 @@ const FormBuilder = () => {
           'Email',
           'Short answer',
           'Long answer',
-          'Single choice',
-          'Multiple choice',
-          'File upload',
+          'File Upload',
           'Date/Time'
         ]);
       })
@@ -48,6 +48,7 @@ const FormBuilder = () => {
   };
 
   const handleAddComponent = useCallback((componentName) => {
+    console.log("Adding component:", componentName); // Add this line to log the component name
     // Determine the component type based on the component name
     let componentType;
     switch (componentName) {
@@ -63,6 +64,12 @@ const FormBuilder = () => {
       case 'Long answer':
         componentType = LongDescription;
         break;
+      case 'File Upload':
+        componentType = FileUpload;
+        break;
+      case 'Date/Time':
+        componentType = DateTimeInput;
+        break;
       // Add cases for other components as needed
       default:
         console.error(`Component type for "${componentName}" not found.`);
@@ -77,7 +84,6 @@ const FormBuilder = () => {
   }, [formComponents]);
   
   
-
   useEffect(() => {
     // Event listener to handle the custom event emitted by EmailInput component
     const handleEmailAdded = (event) => {
@@ -144,7 +150,8 @@ const FormBuilder = () => {
               {formComponents.map((component, index) => (
                 <div key={index} className="col-md-6 mb-3">
                   {/* Render the component */}
-                  {React.createElement(component.type, { key: component.key })}
+                  {/* {React.createElement(component.type, { key: component.key })} */}
+                  {React.createElement(component.type, { key: component.key, onAddComponent: handleAddComponent })}
                   {/* Render delete button for each component */}
                   <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Delete</button>
                 </div>
