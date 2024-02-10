@@ -5,7 +5,7 @@ const FileUpload = ({ onAddComponent }) => {
         onAddComponent('File Upload');
     };
 
-    console.log("Rendering FileUpload component"); // Add this line
+    console.log("FileUpload component - onAddComponent:", onAddComponent); // Add this line
 
     return (
         <div
@@ -20,3 +20,5 @@ const FileUpload = ({ onAddComponent }) => {
 };
 
 export default FileUpload;
+
+
