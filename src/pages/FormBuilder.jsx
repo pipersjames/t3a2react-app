@@ -5,7 +5,7 @@ import FullNameInput from '../components/FullNameInput';
 import EmailInput from '../components/EmailInput';
 import ShortDescription from '../components/ShortDesciption';
 import LongDescription from '../components/LongDescription';
-import FileUpload from '../components/fileupload/FileUpload';
+import FileUpload from '../components/FileUpload/FileUpload';
 import DateTimeInput from '../components/DateTimeInput';
 
 const FormBuilder = () => {
