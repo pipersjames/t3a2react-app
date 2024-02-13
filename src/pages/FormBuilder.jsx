@@ -115,7 +115,7 @@ const FormBuilder = () => {
       };
   
       // Send formData to backend through Heroku server using fetch or axios
-      fetch('https://your-heroku-server-url.com/submitForm', {
+      fetch('https://stream-linedd-8391d4c8cf39.herokuapp.com/submitForm', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
