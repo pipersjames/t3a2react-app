@@ -5,7 +5,7 @@ import FullNameInput from '../components/FullNameInput';
 import EmailInput from '../components/EmailInput';
 import ShortDescription from '../components/ShortDesciption';
 import LongDescription from '../components/LongDescription';
-import FileUpload from '../components/fileupload/FileUpload';
+import FileUpload from '../components/FileUpload/FileUpload';
 import DateTimeInput from '../components/DateTimeInput';
 
 const FormBuilder = () => {
@@ -76,12 +76,13 @@ const FormBuilder = () => {
         return;
     }
   
-    // Check if the component is already added
-    if (!formComponents.some((comp) => comp.type === componentType)) {
-      // Add component to formComponents array
-      setFormComponents([...formComponents, { type: componentType, key: formComponents.length }]);
-    }
-  }, [formComponents]);
+
+  // Check if the component is already added
+  if (!formComponents.some((comp) => comp.type === componentType)) {
+    // Add component to formComponents array
+    setFormComponents([...formComponents, { type: componentType, key: formComponents.length }]);
+  }
+}, [formComponents]);
   
   
   useEffect(() => {
@@ -202,3 +203,5 @@ const FormBuilder = () => {
 };
 
 export default FormBuilder;
+
+
