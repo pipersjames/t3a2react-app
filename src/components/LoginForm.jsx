@@ -48,13 +48,17 @@ export default function LoginForm() {
 
 
     return (
-        <div className="loginContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5 overflow-auto">
+        <div className="loginContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5 overflow-auto" data-testid="login-form">
     <div className="loginBox row border rounded p-4 mx-sm-5">
         <div className="col-md-6">
             <div className="loginFormContainer p-4">
                 <h2 className="text-center">Stream-Lined</h2>
                 <h1 className="text-center">Login To Your Account</h1>
-                <form autoComplete="on" className="loginForm d-flex flex-column" onSubmit={handleSubmit}>
+                <form 
+                    autoComplete="on" 
+                    className="loginForm d-flex flex-column" 
+                    onSubmit={handleSubmit}
+                    >
                     <div className="mb-4 mt-4">
                         <input 
                             type="text" 
