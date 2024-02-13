@@ -105,6 +105,37 @@ const FormBuilder = () => {
     setFormComponents(formComponents.filter((_, i) => i !== index));
   };
 
+    // Function to handle form submission
+    const handleSubmit = () => {
+      const formData = {
+        formName: formName,
+        assignedTo: assignedTo,
+        components: formComponents.map(component => component.type.name) // Assuming component type names are unique identifiers
+      };
+  
+      // Send formData to backend through Heroku server using fetch or axios
+      fetch('https://your-heroku-server-url.com/submitForm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (response.ok) {
+          // Form submitted successfully
+          console.log('Form submitted successfully');
+        } else {
+          // Handle error
+          console.error('Form submission failed');
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+      });
+    };
+
+    
   return (
     <Layout>
       <div className="container">
@@ -156,6 +187,12 @@ const FormBuilder = () => {
                   <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Delete</button>
                 </div>
               ))}
+              {/* Add a submit button */}
+              <div className="row mt-3">
+                <div className="col-md-12 text-center">
+                  <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
