@@ -193,6 +193,7 @@ const FormBuilder = () => {
                 <div key={index} className="col-md-6 mb-3">
                   {/* Render the component */}
                   {React.createElement(component.type, { key: component.key, onChange: handleDescriptionChange })}
+
                   {/*React.createElement(component.type, { key: component.key, onAddComponent: handleAddComponent })}*/}
 
 
