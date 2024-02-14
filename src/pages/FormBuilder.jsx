@@ -1,18 +1,24 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import Layout from '../components/layouts/Layout';
 import AccordionTable from '../components/AccordionTable';
 import FullNameInput from '../components/FullNameInput'; 
 import EmailInput from '../components/EmailInput';
 import ShortDescription from '../components/ShortDesciption';
 import LongDescription from '../components/LongDescription';
+import { ApiContext } from "../contexts/ApiProvider"
+
 
 const FormBuilder = () => {
   // State variables for form name, list of usernames, and accordion items
+  const { apiUrl } = useContext(ApiContext) 
   const [formName, setFormName] = useState('');
   const [usernames, setUsernames] = useState([]);
   const [accordionItems, setAccordionItems] = useState([]);
   const [formComponents, setFormComponents] = useState([]); // State to store form components
+  // eslint-disable-next-line
+  const [shortDescription, setShortDescription] = useState(''); // State for short description
   const [assignedTo, setAssignedTo] = useState(''); // State for assignedTo input value
+  
 
   // useEffect hook to fetch usernames from the database
   useEffect(() => {
@@ -100,22 +106,23 @@ const FormBuilder = () => {
   };
 
     // Function to handle form submission
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
       const formData = {
         formName: formName,
         assignedTo: assignedTo,
         components: formComponents.map(component => component.type.name) // Assuming component type names are unique identifiers
       };
-  
-      // Send formData to backend through Heroku server using fetch or axios
-      fetch('https://stream-linedd-8391d4c8cf39.herokuapp.com/submitForm', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-      .then(response => {
+    
+      try {
+        // to make changes to this link (check with CreateAccount.jsx as example)
+        const response = await fetch(`${apiUrl}/formsubmissions/submitForm`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+    
         if (response.ok) {
           // Form submitted successfully
           console.log('Form submitted successfully');
@@ -123,12 +130,16 @@ const FormBuilder = () => {
           // Handle error
           console.error('Form submission failed');
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error submitting form:', error);
-      });
+      }
     };
 
+    // Function to handle description change
+    const handleDescriptionChange = (description) => {
+      setShortDescription(description);
+    };
+  
     
   return (
     <Layout>
@@ -175,7 +186,7 @@ const FormBuilder = () => {
               {formComponents.map((component, index) => (
                 <div key={index} className="col-md-6 mb-3">
                   {/* Render the component */}
-                  {React.createElement(component.type, { key: component.key })}
+                  {React.createElement(component.type, { key: component.key, onChange: handleDescriptionChange })}
                   {/* Render delete button for each component */}
                   <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Delete</button>
                 </div>
