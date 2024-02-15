@@ -57,16 +57,13 @@ const FullNameInput = ({ onFullNameAdded }) => {
         </button>
       )}
       {!editMode && (
-        <button className="btn btn-sm btn-primary mt-1" onClick={handleEdit}>
-          Edit
-        </button>
+        <div className="form-group">
+          <div>{fullNameList[0]}</div>
+          <button className="btn btn-sm btn-primary mt-1" onClick={handleEdit}>
+            Edit
+          </button>
+        </div>
       )}
-      {/* Display the full name */}
-      <div>
-        {fullNameList.map((fullName, index) => (
-          <div key={index}>{fullName}</div>
-        ))}
-      </div>
     </div>
   );
 };
