@@ -57,16 +57,13 @@ const EmailInput = ({ onEmailAdded }) => {
         </button>
       )}
       {!editMode && (
-        <button className="btn btn-sm btn-primary mt-1" onClick={handleEdit}>
-          Edit
-        </button>
+        <div className="form-group">
+          <div>{emailList[0]}</div>
+          <button className="btn btn-sm btn-primary mt-1" onClick={handleEdit}>
+            Edit
+          </button>
+        </div>
       )}
-      {/* Display the email address */}
-      <div>
-        {emailList.map((email, index) => (
-          <div key={index}>{email}</div>
-        ))}
-      </div>
     </div>
   );
 };
