@@ -128,7 +128,10 @@ const FormBuilder = () => {
         });
     
         if (response.ok) {
-          // Form submitted successfully
+          // Form submitted successfully, clear the form
+          setFormName('');
+          setAssignedTo('');
+          setFormComponents([]);
           console.log('Form submitted successfully');
         } else {
           // Handle error
@@ -185,7 +188,8 @@ const FormBuilder = () => {
               {formComponents.map((component, index) => (
                 <div key={index} className="col-md-6 mb-3">
                   {/* Render the component */}
-                  {React.createElement(component.type, { key: component.key, onAddComponent: handleAddComponent })}
+                  {React.createElement(component.type, { key: component.key, onEmailAdded: handleAddComponent, onFullNameAdded: handleAddComponent, onAddComponent: handleAddComponent })}
+
                   {/* Render delete button for each component */}
                   <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Delete</button>
                 </div>
