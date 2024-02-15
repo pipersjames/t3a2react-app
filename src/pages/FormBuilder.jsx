@@ -128,7 +128,10 @@ const FormBuilder = () => {
         });
     
         if (response.ok) {
-          // Form submitted successfully
+          // Form submitted successfully, clear the form
+          setFormName('');
+          setAssignedTo('');
+          setFormComponents([]);
           console.log('Form submitted successfully');
         } else {
           // Handle error
