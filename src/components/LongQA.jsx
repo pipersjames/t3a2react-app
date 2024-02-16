@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LongDescription = ({ initialValue }) => {
+const LongQA = ({ initialValue }) => {
   const [description, setDescription] = useState(initialValue || '');
   const [editMode, setEditMode] = useState(true); // State to control edit mode
 
@@ -54,4 +54,4 @@ const LongDescription = ({ initialValue }) => {
   );
 };
 
-export default LongDescription;
+export default LongQA;

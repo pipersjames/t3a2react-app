@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ShortDescription = ({ initialValue }) => {
+const ShortQA = ({ initialValue }) => {
   const [description, setDescription] = useState(initialValue || '');
   const [editMode, setEditMode] = useState(true); // State to control edit mode
 
@@ -54,4 +54,4 @@ const ShortDescription = ({ initialValue }) => {
   );
 };
 
-export default ShortDescription;
+export default ShortQA;
