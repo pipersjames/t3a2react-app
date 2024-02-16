@@ -10,6 +10,9 @@ const ShortDescription = ({ initialValue }) => {
   // Function to handle description change
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
+    if (!editMode) {
+      setEditMode(true); // Enable edit mode when user starts typing
+    }
   };
 
   // Function to handle title change
@@ -28,6 +31,12 @@ const ShortDescription = ({ initialValue }) => {
   // Function to handle double click on title to enter edit mode
   const handleTitleDoubleClick = () => {
     setEditMode(true);
+  };
+
+  // Function to handle clicking the add/save button
+  const handleAddSaveClick = () => {
+    // Save description when in edit mode
+    handleSave();
   };
 
   // Effect to set initial description when initialValue changes
@@ -68,13 +77,12 @@ const ShortDescription = ({ initialValue }) => {
         onChange={handleDescriptionChange}
         rows="3"
         placeholder="Enter a short description"
+        disabled={!editMode} // Disable textarea when not in edit mode
       />
-      {/* Show Save button in edit mode */}
-      {editMode && (
-        <button className="btn btn-sm btn-primary mt-1" onClick={handleSave}>
-          Save
-        </button>
-      )}
+      {/* Show Save button */}
+      <button className="btn btn-sm btn-primary mt-1 mr-2" onClick={handleAddSaveClick}>
+        Save
+      </button>
     </div>
   );
 };
