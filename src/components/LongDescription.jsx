@@ -23,7 +23,7 @@ const LongDescription = ({ initialValue }) => {
 
   return (
     <div className="form-group">
-      <label htmlFor="description">Short Description:</label>
+      <label htmlFor="description">Long Description:</label>
       {editMode ? (
         // Input field in edit mode
         <textarea
@@ -32,7 +32,7 @@ const LongDescription = ({ initialValue }) => {
           value={description}
           onChange={handleDescriptionChange}
           rows="3"
-          placeholder="Enter a short description"
+          placeholder="Enter a long description"
         />
       ) : (
         // Display description in non-edit mode
