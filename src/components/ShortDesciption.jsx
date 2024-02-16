@@ -6,6 +6,7 @@ const ShortDescription = ({ initialValue }) => {
   const [title, setTitle] = useState("Short Description");
   const [description, setDescription] = useState(initialValue || '');
   const [editMode, setEditMode] = useState(true); // Initially set to true to enable editing
+  const maxCharacters = 28;
 
   // Function to handle title change
   const handleTitleChange = (event) => {
@@ -14,7 +15,15 @@ const ShortDescription = ({ initialValue }) => {
 
   // Function to handle description change
   const handleDescriptionChange = (event) => {
-    if (editMode) setDescription(event.target.value);
+    if (editMode) {
+      const value = event.target.value;
+      if (value.length <= maxCharacters) {
+        setDescription(value);
+      } else {
+        // Truncate the description if it exceeds the character limit
+        setDescription(value.slice(0, maxCharacters));
+      }
+    }
   };
 
   // Function to handle saving both title and description
