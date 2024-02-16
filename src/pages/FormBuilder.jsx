@@ -1,13 +1,8 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import Layout from '../components/layouts/Layout';
-import AccordionTable from '../components/AccordionTable';
-import FullNameInput from '../components/FullNameInput'; 
-import EmailInput from '../components/EmailInput';
-import ShortDescription from '../components/ShortDesciption';
-import LongDescription from '../components/LongDescription';
+import SelectionTable from '../components/FormBuilderSelections';
 import { ApiContext } from "../contexts/ApiProvider"
-import FileUpload from '../components/FileUpload/FileUpload';
-import DateTimeInput from '../components/DateTimeInput';
+import { FormComponentContext } from '../contexts/FormComponentProvider';
 
 const FormBuilder = () => {
   // State variables for form name, list of usernames, and accordion items
@@ -15,8 +10,10 @@ const FormBuilder = () => {
   const [formName, setFormName] = useState('');
   const [usernames, setUsernames] = useState([]);
   const [accordionItems, setAccordionItems] = useState([]);
-  const [formComponents, setFormComponents] = useState([]); // State to store form components
+  const [renderedFormComponents, setRenderedFormComponents] = useState([]); // State to store form components
   const [assignedTo, setAssignedTo] = useState(''); // State for assignedTo input value
+
+  const { formComponents } = useContext(FormComponentContext)
   
 
   // useEffect hook to fetch usernames from the database
@@ -24,17 +21,10 @@ const FormBuilder = () => {
     fetchUsernamesFromDatabase()
       .then((data) => {
         setUsernames(data);
-        setAccordionItems([
-          'Full Name',
-          'Email',
-          'Short answer',
-          'Long answer',
-          'File Upload',
-          'Date/Time'
-        ]);
+        setAccordionItems([...Object.keys(formComponents)]);
       })
       .catch((error) => console.error('Error fetching usernames:', error));
-  }, []);
+  }, [formComponents]);
 
   // Function to handle form name input change
   const handleFormNameChange = (event) => {
@@ -48,74 +38,35 @@ const FormBuilder = () => {
 
   
   const fetchUsernamesFromDatabase = async () => {
-    return ['user1', 'user2', 'user3'];
+    return ['user1', 'user2', 'user3']; //example needs fetch request, render in assigned to:
   };
 
   const handleAddComponent = useCallback((componentName) => {
-    console.log("Adding component:", componentName); // Add this line to log the component name
+    console.log("Adding component:", componentName); // log the component name, troubleshooting
     // Determine the component type based on the component name
-    let componentType;
-    switch (componentName) {
-      case 'Full Name':
-        componentType = FullNameInput;
-        break;
-      case 'Email':
-        componentType = EmailInput;
-        break;
-      case 'Short answer':
-        componentType = ShortDescription;
-        break;
-      case 'Long answer':
-        componentType = LongDescription;
-        break;
-      case 'File Upload':
-        componentType = FileUpload;
-        break;
-      case 'Date/Time':
-        componentType = DateTimeInput;
-        break;
-      // Add cases for other components as needed
-      default:
-        console.error(`Component type for "${componentName}" not found.`);
-        return;
-    }
-  
+    const componentArray = formComponents[componentName]
+    const componentType = componentArray[0]
 
   // Check if the component is already added
-  if (!formComponents.some((comp) => comp.type === componentType)) {
-    // Add component to formComponents array
-    setFormComponents([...formComponents, { type: componentType, key: formComponents.length }]);
-  }
-}, [formComponents]);
+  // if (!renderedFormComponents.some((comp) => comp.type === componentType)) {
+    // Add component to renderedFormComponents array
+    setRenderedFormComponents([...renderedFormComponents, { type: componentType, key: renderedFormComponents.length }]);
+  // }
+}, [formComponents, renderedFormComponents])
+
+console.log(renderedFormComponents)
   
-  
-  useEffect(() => {
-    // Event listener to handle the custom event emitted by EmailInput component
-    const handleEmailAdded = (event) => {
-      // Add the EmailInput component to the form when a valid email is entered
-      handleAddComponent('Email');
-    };
-
-    // Add the event listener
-    document.addEventListener('emailAdded', handleEmailAdded);
-
-    // Clean up the event listener
-    return () => {
-      document.removeEventListener('emailAdded', handleEmailAdded);
-    };
-  }, [handleAddComponent]); // Add formComponents to the dependency array
-
   // Function to handle deleting a component from the form
   const handleDeleteComponent = (index) => {
-    setFormComponents(formComponents.filter((_, i) => i !== index));
+    setRenderedFormComponents(renderedFormComponents.filter((_, i) => i !== index));
   };
 
     // Function to handle form submission
-    const handleSubmit = async () => {
+    const handleCreateForm = async () => {
       const formData = {
         formName: formName,
         assignedTo: assignedTo,
-        components: formComponents.map(component => component.type.name) // Assuming component type names are unique identifiers
+        components: renderedFormComponents.map(component => component.type.name) // Assuming component type names are unique identifiers
       };
     
       try {
@@ -132,7 +83,7 @@ const FormBuilder = () => {
           // Form submitted successfully, clear the form
           setFormName('');
           setAssignedTo('');
-          setFormComponents([]);
+          setRenderedFormComponents([]);
           console.log('Form submitted successfully');
         } else {
           // Handle error
@@ -143,6 +94,10 @@ const FormBuilder = () => {
       }
     };
 
+    const handleReset = (event) => {
+      setRenderedFormComponents([])
+    }
+
     
   return (
     <Layout>
@@ -150,10 +105,13 @@ const FormBuilder = () => {
         <div className="row">
           <div className="col-md-3">
             {/* Pass handleAddComponent as a prop to AccordionTable */}
-            <AccordionTable items={accordionItems} onItemClick={handleAddComponent} />
+            <SelectionTable items={accordionItems} onItemClick={handleAddComponent} />
           </div>
           <div className="col-md-9">
-            <div className="row">
+            <div className="row justify-content-around">
+              <div className='mb-4'>
+                <button className='btn btn-secondary float-left' onClick={handleReset}>Reset</button>
+              </div>
               <div className="col-md-6 mb-3">
                 <div className="form-group">
                   <label htmlFor="formName">Form Name:</label>
@@ -186,8 +144,8 @@ const FormBuilder = () => {
                 </div>
               </div>
               {/* Render added form components */}
-              {formComponents.map((component, index) => (
-                <div key={index} className="col-md-6 mb-3">
+              {renderedFormComponents.map((component, index) => (
+                <div key={index} className="col-md-5 mb-3 border rounded m-2">
                   {/* Render the component */}
                   {React.createElement(component.type, { key: component.key, onEmailAdded: handleAddComponent, onFullNameAdded: handleAddComponent, onAddComponent: handleAddComponent })}
 
@@ -198,7 +156,7 @@ const FormBuilder = () => {
               {/* Add a submit button */}
               <div className="row mt-3">
                 <div className="col-md-12 text-center">
-                  <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                  <button className="btn btn-primary" onClick={handleCreateForm}>Submit</button>
                 </div>
               </div>
             </div>

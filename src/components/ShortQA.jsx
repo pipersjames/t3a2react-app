@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const ShortDescription = ({ initialValue }) => {
-  const [title, setTitle] = useState("Short Description");
+const ShortQA = ({ initialValue }) => {
+  const [title, setTitle] = useState("Short Question");
   const [description, setDescription] = useState(initialValue || '');
   const [editMode, setEditMode] = useState(true); // Initially set to true to enable editing
   const maxCharacters = 28;
@@ -73,4 +73,4 @@ const ShortDescription = ({ initialValue }) => {
   );
 };
 
-export default ShortDescription;
+export default ShortQA;
