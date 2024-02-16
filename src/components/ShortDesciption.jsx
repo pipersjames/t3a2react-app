@@ -9,12 +9,12 @@ const ShortDescription = ({ initialValue }) => {
 
   // Function to handle title change
   const handleTitleChange = (event) => {
-    setTitle(event.target.value);
+    if (editMode) setTitle(event.target.value);
   };
 
   // Function to handle description change
   const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
+    if (editMode) setDescription(event.target.value);
   };
 
   // Function to handle saving both title and description
@@ -25,6 +25,11 @@ const ShortDescription = ({ initialValue }) => {
     setEditMode(false); // Exit edit mode after saving
   };
 
+  // Function to enable editing when the pencil icon is clicked
+  const handleEditClick = () => {
+    setEditMode(true);
+  };
+
   return (
     <div className="form-group">
       {/* Input field for both title and description */}
@@ -33,6 +38,7 @@ const ShortDescription = ({ initialValue }) => {
           className="form-control mb-2"
           value={title}
           onChange={handleTitleChange}
+          disabled={!editMode} // Disable editing if not in edit mode
           autoFocus // Focus the input field on initial render
         />
         <textarea
@@ -41,16 +47,19 @@ const ShortDescription = ({ initialValue }) => {
           onChange={handleDescriptionChange}
           rows="3"
           placeholder="Enter a short description"
+          disabled={!editMode} // Disable editing if not in edit mode
         />
       </div>
-      {/* Always show Save button when in edit mode */}
+      {/* Show Save button when in edit mode */}
       {editMode && (
         <button className="btn btn-sm btn-primary mt-1 mr-2" onClick={handleSave}>
           Save
         </button>
       )}
-      {/* Show pencil icon to toggle edit mode */}
-      <FontAwesomeIcon icon={faPencilAlt} className="text-muted ml-2" onClick={() => setEditMode(true)} />
+      {/* Show pencil icon to enable editing */}
+      {!editMode && (
+        <FontAwesomeIcon icon={faPencilAlt} className="text-muted ml-2" onClick={handleEditClick} />
+      )}
     </div>
   );
 };
