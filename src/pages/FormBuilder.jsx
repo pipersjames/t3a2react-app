@@ -198,7 +198,7 @@ const FormBuilder = () => {
               {/* Add a submit button */}
               <div className="row mt-3">
                 <div className="col-md-12 text-center">
-                  <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                  <button className="btn btn-primary" onClick={handleSubmit}>Create Form</button>
                 </div>
               </div>
             </div>
