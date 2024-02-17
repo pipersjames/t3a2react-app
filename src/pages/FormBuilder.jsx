@@ -97,7 +97,7 @@ const FormBuilder = () => {
       //console.log(formTemplate) //troubleshooting
     
       try {
-        const response = await fetch(`${apiUrl}/formTemplate/add`, {
+        const response = await fetch(`${apiUrl}/formTemplates/add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
