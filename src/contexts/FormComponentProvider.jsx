@@ -10,8 +10,8 @@ export const FormComponentContext = createContext();
 
 export function FormComponentProvider(props) {
   
-    const [shortAnswerTitle, setShortAnswerTitle] = useState('')
-    const [LongAnswerTitle, setLongAnswerTitle] = useState('')
+    const [shortAnswerTitle, setShortAnswerTitle] = useState('Short Question Title')
+    const [LongAnswerTitle, setLongAnswerTitle] = useState('Long Question Title')
 
     const formComponents = {
         'Full Name' : [FullNameInput],
