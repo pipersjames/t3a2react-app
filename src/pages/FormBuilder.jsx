@@ -165,10 +165,10 @@ const FormBuilder = () => {
               {renderedFormComponents.map((component, index) => (
                 <div key={index} className="col-md-5 mb-3 border rounded m-2">
                   {/* Render the component */}
-                  {React.createElement(component.type, { key: component.key, title: component.title, setTitle: component.setTitle})}
+                  {React.createElement(component.type, { key: component.key, edit: component.edit})}
 
                   {/* Render delete button for each component */}
-                  <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Delete</button>
+                  <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Remove</button>
                 </div>
               ))}
               {/* Add a submit button */}

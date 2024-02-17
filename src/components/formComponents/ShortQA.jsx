@@ -50,12 +50,12 @@ const ShortQA = ({ initialValue }) => {
           disabled={!editMode} // Disable editing if not in edit mode
           autoFocus // Focus the input field on initial render
         />
-        <textarea
+        <input
           className="form-control"
           value={description}
           onChange={handleDescriptionChange}
           rows="3"
-          placeholder="Enter a short description"
+          placeholder="Answer"
           disabled={!editMode} // Disable editing if not in edit mode
         />
       </div>
