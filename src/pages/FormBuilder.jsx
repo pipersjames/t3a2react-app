@@ -46,11 +46,21 @@ const FormBuilder = () => {
 
 
   const handleAddComponent = useCallback((componentName) => {
-    console.log("Adding component:", componentName); // log the component name, troubleshooting
+    //console.log("Adding component:", componentName); // log the component name, troubleshooting
     // Determine the component type based on the component name
     const componentArray = formComponents[componentName]
 
-    setRenderedFormComponents([...renderedFormComponents, { type: componentArray[0], key: renderedFormComponents.length, title: componentArray[1], setTitle: componentArray[2]}]);
+    setRenderedFormComponents([
+      ...renderedFormComponents, 
+      { 
+        componentName: componentName,
+        type: componentArray[0], 
+        key: renderedFormComponents.length, 
+        edit: true
+      }
+    ]
+  );
+  //console.log(renderedFormComponents)// log rendered components
   // }
 }, [formComponents, renderedFormComponents])
   
@@ -58,23 +68,41 @@ const FormBuilder = () => {
   const handleDeleteComponent = (index) => {
     setRenderedFormComponents(renderedFormComponents.filter((_, i) => i !== index));
   };
+  //reset all components
+  const handleReset = (event) => {
+    setRenderedFormComponents([])
+  }
+
+    //test funciton
 
     // Function to handle form submission
     const handleCreateForm = async () => {
-      const formData = {
+
+      if (!formName) {
+        window.alert('The Form Needs a Name')
+        return
+      }
+
+      if (!assignedTo) {
+        window.alert('The Form needs an Assigned User')
+        return
+      }
+
+      const formTemplate = {
         formName: formName,
         assignedTo: assignedTo.value,
-        components: formComponents
+        components: renderedFormComponents.map((comp => comp.componentName))
       };
+
+      //console.log(formTemplate) //troubleshooting
     
       try {
-        // to make changes to this link (check with CreateAccount.jsx as example)
-        const response = await fetch(`${apiUrl}/formsubmissions/submitForm`, {
+        const response = await fetch(`${apiUrl}/formTemplate/add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(formTemplate)
         });
     
         if (response.ok) {
@@ -91,10 +119,6 @@ const FormBuilder = () => {
         console.error('Error submitting form:', error);
       }
     };
-
-    const handleReset = (event) => {
-      setRenderedFormComponents([])
-    }
 
     
   return (
@@ -150,7 +174,7 @@ const FormBuilder = () => {
               {/* Add a submit button */}
               <div className="row mt-3">
                 <div className="col-md-12 text-center">
-                  <button className="btn btn-primary" onClick={handleCreateForm}>Submit</button>
+                  <button className="btn btn-primary" onClick={handleCreateForm}>Save Template</button>
                 </div>
               </div>
             </div>
