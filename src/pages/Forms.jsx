@@ -1,8 +1,8 @@
 import React from "react";
-import LongQA from "../components/LongQA";
-import ShortQA from "../components/ShortQA";
-import EmailInput from "../components/EmailInput";
-import FullNameInput from "../components/FullNameInput";
+import LongQA from "../components/formComponents/LongQA";
+import ShortQA from "../components/formComponents/ShortQA";
+import EmailInput from "../components/formComponents/EmailInput";
+import FullNameInput from "../components/formComponents/FullNameInput";
 
 export default function FormsPage(){
     return(

@@ -1,10 +1,10 @@
 import { createContext, useState } from "react";
-import FullNameInput from "../components/FullNameInput";
-import EmailInput from "../components/EmailInput";
-import ShortQA from "../components/ShortQA";
-import LongQA from "../components/LongQA";
-import FileUpload from "../components/FileUpload/FileUpload";
-import DateTimeInput from "../components/DateTimeInput";
+import FullNameInput from "../components/formComponents/FullNameInput";
+import EmailInput from "../components/formComponents/EmailInput";
+import ShortQA from "../components/formComponents/ShortQA";
+import LongQA from "../components/formComponents/LongQA";
+import FileUpload from "../components/formComponents/FileUpload";
+import DateTimeInput from "../components/formComponents/DateTimeInput";
 
 export const FormComponentContext = createContext();
 
