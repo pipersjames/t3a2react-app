@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 import { ApiProvider } from './contexts/ApiProvider';
+import { FormComponentProvider } from './contexts/FormComponentProvider';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ApiProvider>
-        <App/>
-      </ApiProvider>
+      <FormComponentProvider>
+        <ApiProvider>
+          <App/>
+        </ApiProvider>
+      </FormComponentProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const LongDescription = ({ initialValue }) => {
-  const [title, setTitle] = useState("Long Description");
+const ShortQA = ({ initialValue }) => {
+  const [title, setTitle] = useState("Short Question");
   const [description, setDescription] = useState(initialValue || '');
   const [editMode, setEditMode] = useState(true); // Initially set to true to enable editing
-  const maxCharacters = 500;
+  const maxCharacters = 28;
 
   // Function to handle title change
   const handleTitleChange = (event) => {
@@ -50,12 +50,12 @@ const LongDescription = ({ initialValue }) => {
           disabled={!editMode} // Disable editing if not in edit mode
           autoFocus // Focus the input field on initial render
         />
-        <textarea
+        <input
           className="form-control"
           value={description}
           onChange={handleDescriptionChange}
           rows="3"
-          placeholder="Enter a long description"
+          placeholder="Answer"
           disabled={!editMode} // Disable editing if not in edit mode
         />
       </div>
@@ -73,4 +73,4 @@ const LongDescription = ({ initialValue }) => {
   );
 };
 
-export default LongDescription;
+export default ShortQA;

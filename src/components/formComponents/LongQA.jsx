@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const ShortDescription = ({ initialValue }) => {
-  const [title, setTitle] = useState("Short Description");
+
+const LongQA = ({ initialValue }) => {
+  const [title, setTitle] = useState("Long Question");
   const [description, setDescription] = useState(initialValue || '');
   const [editMode, setEditMode] = useState(true); // Initially set to true to enable editing
-  const maxCharacters = 28;
+  const maxCharacters = 500;
+
 
   // Function to handle title change
   const handleTitleChange = (event) => {
@@ -55,7 +57,7 @@ const ShortDescription = ({ initialValue }) => {
           value={description}
           onChange={handleDescriptionChange}
           rows="3"
-          placeholder="Enter a short description"
+          placeholder="Answer"
           disabled={!editMode} // Disable editing if not in edit mode
         />
       </div>
@@ -73,4 +75,4 @@ const ShortDescription = ({ initialValue }) => {
   );
 };
 
-export default ShortDescription;
+export default LongQA;

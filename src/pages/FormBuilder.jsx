@@ -1,39 +1,38 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import Layout from '../components/layouts/Layout';
-import AccordionTable from '../components/AccordionTable';
-import FullNameInput from '../components/FullNameInput'; 
-import EmailInput from '../components/EmailInput';
-import ShortDescription from '../components/ShortDesciption';
-import LongDescription from '../components/LongDescription';
+import SelectionTable from '../components/FormBuilderSelections';
 import { ApiContext } from "../contexts/ApiProvider"
-import FileUpload from '../components/FileUpload/FileUpload';
-import DateTimeInput from '../components/DateTimeInput';
+import { FormComponentContext } from '../contexts/FormComponentProvider';
+import Select from 'react-select'
 
 const FormBuilder = () => {
-  // State variables for form name, list of usernames, and accordion items
-  const { apiUrl } = useContext(ApiContext) 
+  //Context
+  const { apiUrl } = useContext(ApiContext)
+  // State variables
   const [formName, setFormName] = useState('');
-  const [usernames, setUsernames] = useState([]);
   const [accordionItems, setAccordionItems] = useState([]);
-  const [formComponents, setFormComponents] = useState([]); // State to store form components
-  const [assignedTo, setAssignedTo] = useState(''); // State for assignedTo input value
-  
+  const [renderedFormComponents, setRenderedFormComponents] = useState([]); // State to store form components
+  const [assignedTo, setAssignedTo] = useState(); // State for assignedTo input value
+  const [assignedOptions, setAssignedOptions] = useState() // options for assigned dropdown filter
 
-  // useEffect hook to fetch usernames from the database
+  const { formComponents } = useContext(FormComponentContext)
+  
+  const fetchUsernamesFromDatabase = async () => {
+    const response = await fetch(`${apiUrl}/users/`)
+    const data = await response.json()
+    const userNames = data.result.map(user => ({
+      value: `${user.fname} ${user.lname}`,
+      label: `${user.fname} ${user.lname}`
+    }))
+    setAssignedOptions(userNames)
+  };
+
+
+  // useEffect to set up core data on page render
   useEffect(() => {
     fetchUsernamesFromDatabase()
-      .then((data) => {
-        setUsernames(data);
-        setAccordionItems([
-          'Full Name',
-          'Email',
-          'Short answer',
-          'Long answer',
-          'File Upload',
-          'Date/Time'
-        ]);
-      })
-      .catch((error) => console.error('Error fetching usernames:', error));
+    setAccordionItems([...Object.keys(formComponents)]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Function to handle form name input change
@@ -41,98 +40,77 @@ const FormBuilder = () => {
     setFormName(event.target.value);
   };
 
-  // Function to handle username input change
-  const handleAssignedToChange = (event) => {
-    setAssignedTo(event.target.value);
+  const handleAssignedToChange = (selectedOption) => {
+    setAssignedTo(selectedOption);
   };
 
-  
-  const fetchUsernamesFromDatabase = async () => {
-    return ['user1', 'user2', 'user3'];
-  };
 
   const handleAddComponent = useCallback((componentName) => {
-    console.log("Adding component:", componentName); // Add this line to log the component name
+    //console.log("Adding component:", componentName); // log the component name, troubleshooting
     // Determine the component type based on the component name
-    let componentType;
-    switch (componentName) {
-      case 'Full Name':
-        componentType = FullNameInput;
-        break;
-      case 'Email':
-        componentType = EmailInput;
-        break;
-      case 'Short answer':
-        componentType = ShortDescription;
-        break;
-      case 'Long answer':
-        componentType = LongDescription;
-        break;
-      case 'File Upload':
-        componentType = FileUpload;
-        break;
-      case 'Date/Time':
-        componentType = DateTimeInput;
-        break;
-      // Add cases for other components as needed
-      default:
-        console.error(`Component type for "${componentName}" not found.`);
-        return;
-    }
+    const componentArray = formComponents[componentName]
+
+    setRenderedFormComponents([
+      ...renderedFormComponents, 
+      { 
+        componentName: componentName,
+        type: componentArray[0], 
+        key: renderedFormComponents.length, 
+        edit: true
+      }
+    ]
+  );
+  //console.log(renderedFormComponents)// log rendered components
+  // }
+}, [formComponents, renderedFormComponents])
   
-
-  // Check if the component is already added
-  if (!formComponents.some((comp) => comp.type === componentType)) {
-    // Add component to formComponents array
-    setFormComponents([...formComponents, { type: componentType, key: formComponents.length }]);
-  }
-}, [formComponents]);
-  
-  
-  useEffect(() => {
-    // Event listener to handle the custom event emitted by EmailInput component
-    const handleEmailAdded = (event) => {
-      // Add the EmailInput component to the form when a valid email is entered
-      handleAddComponent('Email');
-    };
-
-    // Add the event listener
-    document.addEventListener('emailAdded', handleEmailAdded);
-
-    // Clean up the event listener
-    return () => {
-      document.removeEventListener('emailAdded', handleEmailAdded);
-    };
-  }, [handleAddComponent]); // Add formComponents to the dependency array
-
   // Function to handle deleting a component from the form
   const handleDeleteComponent = (index) => {
-    setFormComponents(formComponents.filter((_, i) => i !== index));
+    setRenderedFormComponents(renderedFormComponents.filter((_, i) => i !== index));
   };
+  //reset all components
+  const handleReset = (event) => {
+    setRenderedFormComponents([])
+  }
+
+    //test funciton
 
     // Function to handle form submission
-    const handleSubmit = async () => {
-      const formData = {
+    const handleCreateForm = async () => {
+
+      if (!formName) {
+        window.alert('The Form Needs a Name')
+        return
+      }
+
+      if (!assignedTo) {
+        window.alert('The Form needs an Assigned User')
+        return
+      }
+
+      const formTemplate = {
         formName: formName,
-        assignedTo: assignedTo,
-        components: formComponents.map(component => component.type.name) // Assuming component type names are unique identifiers
+        assignedTo: assignedTo.value,
+        components: renderedFormComponents.map((comp => comp.componentName))
       };
+
+      //console.log(formTemplate) //troubleshooting
     
       try {
         // to make changes to this link (check with CreateAccount.jsx as example)
-        const response = await fetch(`${apiUrl}/formTemplates/add`, {
+        const response = await fetch(`${apiUrl}/formsubmissions/submitForm`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(formTemplate)
         });
     
         if (response.ok) {
           // Form submitted successfully, clear the form
           setFormName('');
-          setAssignedTo('');
-          setFormComponents([]);
+          setAssignedTo();
+          setRenderedFormComponents([]);
           console.log('Form submitted successfully');
         } else {
           // Handle error
@@ -150,10 +128,13 @@ const FormBuilder = () => {
         <div className="row">
           <div className="col-md-3">
             {/* Pass handleAddComponent as a prop to AccordionTable */}
-            <AccordionTable items={accordionItems} onItemClick={handleAddComponent} />
+            <SelectionTable items={accordionItems} onItemClick={handleAddComponent} />
           </div>
           <div className="col-md-9">
-            <div className="row">
+            <div className="row justify-content-around">
+              <div className='mb-4'>
+                <button className='btn btn-secondary float-left' onClick={handleReset}>Reset</button>
+              </div>
               <div className="col-md-6 mb-3">
                 <div className="form-group">
                   <label htmlFor="formName">Form Name:</label>
@@ -169,36 +150,32 @@ const FormBuilder = () => {
               <div className="col-md-6 mb-3">
                 <div className="form-group">
                   <label htmlFor="assignedTo">Assigned To:</label>
-                  <input
-                    type="text"
-                    className="form-control"
+                  <Select
+                    className="basic-single"
                     id="assignedTo"
                     value={assignedTo}
                     onChange={handleAssignedToChange}
-                    list="usernamesList"
+                    options={assignedOptions}
+                    placeholder="Select a User"
+                    isClearable
+                    isSearchable
                   />
-                  {/* Render a datalist for the filtered usernames */}
-                  <datalist id="usernamesList">
-                    {usernames.map((username, index) => (
-                      <option key={index} value={username} />
-                    ))}
-                  </datalist>
                 </div>
               </div>
               {/* Render added form components */}
-              {formComponents.map((component, index) => (
-                <div key={index} className="col-md-6 mb-3">
+              {renderedFormComponents.map((component, index) => (
+                <div key={index} className="col-md-5 mb-3 border rounded m-2">
                   {/* Render the component */}
-                  {React.createElement(component.type, { key: component.key, onEmailAdded: handleAddComponent, onFullNameAdded: handleAddComponent, onAddComponent: handleAddComponent })}
+                  {React.createElement(component.type, { key: component.key, edit: component.edit})}
 
                   {/* Render delete button for each component */}
-                  <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Delete</button>
+                  <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Remove</button>
                 </div>
               ))}
               {/* Add a submit button */}
               <div className="row mt-3">
                 <div className="col-md-12 text-center">
-                  <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                  <button className="btn btn-primary" onClick={handleCreateForm}>Save Template</button>
                 </div>
               </div>
             </div>
