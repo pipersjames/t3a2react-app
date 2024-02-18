@@ -97,7 +97,8 @@ const FormBuilder = () => {
       //console.log(formTemplate) //troubleshooting
     
       try {
-        const response = await fetch(`${apiUrl}/formTemplates/add`, {
+        // to make changes to this link (check with CreateAccount.jsx as example)
+        const response = await fetch(`${apiUrl}/formsubmissions/submitForm`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
