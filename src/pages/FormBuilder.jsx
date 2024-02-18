@@ -98,7 +98,7 @@ const FormBuilder = () => {
     
       try {
         // to make changes to this link (check with CreateAccount.jsx as example)
-        const response = await fetch(`${apiUrl}/formsubmissions/submitForm`, {
+        const response = await fetch(`${apiUrl}/formTemplates/add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
