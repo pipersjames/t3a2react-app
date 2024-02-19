@@ -4,14 +4,11 @@ import { ApiContext } from "../contexts/ApiProvider";
 
 const FormPage = () => {
   const [formNames, setFormNames] = useState([]);
-  //Context
-  const { apiUrl } = useContext(ApiContext)
+  const { apiUrl } = useContext(ApiContext);
 
   useEffect(() => {
     const fetchFormNames = async () => {
-
       try {
-        // this apiUrl going through Heroku
         const response = await fetch(`${apiUrl}/formTemplates/forms`, {
           method: 'GET',
           headers: {
@@ -22,6 +19,7 @@ const FormPage = () => {
           throw new Error('Failed to fetch form data');
         }
         const data = await response.json();
+        console.log("Fetched form data:", data.forms); // Log fetched form data
         setFormNames(data.forms);
       } catch (error) {
         console.error("Error fetching form data:", error);
@@ -31,6 +29,8 @@ const FormPage = () => {
     fetchFormNames();
   }, [apiUrl]);
 
+  console.log("Form names:", formNames); // Log form names
+  
   const columns = [
     {
       title: "Form Name",
