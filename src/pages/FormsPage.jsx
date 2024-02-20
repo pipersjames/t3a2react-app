@@ -9,7 +9,7 @@ const FormPage = () => {
   useEffect(() => {
     const fetchFormNames = async () => {
       try {
-        const response = await fetch(`${apiUrl}/formTemplates/forms`, {
+        const response = await fetch(`${apiUrl}/formTemplates/formspage`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
