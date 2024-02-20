@@ -25,7 +25,7 @@ function App() {
         <Route path ='/home' element={<HomePage/>}/>
         <Route path ='/formbuilder' element={<FormBuilder/>}/>
         <Route path ='/forms' element={<FormsPage/>}/>
-        {/* <Route path = '/Actions' element={<Actions/>}/> */}
+        <Route path = '/Actions' element={<FillOutForm/>}/>
       </Route>
         <Route path="/" element={<LoginForm/>}/>
         <Route path='/create-new-user' element={<CreateAccount/>}/>

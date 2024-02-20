@@ -3,7 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
-function FavouriteForm() {
+function FavouriteForm({favourites}) {
+
   return (
     <Container>
         <div>
