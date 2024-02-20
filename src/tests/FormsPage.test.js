@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
-import Forms from '../pages/Forms';
+import FormsPage from '../pages/FormsPage';
 import { ApiContext } from '../contexts/ApiProvider';
 
 describe('FormPage component', () => {
@@ -46,7 +46,7 @@ describe('FormPage component', () => {
 
     render(
       <ApiContext.Provider value={{ apiUrl }}>
-        <Forms />
+        <FormsPage />
       </ApiContext.Provider>
     );
 
