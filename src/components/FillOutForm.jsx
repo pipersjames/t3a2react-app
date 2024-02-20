@@ -90,6 +90,7 @@ export default function FillOutForm() {
             }
         };
         fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -98,6 +99,7 @@ export default function FillOutForm() {
         } else {
             setIsChecked(false);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formName]);
 
     
