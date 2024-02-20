@@ -19,8 +19,8 @@ const FormPage = () => {
           throw new Error('Failed to fetch form data');
         }
         const data = await response.json();
-        console.log("Fetched form data:", data.forms); // Log fetched form data
-        setFormNames(data.forms);
+        console.log("Fetched form data:", data.result); // Log fetched form data
+        setFormNames(data.result);
       } catch (error) {
         console.error("Error fetching form data:", error);
       }
@@ -43,9 +43,14 @@ const FormPage = () => {
   return (
     <div>
       <h1>Form Page</h1>
-      <Table dataSource={formNames} columns={columns} />
+      <Table 
+        dataSource={formNames} 
+        columns={columns} 
+        rowKey="_id" // Specify the unique identifier for each row
+      />
     </div>
   );
+  
 };
 
 export default FormPage;
