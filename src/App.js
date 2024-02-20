@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import AuthChecker from './components/AuthChecker';
 import FormBuilder from './pages/FormBuilder';
+import FillOutForm from './components/FillOutForm'
 import FormsPage from './pages/FormsPage';
 
 
@@ -24,6 +25,7 @@ function App() {
         <Route path ='/home' element={<HomePage/>}/>
         <Route path ='/formbuilder' element={<FormBuilder/>}/>
         <Route path ='/forms' element={<FormsPage/>}/>
+        <Route path = '/Actions' element={<FillOutForm/>}/>
       </Route>
         <Route path="/" element={<LoginForm/>}/>
         <Route path='/create-new-user' element={<CreateAccount/>}/>

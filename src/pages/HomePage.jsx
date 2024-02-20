@@ -1,20 +1,21 @@
-import React from "react";
+
 import SavedProgress from "../components/SavedProgess";
 import FavouriteForm from "../components/FavouriteForm";
-import { Container } from 'react-bootstrap'; // Import Container, Row, and Col from Bootstrap
+import { Container, Row, Col } from 'react-bootstrap';
 
-export default function HomePage(){
-    return(
-        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+export default function HomePage() {
+
+    return (
+        <div className="d-flex align-items-center justify-content-center vh-100">
             <Container>
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    <div style={{ flex: '1', minWidth: '300px', margin: '10px' }}>
+                <Row className="justify-content-center">
+                    <Col xs={12} md={6} className="my-3">
                         <SavedProgress />
-                    </div>
-                    <div style={{ flex: '1', minWidth: '300px', margin: '10px' }}>
+                    </Col>
+                    <Col xs={12} md={6} className="my-3">
                         <FavouriteForm />
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </Container>
         </div>
     )
