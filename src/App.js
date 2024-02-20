@@ -6,8 +6,8 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import AuthChecker from './components/AuthChecker';
 import FormBuilder from './pages/FormBuilder';
-import FormsPage from './pages/Forms';
-import FillOutForm from './components/FillOutForm';
+import FillOutForm from './components/FillOutForm'
+import FormsPage from './pages/FormsPage';
 
 
 function App() {
