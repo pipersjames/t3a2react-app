@@ -3,6 +3,9 @@ import { render, waitFor, screen } from '@testing-library/react';
 import FormsPage from '../pages/FormsPage';
 import { ApiContext } from '../contexts/ApiProvider';
 
+// Mock window.matchMedia
+window.matchMedia = jest.fn();
+
 describe('FormPage component', () => {
   test('renders form names table', async () => {
     const apiUrl = 'https://stream-linedd-8391d4c8cf39.herokuapp.com/formTemplates/forms';
@@ -55,12 +58,7 @@ describe('FormPage component', () => {
       expect(console.error).toHaveBeenCalledWith('Error fetching form data:', expect.any(Error));
     });
 
-
-    // Check if form names are rendered in the table
-    formNames.forEach(form => {
-      expect(screen.getByText(form.formName)).toBeInTheDocument();
-    });
+    // Check if the error message is rendered
+    expect(screen.getByText('Error fetching form data:')).toBeInTheDocument();
   });
 });
-
-
