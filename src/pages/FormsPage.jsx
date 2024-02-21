@@ -4,6 +4,7 @@ import { ApiContext } from "../contexts/ApiProvider";
 
 const FormPage = () => {
   const [formNames, setFormNames] = useState([]);
+  const [selectedForm, setSelectedForm] = useState(null);
   const { apiUrl } = useContext(ApiContext);
 
   useEffect(() => {
@@ -36,9 +37,16 @@ const FormPage = () => {
       title: "Form Name",
       dataIndex: "formName",
       key: "formName",
+      render: (text) => (
+        <a onClick={() => handleFormClick(text)}>{text}</a>
+      )
     },
     // Add more columns as needed
   ];
+
+  const handleFormClick = (formName) => {
+    setSelectedForm(formName);
+  };
 
   return (
     <div>
@@ -50,7 +58,6 @@ const FormPage = () => {
       />
     </div>
   );
-  
 };
 
 export default FormPage;
