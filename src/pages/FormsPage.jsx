@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Table } from "antd";
 import { ApiContext } from "../contexts/ApiProvider";
+import { Link } from "react-router-dom";
+
 
 const FormPage = () => {
   const [formNames, setFormNames] = useState([]);
@@ -47,6 +49,7 @@ const FormPage = () => {
   const handleFormClick = (formName) => {
     setSelectedForm(formName);
   };
+  
 
   return (
     <div className="container">
@@ -72,7 +75,7 @@ const FormPage = () => {
                   </div>
                   <div className="row">
                     <div className="col text-center">
-                      <button className="btn btn-primary">Create Form</button>
+                      <Link to="/formbuilder" className="btn btn-primary">Create Form</Link>
                     </div>
                   </div>
                 </div>
