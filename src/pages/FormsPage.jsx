@@ -59,18 +59,27 @@ const FormPage = () => {
             rowKey="_id" 
           />
         </div>
-        <div className="col-md-6">
-          {selectedForm && (
-            <div>
-              <h2>{selectedForm}</h2>
-              {/* Add description input and create form option here */}
-              <div className="form-description-container">
-                <textarea placeholder="Enter form description"></textarea>
-                <button>Create Form</button>
+        <div className="col-md-6 d-flex flex-column align-items-center justify-content-start">
+            {selectedForm && (
+              <div className="text-center mb-4">
+                <h2>{selectedForm}</h2>
+                {/* Add description input and create form option here */}
+                <div className="form-description-container">
+                  <div className="row">
+                    <div className="col">
+                      <textarea className="mb-3 form-control" placeholder="Enter form description"></textarea>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col text-center">
+                      <button className="btn btn-primary">Create Form</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+
       </div>
     </div>
   );
