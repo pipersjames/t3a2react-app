@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Label from './Label';
 
 export default function FullNameInput({ edit }) {
   const [fullName, setFullName] = useState('');
@@ -12,7 +13,7 @@ export default function FullNameInput({ edit }) {
   return (
     <div>
       <div className="form-group">
-        <label htmlFor="fullName">Full Name:</label>
+        <Label Tag='fullName' label='Full Name:'/>
         <input
           type="text"
           className="form-control"
