@@ -49,13 +49,29 @@ const FormPage = () => {
   };
 
   return (
-    <div>
-      <h1>Form Page</h1>
-      <Table 
-        dataSource={formNames} 
-        columns={columns} 
-        rowKey="_id" // Specify the unique identifier for each row
-      />
+    <div className="container">
+      <div className="row">
+        <div className="col-md-3">
+          <h1>Form Page</h1>
+          <Table 
+            dataSource={formNames} 
+            columns={columns} 
+            rowKey="_id" 
+          />
+        </div>
+        <div className="col-md-6">
+          {selectedForm && (
+            <div>
+              <h2>{selectedForm}</h2>
+              {/* Add description input and create form option here */}
+              <div className="form-description-container">
+                <textarea placeholder="Enter form description"></textarea>
+                <button>Create Form</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
