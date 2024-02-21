@@ -3,7 +3,7 @@ import Layout from '../components/layouts/Layout';
 import SelectionTable from '../components/FormBuilderSelections';
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormComponentContext } from '../contexts/FormComponentProvider';
-import Select from 'react-select'
+import Select, { components } from 'react-select'
 
 const FormBuilder = () => {
   //Context
@@ -14,6 +14,7 @@ const FormBuilder = () => {
   const [renderedFormComponents, setRenderedFormComponents] = useState([]); // State to store form components
   const [assignedTo, setAssignedTo] = useState(); // State for assignedTo input value
   const [assignedOptions, setAssignedOptions] = useState() // options for assigned dropdown filter
+  const [questionHeaders, setQuestionHeaders] = useState([])
 
   const { formComponents } = useContext(FormComponentContext)
   
@@ -26,7 +27,6 @@ const FormBuilder = () => {
     }))
     setAssignedOptions(userNames)
   };
-
 
   // useEffect to set up core data on page render
   useEffect(() => {
@@ -49,20 +49,23 @@ const FormBuilder = () => {
     //console.log("Adding component:", componentName); // log the component name, troubleshooting
     // Determine the component type based on the component name
     const componentArray = formComponents[componentName]
+     
 
     setRenderedFormComponents([
       ...renderedFormComponents, 
       { 
         componentName: componentName,
         type: componentArray[0], 
-        key: renderedFormComponents.length, 
-        edit: true
+        key: renderedFormComponents.length,
+        index: renderedFormComponents.length, 
+        edit: true,
+        setQuestionHeaders: setQuestionHeaders,
+        questionHeaders: questionHeaders
       }
     ]
   );
   //console.log(renderedFormComponents)// log rendered components
-  // }
-}, [formComponents, renderedFormComponents])
+}, [formComponents, renderedFormComponents, renderedFormComponents, setQuestionHeaders])
   
   // Function to handle deleting a component from the form
   const handleDeleteComponent = (index) => {
@@ -91,7 +94,8 @@ const FormBuilder = () => {
       const formTemplate = {
         formName: formName,
         assignedTo: assignedTo.value,
-        components: renderedFormComponents.map((comp => comp.componentName))
+        components: renderedFormComponents.map((comp => comp.componentName)),
+        questionHeaders: questionHeaders
       };
 
       //console.log(formTemplate) //troubleshooting
@@ -111,6 +115,7 @@ const FormBuilder = () => {
           setFormName('');
           setAssignedTo();
           setRenderedFormComponents([]);
+          setQuestionHeaders([])
           console.log('Form submitted successfully');
         } else {
           // Handle error
@@ -166,7 +171,15 @@ const FormBuilder = () => {
               {renderedFormComponents.map((component, index) => (
                 <div key={index} className="col-md-5 mb-3 border rounded m-2">
                   {/* Render the component */}
-                  {React.createElement(component.type, { key: component.key, edit: component.edit})}
+                  {React.createElement(
+                    component.type, 
+                    {  
+                      key: component.key, 
+                      edit: component.edit, 
+                      setQuestionHeaders: component.setQuestionHeaders, 
+                      questionHeaders: component.questionHeaders,
+                      index: component.index
+                    })}
 
                   {/* Render delete button for each component */}
                   <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Remove</button>

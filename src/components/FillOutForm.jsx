@@ -17,7 +17,7 @@ export default function FillOutForm() {
 
     const fetchFormTemplate = async () => {
         try {
-            const response = await fetch(`${apiUrl}/formTemplates/license`); //replace asda with prop
+            const response = await fetch(`${apiUrl}/formTemplates/example`); //replace asda with prop
             const data = await response.json();
             setFillFormStructure(data);
             setFormName(data.template.formName)
@@ -125,7 +125,7 @@ export default function FillOutForm() {
                             </div>
                             {fillFormStructure.template.components && fillFormStructure.template.components.map((component, index) => (
                                 <div key={index} className="mb-3"> 
-                                    {React.createElement(formComponents[component][0])}
+                                    {React.createElement(formComponents[component][0], {fill : true})}
                                 </div>    
                             ))}
                             <div className="d-flex justify-content-center">

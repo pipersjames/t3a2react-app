@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const ShortQA = ({ initialValue }) => {
-  const [title, setTitle] = useState("Short Question");
-  const [description, setDescription] = useState(initialValue || '');
-  const [editMode, setEditMode] = useState(true); // Initially set to true to enable editing
+const ShortQA = ({ setQuestionHeaders, edit , fill, index}) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState('');
+  const [editMode, setEditMode] = useState(edit);
   const maxCharacters = 28;
 
   // Function to handle title change
   const handleTitleChange = (event) => {
-    if (editMode) setTitle(event.target.value);
-  };
+    setTitle(event.target.value);
+};
 
   // Function to handle description change
   const handleDescriptionChange = (event) => {
@@ -28,10 +28,8 @@ const ShortQA = ({ initialValue }) => {
 
   // Function to handle saving both title and description
   const handleSave = () => {
-    // Here you can perform any validation or further processing if needed
-    console.log("Title:", title);
-    console.log("Description:", description);
     setEditMode(false); // Exit edit mode after saving
+    setQuestionHeaders((prevHeaders) => ({...prevHeaders, [index]: title}));
   };
 
   // Function to enable editing when the pencil icon is clicked
@@ -46,18 +44,20 @@ const ShortQA = ({ initialValue }) => {
         <input
           className="form-control mb-2"
           value={title}
+          placeholder='Enter Question Here'
           onChange={handleTitleChange}
           disabled={!editMode} // Disable editing if not in edit mode
-          autoFocus // Focus the input field on initial render
         />
-        <input
-          className="form-control"
-          value={description}
-          onChange={handleDescriptionChange}
-          rows="3"
-          placeholder="Answer"
-          disabled={!editMode} // Disable editing if not in edit mode
-        />
+        {!editMode && (
+          <input
+            className="form-control"
+            value={description}
+            onChange={handleDescriptionChange}
+            rows="3"
+            placeholder="Answer Area"
+            disabled={!fill} 
+          />
+        )}
       </div>
       {/* Show Save button when in edit mode */}
       {editMode && (
@@ -66,7 +66,7 @@ const ShortQA = ({ initialValue }) => {
         </button>
       )}
       {/* Show pencil icon to enable editing */}
-      {!editMode && (
+      {!editMode && !fill && (
         <FontAwesomeIcon icon={faPencilAlt} className="text-muted ml-2" onClick={handleEditClick} />
       )}
     </div>
