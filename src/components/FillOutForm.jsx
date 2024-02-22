@@ -17,7 +17,7 @@ export default function FillOutForm(form) {
 
     const fetchFormTemplate = async () => {
         try {
-            const response = await fetch(`${apiUrl}/formTemplates/${form}`); //replace asda with prop
+            const response = await fetch(`${apiUrl}/formTemplates/${form.formName}`); //replace asda with prop
             const data = await response.json();
             setFillFormStructure(data);
             setFormName(data.template.formName)
