@@ -32,7 +32,7 @@ const FormPage = () => {
     fetchFormNames();
   }, [apiUrl]);
 
-  console.log("Form names:", formNames); // Log form names
+  // console.log("Form names:", formNames); // Log form names
   
   const columns = [
     {
