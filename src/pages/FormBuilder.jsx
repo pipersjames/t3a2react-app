@@ -65,6 +65,7 @@ const FormBuilder = () => {
   );
   //console.log(renderedFormComponents)// log rendered components
 }, [formComponents, renderedFormComponents, setQuestionHeaders])
+
   
   // Function to handle deleting a component from the form
   const handleDeleteComponent = (index) => {
