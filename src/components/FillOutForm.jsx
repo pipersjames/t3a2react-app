@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react"
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormComponentContext } from "../contexts/FormComponentProvider"
 import Cookies from "js-cookie"
+import { useNavigate } from "react-router-dom";
 
 
-export default function FillOutForm() {
+export default function FillOutForm(form, description) {
 
+    const navigate = useNavigate()
     const {apiUrl} = useContext(ApiContext)
     const {formComponents} = useContext(FormComponentContext)
     const jwt = Cookies.get('jwt')
@@ -15,9 +17,16 @@ export default function FillOutForm() {
     const [fillFormStructure, setFillFormStructure] = useState()
     const [formName, setFormName] = useState()
 
+    const describe = description || 'test'
+
+
+
     const fetchFormTemplate = async () => {
         try {
-            const response = await fetch(`${apiUrl}/formTemplates/example1`); //replace example with prop
+            //testing variable
+            const selectedForm = 'example1'
+
+            const response = await fetch(`${apiUrl}/formTemplates/${selectedForm}`); //replace example with prop
             const data = await response.json();
             setFillFormStructure(data);
             setFormName(data.template.formName)
@@ -103,7 +112,31 @@ export default function FillOutForm() {
     }, [formName]);
 
     const handleSubmit = async () => {
-        return null
+        
+        const form = {
+            description: describe,
+            formTemplate: fillFormStructure.template._id
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/forms/submit`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    jwt : jwt
+                },
+                body: JSON.stringify(form)
+            })
+
+            if (response.ok) {
+                navigate('/forms')
+            } else {
+                console.error('Form submission failed')
+            }
+        } catch (error) {
+            console.error('Error submitting form')
+        }
+    
     }
 
     
