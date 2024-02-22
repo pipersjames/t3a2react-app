@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Table } from "antd";
 import { ApiContext } from "../contexts/ApiProvider";
 import { Link } from "react-router-dom";
+import FillOutForm from "../components/FillOutForm"
 
 
 const FormPage = () => {
@@ -77,6 +78,7 @@ const FormPage = () => {
                   <div className="row">
                     <div className="col text-center">
                       <Link to="/formbuilder" className="btn btn-primary">Create Form</Link>
+                      <FillOutForm form = {selectedForm}/>
                     </div>
                   </div>
                 </div>
