@@ -3,7 +3,7 @@ import Layout from '../components/layouts/Layout';
 import SelectionTable from '../components/FormBuilderSelections';
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormComponentContext } from '../contexts/FormComponentProvider';
-import Select, { components } from 'react-select'
+import Select from 'react-select'
 
 const FormBuilder = () => {
   //Context
@@ -59,13 +59,12 @@ const FormBuilder = () => {
         key: renderedFormComponents.length,
         index: renderedFormComponents.length, 
         edit: true,
-        setQuestionHeaders: setQuestionHeaders,
-        questionHeaders: questionHeaders
+        setQuestionHeaders: setQuestionHeaders
       }
     ]
   );
   //console.log(renderedFormComponents)// log rendered components
-}, [formComponents, renderedFormComponents, renderedFormComponents, setQuestionHeaders])
+}, [formComponents, renderedFormComponents, setQuestionHeaders])
   
   // Function to handle deleting a component from the form
   const handleDeleteComponent = (index) => {
