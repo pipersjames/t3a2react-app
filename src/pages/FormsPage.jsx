@@ -40,6 +40,7 @@ const FormPage = () => {
       dataIndex: "formName",
       key: "formName",
       render: (text) => (
+        /* eslint-disable-next-line */
         <a onClick={() => handleFormClick(text)}>{text}</a>
       )
     },
