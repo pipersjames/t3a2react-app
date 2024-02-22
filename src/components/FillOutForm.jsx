@@ -4,7 +4,7 @@ import { FormComponentContext } from "../contexts/FormComponentProvider"
 import Cookies from "js-cookie"
 
 
-export default function FillOutForm() {
+export default function FillOutForm(form) {
 
     const {apiUrl} = useContext(ApiContext)
     const {formComponents} = useContext(FormComponentContext)
@@ -17,7 +17,7 @@ export default function FillOutForm() {
 
     const fetchFormTemplate = async () => {
         try {
-            const response = await fetch(`${apiUrl}/formTemplates/example`); //replace asda with prop
+            const response = await fetch(`${apiUrl}/formTemplates/${form}`); //replace asda with prop
             const data = await response.json();
             setFillFormStructure(data);
             setFormName(data.template.formName)
