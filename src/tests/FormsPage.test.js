@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { render, waitFor, fireEvent } from '@testing-library/react';
 import FormPage from '../pages/FormsPage';
 import { ApiContext } from '../contexts/ApiProvider';
 
@@ -22,22 +22,10 @@ describe('FormPage component', () => {
       })
     );
 
-
       <ApiContext.Provider value={{ apiUrl }}>
         <FormPage />
       </ApiContext.Provider>
-    
-
-    // Wait for the component to fetch form names
-    // await waitFor(() => {
-    //   // Check if fetch is called with the correct apiUrl
-    //   expect(global.fetch).toHaveBeenCalledTimes(1);
-    //   expect(global.fetch).toHaveBeenCalledWith(`${apiUrl}/formTemplates/formspage`, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   });
-    // });
+    });
   });
-});
+
+  
