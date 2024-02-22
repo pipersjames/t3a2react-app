@@ -59,13 +59,13 @@ const FormBuilder = () => {
         key: renderedFormComponents.length,
         index: renderedFormComponents.length, 
         edit: true,
-        setQuestionHeaders: setQuestionHeaders,
-        questionHeaders: questionHeaders
+        setQuestionHeaders: setQuestionHeaders
       }
     ]
   );
   //console.log(renderedFormComponents)// log rendered components
-}, [formComponents, renderedFormComponents, questionHeaders, setQuestionHeaders])
+}, [formComponents, renderedFormComponents, setQuestionHeaders])
+
   
   // Function to handle deleting a component from the form
   const handleDeleteComponent = (index) => {

@@ -17,7 +17,7 @@ export default function FillOutForm() {
 
     const fetchFormTemplate = async () => {
         try {
-            const response = await fetch(`${apiUrl}/formTemplates/example`); //replace asda with prop
+            const response = await fetch(`${apiUrl}/formTemplates/example1`); //replace example with prop
             const data = await response.json();
             setFillFormStructure(data);
             setFormName(data.template.formName)
@@ -102,6 +102,10 @@ export default function FillOutForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formName]);
 
+    const handleSubmit = async () => {
+        return null
+    }
+
     
 
     return (
@@ -129,7 +133,7 @@ export default function FillOutForm() {
                                 </div>    
                             ))}
                             <div className="d-flex justify-content-center">
-                                <button type="submit" className="btn btn-primary px-5">Submit</button> 
+                                <button onClick={handleSubmit} type="submit" className="btn btn-primary px-5">Submit</button> 
                             </div>
                         </div>
                     )}
