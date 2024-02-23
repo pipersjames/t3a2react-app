@@ -5,7 +5,8 @@ import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom";
 
 
-export default function FillOutForm(form, description) {
+export default function FillOutForm(props) {
+
 
     const navigate = useNavigate()
     const {apiUrl} = useContext(ApiContext)
@@ -16,33 +17,40 @@ export default function FillOutForm(form, description) {
     const [favourites, setFavourites] = useState([])
     const [fillFormStructure, setFillFormStructure] = useState()
     const [formName, setFormName] = useState()
-
-
     const [formData, setFormData] = useState({});
   
     const handleInputChange = (index, value) => {
-    setFormData(prevData => ({
-      ...prevData,
-      [index]: value
-    }));
-  };
+      setFormData(prevData => ({
+        ...prevData,
+        [index]: value
+      }));
+    };
 
     //testing components to be replace entirely once props are passed
     const describe = 'test'
-    const selectedForm = 'example1'
 
+
+    // const describe = description || 'test'
 
     const fetchFormTemplate = async () => {
         try {
-
-            const response = await fetch(`${apiUrl}/formTemplates/${selectedForm}`); //replace example with prop
+            if (!formData) {
+                console.error('Form data is undefined');
+                return;
+            }
+    
+            const response = await fetch(`${apiUrl}/formTemplates/${props.formName}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch form template');
+            }
             const data = await response.json();
             setFillFormStructure(data);
-            setFormName(data.template.formName)
+            setFormName(data.template.formName);
         } catch (error) {
             console.error('Error fetching form template:', error);
         }
     };
+    
 
     const patchFavourites = async (favourites) => {
         try {

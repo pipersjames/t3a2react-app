@@ -7,6 +7,7 @@ const FormPage = () => {
   const [formNames, setFormNames] = useState([]);
   const [selectedForm, setSelectedForm] = useState(null);
   const [formDescription, setFormDescription] = useState("");
+  const [creatingForm, setCreatingForm] = useState(false); // New state
   const { apiUrl } = useContext(ApiContext);
 
   useEffect(() => {
@@ -32,7 +33,8 @@ const FormPage = () => {
   }, [apiUrl]);
 
   const handleFormClick = (formName) => {
-    setSelectedForm(formName);
+    setSelectedForm({ formName: formName }); // Pass form name as an object
+    console.log('Selected Form:', formName);
   };
 
   const handleDescriptionChange = (e) => {
@@ -40,9 +42,7 @@ const FormPage = () => {
   };
 
   const handleCreateForm = () => {
-    // Assuming form name doesn't contain spaces
-    const formUrl = `/form/${selectedForm.replace(/\s+/g, '-')}`;
-    window.location.href = formUrl;
+    setCreatingForm(true); // Set creatingForm state to true
   };
 
   const columns = [
@@ -70,9 +70,9 @@ const FormPage = () => {
           />
         </div>
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-start">
-          {selectedForm && (
+          {selectedForm && !creatingForm && (
             <div className="text-center mb-4">
-              <h2>{selectedForm}</h2>
+              <h2>{selectedForm.formName}</h2>
               <div className="form-description-container">
                 <div className="row">
                   <div className="col">
@@ -86,13 +86,14 @@ const FormPage = () => {
                 </div>
                 <div className="row">
                   <div className="col text-center">
-                    {/* Update Link to handle form creation */}
                     <button className="btn btn-primary" onClick={handleCreateForm}>Create Form</button>
-                    <FillOutForm form={selectedForm} />
                   </div>
                 </div>
               </div>
             </div>
+          )}
+          {selectedForm && creatingForm && (
+            <FillOutForm formData={selectedForm} />
           )}
         </div>
       </div>
