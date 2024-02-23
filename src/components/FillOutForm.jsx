@@ -2,10 +2,13 @@ import React, { useContext, useEffect, useState } from "react"
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormComponentContext } from "../contexts/FormComponentProvider"
 import Cookies from "js-cookie"
+import { useNavigate } from "react-router-dom";
 
 
 export default function FillOutForm(props) {
 
+
+    const navigate = useNavigate()
     const {apiUrl} = useContext(ApiContext)
     const {formComponents} = useContext(FormComponentContext)
     const jwt = Cookies.get('jwt')
@@ -16,6 +19,8 @@ export default function FillOutForm(props) {
     const [favourites, setFavourites] = useState([])
     const [fillFormStructure, setFillFormStructure] = useState()
     const [formName, setFormName] = useState()
+
+    const describe = description || 'test'
 
     const fetchFormTemplate = async () => {
         try {
@@ -113,6 +118,34 @@ export default function FillOutForm(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formName]);
 
+    const handleSubmit = async () => {
+        
+        const form = {
+            description: describe,
+            formTemplate: fillFormStructure.template._id
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/forms/submit`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    jwt : jwt
+                },
+                body: JSON.stringify(form)
+            })
+
+            if (response.ok) {
+                navigate('/forms')
+            } else {
+                console.error('Form submission failed')
+            }
+        } catch (error) {
+            console.error('Error submitting form')
+        }
+    
+    }
+
     
 
     return (
@@ -140,7 +173,7 @@ export default function FillOutForm(props) {
                                 </div>    
                             ))}
                             <div className="d-flex justify-content-center">
-                                <button type="submit" className="btn btn-primary px-5">Submit</button> 
+                                <button onClick={handleSubmit} type="submit" className="btn btn-primary px-5">Submit</button> 
                             </div>
                         </div>
                     )}

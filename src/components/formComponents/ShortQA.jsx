@@ -6,7 +6,17 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState('');
   const [editMode, setEditMode] = useState(edit);
+  const [placeHolder, setPlaceHolder] = useState('')
   const maxCharacters = 28;
+
+
+  // component render
+  useEffect(() => {
+    if (editMode) {
+      setPlaceHolder('Text Area')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
 
   // Function to handle title change
   const handleTitleChange = (event) => {
@@ -15,14 +25,13 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index}) => {
 
   // Function to handle description change
   const handleDescriptionChange = (event) => {
-    if (editMode) {
+    
       const value = event.target.value;
       if (value.length <= maxCharacters) {
         setDescription(value);
       } else {
         // Truncate the description if it exceeds the character limit
         setDescription(value.slice(0, maxCharacters));
-      }
     }
   };
 
@@ -54,7 +63,7 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index}) => {
             value={description}
             onChange={handleDescriptionChange}
             rows="3"
-            placeholder="Answer Area"
+            placeholder={placeHolder}
             disabled={!fill} 
           />
         )}

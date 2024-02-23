@@ -59,13 +59,13 @@ const FormBuilder = () => {
         key: renderedFormComponents.length,
         index: renderedFormComponents.length, 
         edit: true,
-        setQuestionHeaders: setQuestionHeaders,
-        questionHeaders: questionHeaders
+        setQuestionHeaders: setQuestionHeaders
       }
     ]
   );
   //console.log(renderedFormComponents)// log rendered components
-}, [formComponents, renderedFormComponents, questionHeaders, setQuestionHeaders])
+}, [formComponents, renderedFormComponents, setQuestionHeaders])
+
   
   // Function to handle deleting a component from the form
   const handleDeleteComponent = (index) => {
@@ -116,13 +116,13 @@ const FormBuilder = () => {
           setAssignedTo();
           setRenderedFormComponents([]);
           setQuestionHeaders([])
-          console.log('Form submitted successfully');
+          console.log('Form template created successfully');
         } else {
           // Handle error
-          console.error('Form submission failed');
+          console.error('Form template creation failed');
         }
       } catch (error) {
-        console.error('Error submitting form:', error);
+        console.error('Error creating form:', error);
       }
     };
 
