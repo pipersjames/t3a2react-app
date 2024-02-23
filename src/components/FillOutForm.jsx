@@ -4,11 +4,13 @@ import { FormComponentContext } from "../contexts/FormComponentProvider"
 import Cookies from "js-cookie"
 
 
-export default function FillOutForm(form) {
+export default function FillOutForm(props) {
 
     const {apiUrl} = useContext(ApiContext)
     const {formComponents} = useContext(FormComponentContext)
     const jwt = Cookies.get('jwt')
+
+    const { formData } = props;
     
     const [isChecked, setIsChecked] = useState(false);
     const [favourites, setFavourites] = useState([])
@@ -17,14 +19,23 @@ export default function FillOutForm(form) {
 
     const fetchFormTemplate = async () => {
         try {
-            const response = await fetch(`${apiUrl}/formTemplates/${form.formName}`); //replace asda with prop
+            if (!formData) {
+                console.error('Form data is undefined');
+                return;
+            }
+    
+            const response = await fetch(`${apiUrl}/formTemplates/${formData.formName}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch form template');
+            }
             const data = await response.json();
             setFillFormStructure(data);
-            setFormName(data.template.formName)
+            setFormName(data.template.formName);
         } catch (error) {
             console.error('Error fetching form template:', error);
         }
     };
+    
 
     const patchFavourites = async (favourites) => {
         try {

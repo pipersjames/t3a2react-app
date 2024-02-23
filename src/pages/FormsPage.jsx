@@ -33,7 +33,8 @@ const FormPage = () => {
   }, [apiUrl]);
 
   const handleFormClick = (formName) => {
-    setSelectedForm(formName);
+    setSelectedForm({ formName: formName }); // Pass form name as an object
+    console.log('Selected Form:', formName);
   };
 
   const handleDescriptionChange = (e) => {
@@ -71,7 +72,7 @@ const FormPage = () => {
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-start">
           {selectedForm && !creatingForm && (
             <div className="text-center mb-4">
-              <h2>{selectedForm}</h2>
+              <h2>{selectedForm.formName}</h2>
               <div className="form-description-container">
                 <div className="row">
                   <div className="col">
@@ -92,7 +93,7 @@ const FormPage = () => {
             </div>
           )}
           {selectedForm && creatingForm && (
-            <FillOutForm form={selectedForm} />
+            <FillOutForm formData={selectedForm} />
           )}
         </div>
       </div>
