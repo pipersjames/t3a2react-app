@@ -1,6 +1,13 @@
 
 export default function EmailInput({edit , index, handleInputChange, formData}){
 
+  const value = formData && formData[index] !== undefined ? formData[index] : ''
+
+  const handleEmailChange = (event) => {
+    const { value } = event.target
+    handleInputChange(index, value)
+     }
+
   return (
     <div>
       <div className="form-group">
@@ -9,8 +16,8 @@ export default function EmailInput({edit , index, handleInputChange, formData}){
           type="email"
           className="form-control"
           id="email"
-          value={formData[index] || ''}
-          onChange={handleInputChange}
+          value={value || ''}
+          onChange={handleEmailChange}
           placeholder=""
           disabled={edit}
         />
