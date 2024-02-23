@@ -5,12 +5,15 @@ import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom";
 
 
-export default function FillOutForm(form, description) {
+export default function FillOutForm(props) {
+
 
     const navigate = useNavigate()
     const {apiUrl} = useContext(ApiContext)
     const {formComponents} = useContext(FormComponentContext)
     const jwt = Cookies.get('jwt')
+
+    const { formData } = props;
     
     const [isChecked, setIsChecked] = useState(false);
     const [favourites, setFavourites] = useState([])
@@ -19,21 +22,25 @@ export default function FillOutForm(form, description) {
 
     const describe = description || 'test'
 
-
-
     const fetchFormTemplate = async () => {
         try {
-            //testing variable
-            const selectedForm = 'example1'
-
-            const response = await fetch(`${apiUrl}/formTemplates/${selectedForm}`); //replace example with prop
+            if (!formData) {
+                console.error('Form data is undefined');
+                return;
+            }
+    
+            const response = await fetch(`${apiUrl}/formTemplates/${formData.formName}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch form template');
+            }
             const data = await response.json();
             setFillFormStructure(data);
-            setFormName(data.template.formName)
+            setFormName(data.template.formName);
         } catch (error) {
             console.error('Error fetching form template:', error);
         }
     };
+    
 
     const patchFavourites = async (favourites) => {
         try {
