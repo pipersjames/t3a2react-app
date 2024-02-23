@@ -1,39 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-
-const LongQA = ({ initialValue }) => {
-  const [title, setTitle] = useState("Long Question");
-  const [description, setDescription] = useState(initialValue || '');
-  const [editMode, setEditMode] = useState(true); // Initially set to true to enable editing
+const ShortQA = ({ setQuestionHeaders, edit , fill, index}) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState('');
+  const [editMode, setEditMode] = useState(edit);
+  const [placeHolder, setPlaceHolder] = useState('')
   const maxCharacters = 500;
 
 
+  // component render
+  useEffect(() => {
+    if (editMode) {
+      setPlaceHolder('Answer')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
   // Function to handle title change
   const handleTitleChange = (event) => {
-    if (editMode) setTitle(event.target.value);
-  };
+    setTitle(event.target.value);
+};
 
   // Function to handle description change
   const handleDescriptionChange = (event) => {
-    if (editMode) {
+    
       const value = event.target.value;
       if (value.length <= maxCharacters) {
         setDescription(value);
       } else {
         // Truncate the description if it exceeds the character limit
         setDescription(value.slice(0, maxCharacters));
-      }
     }
   };
 
   // Function to handle saving both title and description
   const handleSave = () => {
-    // Here you can perform any validation or further processing if needed
-    console.log("Title:", title);
-    console.log("Description:", description);
     setEditMode(false); // Exit edit mode after saving
+    setQuestionHeaders((prevHeaders) => ({...prevHeaders, [index]: title}));
   };
 
   // Function to enable editing when the pencil icon is clicked
@@ -48,18 +53,20 @@ const LongQA = ({ initialValue }) => {
         <input
           className="form-control mb-2"
           value={title}
+          placeholder='Enter Question Here'
           onChange={handleTitleChange}
           disabled={!editMode} // Disable editing if not in edit mode
-          autoFocus // Focus the input field on initial render
         />
-        <textarea
-          className="form-control"
-          value={description}
-          onChange={handleDescriptionChange}
-          rows="3"
-          placeholder="Answer"
-          disabled={!editMode} // Disable editing if not in edit mode
-        />
+        {!editMode && (
+          <textarea
+            className="form-control"
+            value={description}
+            onChange={handleDescriptionChange}
+            rows="3"
+            placeholder={placeHolder}
+            disabled={!fill} 
+          />
+        )}
       </div>
       {/* Show Save button when in edit mode */}
       {editMode && (
@@ -68,11 +75,11 @@ const LongQA = ({ initialValue }) => {
         </button>
       )}
       {/* Show pencil icon to enable editing */}
-      {!editMode && (
+      {!editMode && !fill && (
         <FontAwesomeIcon icon={faPencilAlt} className="text-muted ml-2" onClick={handleEditClick} />
       )}
     </div>
   );
 };
 
-export default LongQA;
+export default ShortQA;

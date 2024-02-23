@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,7 +13,7 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index}) => {
   // component render
   useEffect(() => {
     if (editMode) {
-      setPlaceHolder('Text Area')
+      setPlaceHolder('Answer')
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
