@@ -7,6 +7,7 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index, handleInputChange, fo
   const [editMode, setEditMode] = useState(edit);
   const [placeHolder, setPlaceHolder] = useState('')
   const maxCharacters = 500;
+  const value = formData && formData[index] !== undefined ? formData[index] : ''
 
 
   // component render
@@ -59,7 +60,7 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index, handleInputChange, fo
         {!editMode && (
           <textarea
             className="form-control"
-            value={formData[index] || ''}
+            value={value || ''}
             onChange={handleDescriptionChange}
             rows="3"
             placeholder={placeHolder}

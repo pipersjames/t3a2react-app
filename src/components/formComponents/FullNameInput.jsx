@@ -1,6 +1,13 @@
 
 export default function FullNameInput({edit , index, handleInputChange, formData}) {
 
+  const value = formData && formData[index] !== undefined ? formData[index] : ''
+
+  const handleFullNameChange = (event) => {
+    const { value } = event.target
+    handleInputChange(index, value)
+     }
+
   return (
     <div>
       <div className="form-group">
@@ -9,8 +16,8 @@ export default function FullNameInput({edit , index, handleInputChange, formData
           type="text"
           className="form-control"
           id="fullName"
-          value={formData[index] || ''}
-          onChange={handleInputChange}
+          value={value || ''}
+          onChange={handleFullNameChange}
           placeholder=""
           disabled={edit}
         />
