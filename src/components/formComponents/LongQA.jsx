@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const ShortQA = ({ setQuestionHeaders, edit , fill, index}) => {
+const ShortQA = ({ setQuestionHeaders, edit , fill, index, handleInputChange, formData}) => {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState('');
   const [editMode, setEditMode] = useState(edit);
   const [placeHolder, setPlaceHolder] = useState('')
   const maxCharacters = 500;
@@ -26,12 +25,12 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index}) => {
   // Function to handle description change
   const handleDescriptionChange = (event) => {
     
-      const value = event.target.value;
+    const { value } = event.target
       if (value.length <= maxCharacters) {
-        setDescription(value);
+        handleInputChange(index, value)
       } else {
         // Truncate the description if it exceeds the character limit
-        setDescription(value.slice(0, maxCharacters));
+        handleInputChange(index, value.slice(0, maxCharacters))
     }
   };
 
@@ -60,7 +59,7 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index}) => {
         {!editMode && (
           <textarea
             className="form-control"
-            value={description}
+            value={formData[index] || ''}
             onChange={handleDescriptionChange}
             rows="3"
             placeholder={placeHolder}

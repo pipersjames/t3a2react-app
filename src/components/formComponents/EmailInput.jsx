@@ -1,13 +1,5 @@
-import React, { useState } from 'react';
 
-export default function EmailInput({ edit }){
-  const [email, setEmail] = useState('');
-
-  const editMode = edit
-
-  const handleChange = (event) => {
-    setEmail(event.target.value);
-  };
+export default function EmailInput({edit , index, handleInputChange, formData}){
 
   return (
     <div>
@@ -17,10 +9,10 @@ export default function EmailInput({ edit }){
           type="email"
           className="form-control"
           id="email"
-          value={email}
-          onChange={handleChange}
+          value={formData[index] || ''}
+          onChange={handleInputChange}
           placeholder=""
-          disabled={editMode}
+          disabled={edit}
         />
         </div>
     </div>

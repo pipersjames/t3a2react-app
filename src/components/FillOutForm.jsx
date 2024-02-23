@@ -17,14 +17,23 @@ export default function FillOutForm(form, description) {
     const [fillFormStructure, setFillFormStructure] = useState()
     const [formName, setFormName] = useState()
 
-    const describe = description || 'test'
 
+    const [formData, setFormData] = useState({});
+  
+    const handleInputChange = (index, value) => {
+    setFormData(prevData => ({
+      ...prevData,
+      [index]: value
+    }));
+  };
+
+    //testing components to be replace entirely once props are passed
+    const describe = 'test'
+    const selectedForm = 'example1'
 
 
     const fetchFormTemplate = async () => {
         try {
-            //testing variable
-            const selectedForm = 'example1'
 
             const response = await fetch(`${apiUrl}/formTemplates/${selectedForm}`); //replace example with prop
             const data = await response.json();
@@ -111,11 +120,13 @@ export default function FillOutForm(form, description) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formName]);
 
-    const handleSubmit = async () => {
-        
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+
         const form = {
             description: describe,
-            formTemplate: fillFormStructure.template._id
+            formTemplate: fillFormStructure.template._id,
+            formData: formData
         }
 
         try {
@@ -134,7 +145,7 @@ export default function FillOutForm(form, description) {
                 console.error('Form submission failed')
             }
         } catch (error) {
-            console.error('Error submitting form')
+            console.error('Error submitting form', error)
         }
     
     }
@@ -162,7 +173,7 @@ export default function FillOutForm(form, description) {
                             </div>
                             {fillFormStructure.template.components && fillFormStructure.template.components.map((component, index) => (
                                 <div key={index} className="mb-3"> 
-                                    {React.createElement(formComponents[component][0], {fill : true})}
+                                    {React.createElement(formComponents[component][0], {fill : true, index : index, handleInputChange : handleInputChange, formData : formData})}
                                 </div>    
                             ))}
                             <div className="d-flex justify-content-center">
