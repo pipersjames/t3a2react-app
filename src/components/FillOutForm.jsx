@@ -12,13 +12,22 @@ export default function FillOutForm(props) {
     const {apiUrl} = useContext(ApiContext)
     const {formComponents} = useContext(FormComponentContext)
     const jwt = Cookies.get('jwt')
-
-    const { formData } = props;
     
     const [isChecked, setIsChecked] = useState(false);
     const [favourites, setFavourites] = useState([])
     const [fillFormStructure, setFillFormStructure] = useState()
     const [formName, setFormName] = useState()
+    const [formData, setFormData] = useState({});
+  
+    const handleInputChange = (index, value) => {
+      setFormData(prevData => ({
+        ...prevData,
+        [index]: value
+      }));
+    };
+
+    //testing components to be replace entirely once props are passed
+    const describe = 'test'
 
 
     // const describe = description || 'test'
@@ -30,7 +39,7 @@ export default function FillOutForm(props) {
                 return;
             }
     
-            const response = await fetch(`${apiUrl}/formTemplates/${formData.formName}`);
+            const response = await fetch(`${apiUrl}/formTemplates/${props.formName}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch form template');
             }
@@ -119,11 +128,13 @@ export default function FillOutForm(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formName]);
 
-    const handleSubmit = async () => {
-        
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+
         const form = {
             description: describe,
-            formTemplate: fillFormStructure.template._id
+            formTemplate: fillFormStructure.template._id,
+            formData: formData
         }
 
         try {
@@ -142,7 +153,7 @@ export default function FillOutForm(props) {
                 console.error('Form submission failed')
             }
         } catch (error) {
-            console.error('Error submitting form')
+            console.error('Error submitting form', error)
         }
     
     }
@@ -170,7 +181,7 @@ export default function FillOutForm(props) {
                             </div>
                             {fillFormStructure.template.components && fillFormStructure.template.components.map((component, index) => (
                                 <div key={index} className="mb-3"> 
-                                    {React.createElement(formComponents[component][0], {fill : true})}
+                                    {React.createElement(formComponents[component][0], {fill : true, index : index, handleInputChange : handleInputChange, formData : formData})}
                                 </div>    
                             ))}
                             <div className="d-flex justify-content-center">
