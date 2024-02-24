@@ -34,8 +34,11 @@ const FormPage = () => {
 
   const handleFormClick = (formName) => {
     setSelectedForm({ formName: formName }); // Pass form name as an object
-    console.log('Selected Form:', formName);
+    setCreatingForm(false); // Reset creatingForm state to false
+    setFormDescription(""); // Reset formDescription
+    console.log('Selected Form:', formName);    
   };
+  
 
   const handleDescriptionChange = (e) => {
     setFormDescription(e.target.value);
