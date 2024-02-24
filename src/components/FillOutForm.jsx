@@ -18,7 +18,6 @@ export default function FillOutForm(props) {
     const [fillFormStructure, setFillFormStructure] = useState()
     const [formName, setFormName] = useState()
     const [formData, setFormData] = useState({});
-    const [formDescription, setFormDescription] = useState("");
   
     const handleInputChange = (index, value) => {
       setFormData(prevData => ({
@@ -134,10 +133,11 @@ export default function FillOutForm(props) {
         event.preventDefault()
 
         const form = {
-            description: formDescription,
+            description: props.formDescription,
             formTemplate: fillFormStructure.template._id,
             formData: formData
         }
+        console.log(formData)
 
         try {
             const response = await fetch(`${apiUrl}/forms/submit`, {
@@ -159,11 +159,6 @@ export default function FillOutForm(props) {
         }
     
     }
-
-    // eslint-disable-next-line
-    const handleDescriptionChange = (e) => {
-        setFormDescription(e.target.value);
-      };
 
 
     return (
