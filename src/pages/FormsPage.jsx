@@ -45,7 +45,11 @@ const FormPage = () => {
   };
 
   const handleCreateForm = () => {
-    setCreatingForm(true); // Set creatingForm state to true
+    if (formDescription.trim() !== "") { // Check if form description is not empty
+      setCreatingForm(true); // Set creatingForm state to true
+    } else {
+      alert("Please enter a form description.");
+    }
   };
 
   const columns = [
@@ -96,7 +100,10 @@ const FormPage = () => {
             </div>
           )}
           {selectedForm && creatingForm && (
-            <FillOutForm formName={selectedForm.formName} />
+            <FillOutForm 
+              formName={selectedForm.formName}
+              formDescription={formDescription}
+            />
           )}
         </div>
       </div>
