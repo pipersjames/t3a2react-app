@@ -51,7 +51,6 @@ export default function FormPage() {
           }
           const data = await response.json();
           setFormNames(data.result);
-          console.log(data.result)
         } catch (error) {
           console.error("Error fetching form template data:", error);
         }
@@ -77,11 +76,9 @@ export default function FormPage() {
   const handleCreateForm = () => {
     if (formDescription.trim() !== "") { // Check if form description is not empty
       setCreatingForm(true); // Set creatingForm state to true
-      fetchFormTemplate(selectedForm.formName); // Fetch form template
     } else {
       alert("Please enter a form description.");
     }
-    console.log("Create Form button clicked. creatingForm state:", creatingForm);
   };
 
   const handleFormRowSelect = () => {
@@ -180,11 +177,10 @@ export default function FormPage() {
               </div>
             </div>
           )}
-          {selectedForm && creatingForm && formTemplate &&(
+          {selectedForm && creatingForm &&(
             <FillOutForm 
               formName={selectedForm.formName}
               formDescription={formDescription}
-              formTemplate={formTemplate}
             />
           )}
           {!creatingForm && userForms.length > 0 && (
