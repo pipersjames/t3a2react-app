@@ -50,14 +50,15 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index, handleInputChange, fo
     <div className="form-group">
       {/* Input field for both title and description */}
       <div>
-        <input
+        {fill && <label>{title}</label>}
+        {!fill && <input
           type='text'
           className="form-control mb-2"
           value={title}
           placeholder='Enter Question Here'
           onChange={handleTitleChange}
           disabled={!editMode} // Disable editing if not in edit mode
-        />
+        />}
         {!editMode && (
           <input
             className="form-control"
