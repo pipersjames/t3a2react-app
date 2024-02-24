@@ -41,7 +41,7 @@ export default function FillOutForm(props) {
                 return;
             }
     
-            const response = await fetch(`${apiUrl}/formTemplates/${props.formName}`);
+            const response = await fetch(`${apiUrl}/forms/${props.formName}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch form template');
             }
