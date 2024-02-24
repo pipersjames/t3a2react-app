@@ -8,6 +8,7 @@ const FormPage = () => {
   const [selectedForm, setSelectedForm] = useState(null);
   const [formDescription, setFormDescription] = useState("");
   const [creatingForm, setCreatingForm] = useState(false); // New state
+  const [formTemplate, setFormTemplate] = useState(null);
   const { apiUrl } = useContext(ApiContext);
 
   useEffect(() => {
@@ -32,6 +33,21 @@ const FormPage = () => {
     fetchFormNames();
   }, [apiUrl]);
 
+
+  
+  const fetchFormTemplate = async (formName) => {
+    try {
+      const response = await fetch(`${apiUrl}/forms/${formName}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch form template');
+      }
+      const data = await response.json();
+      setFormTemplate(data.formTemplate);
+    } catch (error) {
+      console.error('Error fetching form template:', error);
+    }
+  };
+
   const handleFormClick = (formName) => {
     setSelectedForm({ formName: formName }); // Pass form name as an object
     setCreatingForm(false); // Reset creatingForm state to false
@@ -47,9 +63,11 @@ const FormPage = () => {
   const handleCreateForm = () => {
     if (formDescription.trim() !== "") { // Check if form description is not empty
       setCreatingForm(true); // Set creatingForm state to true
+      fetchFormTemplate(selectedForm.formName); // Fetch form template
     } else {
       alert("Please enter a form description.");
     }
+    console.log("Create Form button clicked. creatingForm state:", creatingForm);
   };
 
   const columns = [
@@ -99,10 +117,11 @@ const FormPage = () => {
               </div>
             </div>
           )}
-          {selectedForm && creatingForm && (
+          {selectedForm && creatingForm && formTemplate &&(
             <FillOutForm 
               formName={selectedForm.formName}
               formDescription={formDescription}
+              formTemplate={formTemplate}
             />
           )}
         </div>
