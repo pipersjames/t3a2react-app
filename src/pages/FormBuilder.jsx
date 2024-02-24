@@ -177,7 +177,6 @@ const FormBuilder = () => {
                       key: component.key, 
                       edit: component.edit, 
                       setQuestionHeaders: component.setQuestionHeaders, 
-                      questionHeaders: component.questionHeaders,
                       index: component.index
                     })}
 

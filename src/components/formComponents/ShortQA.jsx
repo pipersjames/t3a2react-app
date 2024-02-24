@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
-const ShortQA = ({ setQuestionHeaders, edit , fill, index, handleInputChange, formData}) => {
+const ShortQA = ({ setQuestionHeaders, edit , fill, index, handleInputChange, formData, questionHeader}) => {
   
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(questionHeader || '');
   const [editMode, setEditMode] = useState(edit);
   const [placeHolder, setPlaceHolder] = useState('')
   const maxCharacters = 28;

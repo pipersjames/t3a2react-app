@@ -185,7 +185,6 @@ export default function FillOutForm(props) {
                                     <label className="form-check-label" htmlFor="favCheckBox">Favourite</label>
                                 </div>
                             </div>
-                                {/* Render form description */}
                                 <div className="form-description-container">
                                     <div className="row">
                                     <div className="col">
@@ -199,10 +198,17 @@ export default function FillOutForm(props) {
                                     </div>
                                     </div>
                                 </div>
-                                {fillFormStructure.template.components && fillFormStructure.template.components.map((component, index) => (
-                                <div key={index} className="mb-3"> 
-                                    {React.createElement(formComponents[component][0], {fill : true, index : index, handleInputChange : handleInputChange, formData : formData})}
-                                </div>    
+                                {fillFormStructure.template.components && 
+                                  fillFormStructure.template.components.map((component, index) => (
+                                    <div key={index} className="mb-3"> 
+                                        {React.createElement(formComponents[component][0], {
+                                            fill : true, 
+                                            index : index, 
+                                            handleInputChange : handleInputChange, 
+                                            formData : formData,
+                                            questionHeader: fillFormStructure.template.questionHeaders[index]
+                                            })}
+                                    </div>    
                             ))}
                             <div className="d-flex justify-content-center">
                                 <button onClick={handleSubmit} type="submit" className="btn btn-primary px-5">Submit</button> 
