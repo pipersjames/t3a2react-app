@@ -39,7 +39,7 @@ export default function FillOutForm(props) {
                 return;
             }
     
-            const response = await fetch(`${apiUrl}/formTemplates/${props.formName}`);
+            const response = await fetch(`${apiUrl}/formTemplates/dd`);
             if (!response.ok) {
                 throw new Error('Failed to fetch form template');
             }
@@ -179,9 +179,16 @@ export default function FillOutForm(props) {
                                     <label className="form-check-label" htmlFor="favCheckBox">Favourite</label>
                                 </div>
                             </div>
-                            {fillFormStructure.template.components && fillFormStructure.template.components.map((component, index) => (
+                            {fillFormStructure.template.components && 
+                                fillFormStructure.template.components.map((component, index) => (
                                 <div key={index} className="mb-3"> 
-                                    {React.createElement(formComponents[component][0], {fill : true, index : index, handleInputChange : handleInputChange, formData : formData})}
+                                    {React.createElement(formComponents[component][0], {
+                                        fill : true, 
+                                        index : index, 
+                                        handleInputChange : handleInputChange, 
+                                        formData : formData,
+                                        questionHeader: fillFormStructure.template.questionHeaders[index]
+                                        })}
                                 </div>    
                             ))}
                             <div className="d-flex justify-content-center">
