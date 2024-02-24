@@ -18,6 +18,7 @@ export default function FillOutForm(props) {
     const [fillFormStructure, setFillFormStructure] = useState()
     const [formName, setFormName] = useState()
     const [formData, setFormData] = useState({});
+    const [formDescription, setFormDescription] = useState("");
   
     const handleInputChange = (index, value) => {
       setFormData(prevData => ({
@@ -27,7 +28,8 @@ export default function FillOutForm(props) {
     };
 
     //testing components to be replace entirely once props are passed
-    const describe = 'test'
+    // Passed on as formDescription
+    // const describe = 'test'
 
 
     // const describe = description || 'test'
@@ -39,7 +41,7 @@ export default function FillOutForm(props) {
                 return;
             }
     
-            const response = await fetch(`${apiUrl}/formTemplates/dd`);
+            const response = await fetch(`${apiUrl}/formTemplates/${props.formName}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch form template');
             }
@@ -132,7 +134,7 @@ export default function FillOutForm(props) {
         event.preventDefault()
 
         const form = {
-            description: describe,
+            description: formDescription,
             formTemplate: fillFormStructure.template._id,
             formData: formData
         }
@@ -158,7 +160,11 @@ export default function FillOutForm(props) {
     
     }
 
-    
+    // eslint-disable-next-line
+    const handleDescriptionChange = (e) => {
+        setFormDescription(e.target.value);
+      };
+
 
     return (
         <div className="container">
@@ -179,17 +185,30 @@ export default function FillOutForm(props) {
                                     <label className="form-check-label" htmlFor="favCheckBox">Favourite</label>
                                 </div>
                             </div>
-                            {fillFormStructure.template.components && 
-                                fillFormStructure.template.components.map((component, index) => (
-                                <div key={index} className="mb-3"> 
-                                    {React.createElement(formComponents[component][0], {
-                                        fill : true, 
-                                        index : index, 
-                                        handleInputChange : handleInputChange, 
-                                        formData : formData,
-                                        questionHeader: fillFormStructure.template.questionHeaders[index]
-                                        })}
-                                </div>    
+                                <div className="form-description-container">
+                                    <div className="row">
+                                    <div className="col">
+                                        <p>{props.formDescription}</p> {/* Render formDescription */}
+                                        {/* <textarea 
+                                        className="mb-3 form-control" 
+                                        placeholder="Enter form description" 
+                                        onChange={handleDescriptionChange}
+                                        value={formDescription}
+                                        /> */}
+                                    </div>
+                                    </div>
+                                </div>
+                                {fillFormStructure.template.components && 
+                                  fillFormStructure.template.components.map((component, index) => (
+                                    <div key={index} className="mb-3"> 
+                                        {React.createElement(formComponents[component][0], {
+                                            fill : true, 
+                                            index : index, 
+                                            handleInputChange : handleInputChange, 
+                                            formData : formData,
+                                            questionHeader: fillFormStructure.template.questionHeaders[index]
+                                            })}
+                                    </div>    
                             ))}
                             <div className="d-flex justify-content-center">
                                 <button onClick={handleSubmit} type="submit" className="btn btn-primary px-5">Submit</button> 

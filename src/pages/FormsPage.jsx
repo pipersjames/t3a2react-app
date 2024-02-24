@@ -34,15 +34,22 @@ const FormPage = () => {
 
   const handleFormClick = (formName) => {
     setSelectedForm({ formName: formName }); // Pass form name as an object
-    console.log('Selected Form:', formName);
+    setCreatingForm(false); // Reset creatingForm state to false
+    setFormDescription(""); // Reset formDescription
+    console.log('Selected Form:', formName);    
   };
+  
 
   const handleDescriptionChange = (e) => {
     setFormDescription(e.target.value);
   };
 
   const handleCreateForm = () => {
-    setCreatingForm(true); // Set creatingForm state to true
+    if (formDescription.trim() !== "") { // Check if form description is not empty
+      setCreatingForm(true); // Set creatingForm state to true
+    } else {
+      alert("Please enter a form description.");
+    }
   };
 
   const columns = [
@@ -93,7 +100,10 @@ const FormPage = () => {
             </div>
           )}
           {selectedForm && creatingForm && (
-            <FillOutForm formData={selectedForm} />
+            <FillOutForm 
+              formName={selectedForm.formName}
+              formDescription={formDescription}
+            />
           )}
         </div>
       </div>
