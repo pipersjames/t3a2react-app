@@ -5,7 +5,7 @@ import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom";
 
 
-export default function FillOutForm(props) {
+export default function FillOutForm({formName, formDescription}) {
 
 
     const navigate = useNavigate()
@@ -16,7 +16,6 @@ export default function FillOutForm(props) {
     const [isChecked, setIsChecked] = useState(false);
     const [favourites, setFavourites] = useState([])
     const [fillFormStructure, setFillFormStructure] = useState()
-    const [formName, setFormName] = useState()
     const [formData, setFormData] = useState({});
   
     const handleInputChange = (index, value) => {
@@ -40,13 +39,12 @@ export default function FillOutForm(props) {
                 return;
             }
     
-            const response = await fetch(`${apiUrl}/forms/${props.formName}`);
+            const response = await fetch(`${apiUrl}/formTemplates/${formName}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch form template');
             }
             const data = await response.json();
             setFillFormStructure(data);
-            setFormName(data.template.formName);
         } catch (error) {
             console.error('Error fetching form template:', error);
         }
@@ -133,7 +131,7 @@ export default function FillOutForm(props) {
         event.preventDefault()
 
         const form = {
-            description: props.formDescription,
+            description: formDescription,
             formTemplate: fillFormStructure.template._id,
             formData: formData
         }
@@ -183,7 +181,7 @@ export default function FillOutForm(props) {
                                 <div className="form-description-container">
                                     <div className="row">
                                     <div className="col">
-                                        <p>{props.formDescription}</p> {/* Render formDescription */}
+                                        <p>{formDescription}</p> {/* Render formDescription */}
                                         {/* <textarea 
                                         className="mb-3 form-control" 
                                         placeholder="Enter form description" 
