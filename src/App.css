@@ -41,3 +41,8 @@
 .accountBox {
   background-color: whitesmoke
 }
+
+/*formspage css*/
+.hoverPointer:hover {
+  cursor:pointer;
+}

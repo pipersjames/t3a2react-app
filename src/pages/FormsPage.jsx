@@ -2,59 +2,73 @@ import React, { useState, useEffect, useContext } from "react";
 import { Table } from "antd";
 import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
+import Cookies from "js-cookie";
+import moment from 'moment'
 
-const FormPage = () => {
+export default function FormPage() {
+
+  const { apiUrl } = useContext(ApiContext);
+
   const [formNames, setFormNames] = useState([]);
   const [selectedForm, setSelectedForm] = useState(null);
   const [formDescription, setFormDescription] = useState("");
   const [creatingForm, setCreatingForm] = useState(false); // New state
-  const [formTemplate, setFormTemplate] = useState(null);
-  const { apiUrl } = useContext(ApiContext);
+  const [userForms, setUserForms] = useState([])
 
-  useEffect(() => {
-    const fetchFormNames = async () => {
+
+  const jwt = Cookies.get('jwt')
+
+  const fetchUserForms = async (formId) => {
       try {
-        const response = await fetch(`${apiUrl}/formTemplates/formspage`, {
+        const response = await fetch(`${apiUrl}/forms/currentUser`, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+            'jwt': jwt,
+            'formid': formId
+          },
         });
         if (!response.ok) {
           throw new Error('Failed to fetch form data');
         }
         const data = await response.json();
-        setFormNames(data.result);
+        setUserForms(data.result)
       } catch (error) {
         console.error("Error fetching form data:", error);
       }
-    };
+  }
+
+      const fetchFormNames = async () => {
+        try {
+          const response = await fetch(`${apiUrl}/formTemplates/formspage`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch form template data');
+          }
+          const data = await response.json();
+          setFormNames(data.result);
+          console.log(data.result)
+        } catch (error) {
+          console.error("Error fetching form template data:", error);
+        }
+      };
+
+  useEffect(() => {
     
-    fetchFormNames();
-  }, [apiUrl]);
+    fetchFormNames()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-
-  
-  const fetchFormTemplate = async (formName) => {
-    try {
-      const response = await fetch(`${apiUrl}/forms/${formName}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch form template');
-      }
-      const data = await response.json();
-      setFormTemplate(data.formTemplate);
-    } catch (error) {
-      console.error('Error fetching form template:', error);
-    }
-  };
-
-  const handleFormClick = (formName) => {
-    setSelectedForm({ formName: formName }); // Pass form name as an object
+  const handleFormTemplateSelect = (record) => {
+    setSelectedForm({ formName: record.formName }); // Pass form name as an object
     setCreatingForm(false); // Reset creatingForm state to false
     setFormDescription(""); // Reset formDescription
-    console.log('Selected Form:', formName);    
-  };
-  
+    fetchUserForms(record._id) 
+  }
 
   const handleDescriptionChange = (e) => {
     setFormDescription(e.target.value);
@@ -70,28 +84,77 @@ const FormPage = () => {
     console.log("Create Form button clicked. creatingForm state:", creatingForm);
   };
 
-  const columns = [
+  const handleFormRowSelect = () => {
+    window.alert('its working')
+  }
+
+  const selectionColumns = [
     {
       title: "Form Name",
       dataIndex: "formName",
       key: "formName",
-      render: (text) => (
-        // eslint-disable-next-line
-        <a onClick={() => handleFormClick(text)}>{text}</a> 
-      )
     },
-    // Add more columns as needed
   ];
+
+  const formColumns = [
+    {
+      title: 'description',
+      dataIndex: 'description',
+      key: 'description' 
+    },
+    {
+      title: 'submission date/time',
+      dataIndex: 'timeStamp',
+      key: 'timeStamp',
+      render: (timeStamp) => moment(timeStamp).format('DD-MM-YYYY / hA')
+    },
+    {
+      title: 'submitted by',
+      dataIndex: 'user',
+      key: 'user',
+      render: (user) => {
+        return `${user.fname} ${user.lname}`
+      }
+    },
+    {
+      title: 'status',
+      dataIndex: 'status',
+      key: 'status'
+    },
+    {
+      title: 'assigned',
+      dataIndex: 'formTemplate',
+      key: 'formTemplate',
+      render: (formTemplate) => {
+        return formTemplate.assignedTo
+      }
+    },
+    {
+      title: 'tasked user',
+      dataIndex: 'actions',
+      key: 'actions',
+      render: (actions) => {
+        return actions ? actions.user : null
+      }
+    }
+
+  ]
 
   return (
     <div className="container">
+
       <div className="row">
         <div className="col-md-3">
           <h1>Form Page</h1>
           <Table 
             dataSource={formNames} 
-            columns={columns} 
-            rowKey="_id" 
+            columns={selectionColumns} 
+            rowKey="_id"
+            rowClassName='hoverPointer'
+            onRow={(record) => ({
+              onClick: () => handleFormTemplateSelect(record)
+            })
+          }
           />
         </div>
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-start">
@@ -124,10 +187,19 @@ const FormPage = () => {
               formTemplate={formTemplate}
             />
           )}
+          {!creatingForm && userForms.length > 0 && (
+            <Table 
+            dataSource={userForms} 
+            columns={formColumns} 
+            rowClassName='hoverPointer'
+            rowKey='_id'
+            onRow={() => ({
+                onClick: handleFormRowSelect
+            })}
+        />)}
         </div>
       </div>
     </div>
   );
 };
 
-export default FormPage;
