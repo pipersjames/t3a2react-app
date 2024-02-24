@@ -15,6 +15,7 @@ export default function FormPage() {
   const [creatingForm, setCreatingForm] = useState(false); // New state
   const [userForms, setUserForms] = useState([])
 
+
   const jwt = Cookies.get('jwt')
 
   const fetchUserForms = async (formId) => {
@@ -76,9 +77,11 @@ export default function FormPage() {
   const handleCreateForm = () => {
     if (formDescription.trim() !== "") { // Check if form description is not empty
       setCreatingForm(true); // Set creatingForm state to true
+      fetchFormTemplate(selectedForm.formName); // Fetch form template
     } else {
       alert("Please enter a form description.");
     }
+    console.log("Create Form button clicked. creatingForm state:", creatingForm);
   };
 
   const handleFormRowSelect = () => {
@@ -177,10 +180,11 @@ export default function FormPage() {
               </div>
             </div>
           )}
-          {selectedForm && creatingForm && (
+          {selectedForm && creatingForm && formTemplate &&(
             <FillOutForm 
               formName={selectedForm.formName}
               formDescription={formDescription}
+              formTemplate={formTemplate}
             />
           )}
           {!creatingForm && userForms.length > 0 && (
