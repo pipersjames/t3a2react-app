@@ -93,7 +93,7 @@ const FormPage = () => {
             </div>
           )}
           {selectedForm && creatingForm && (
-            <FillOutForm formData={selectedForm} />
+            <FillOutForm formName={selectedForm.formName} />
           )}
         </div>
       </div>
