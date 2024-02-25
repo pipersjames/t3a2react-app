@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Table } from "antd";
+import { Table, Button } from "antd";
 import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
+import Cookies from "js-cookie";
 import moment from 'moment'
 import Cookies from "js-cookie";
 import {useNavigate, useParams} from 'react-router-dom'
+
 
 export default function FormPage() {
   
@@ -107,6 +109,15 @@ export default function FormPage() {
     }
   };
 
+  const handleEditForm = () => {
+    // Set selected form details in query parameters and navigate to FormBuilder page
+    const queryParams = new URLSearchParams();
+    queryParams.append('formName', selectedForm.formName);
+    // Append other form details as needed
+  
+    window.location.href = `/formbuilder?${queryParams.toString()}`;
+  };
+
   const handleFormRowSelect = () => {
     window.alert('its working')
   }
@@ -197,9 +208,15 @@ export default function FormPage() {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col text-center">
-                    <button className="btn btn-primary" onClick={handleCreateForm}>Create Form</button>
-                  </div>
+                <div className="col d-flex flex-column align-items-center">
+                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleCreateForm}>
+                    <span style={{ margin: 'auto' }}>Create Form</span>
+                  </Button>
+                  {/* Add Edit button */}
+                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleEditForm}>
+                    <span style={{ margin: 'auto' }}>Edit</span>
+                  </Button>
+                </div>
                 </div>
               </div>
             </div>
