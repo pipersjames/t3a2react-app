@@ -44,10 +44,8 @@ export default function CreateAccount() {
               console.log(data)
               const jwt = data.jwt
               
-              //production cookie
               Cookies.set('jwt', jwt, { secure: true, sameSite: 'Strict', expires: 3 })
-              //development cookie
-              //Cookies.set('jwt', jwt, {expires: 3 })
+      
               navigate('/home')
 
           } else {

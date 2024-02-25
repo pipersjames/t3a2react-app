@@ -4,15 +4,20 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import Cookies from 'js-cookie';
 
 export default function Navbar() {
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleNavbar = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleLogout = () => {
-        Cookies.remove('jwt')
-    }
+    const handleLogout = async () => {
+        try {
+            Cookies.remove('jwt');
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
+    };
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
