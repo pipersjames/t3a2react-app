@@ -1,37 +1,25 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormComponentContext } from "../contexts/FormComponentProvider"
-import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom";
+import { FavouritesContext } from "../contexts/FavouritesProvider";
 
 
 export default function FillOutForm({formName, formDescription}) {
 
 
     const navigate = useNavigate()
-    const {apiUrl} = useContext(ApiContext)
+
+    const {apiUrl, jwt} = useContext(ApiContext)
     const {formComponents} = useContext(FormComponentContext)
-    const jwt = Cookies.get('jwt')
+    const {getFavourites, patchFavourites, favourites, setFavourites} = useContext(FavouritesContext)
+
     
     const [isChecked, setIsChecked] = useState(false);
-    const [favourites, setFavourites] = useState([])
     const [fillFormStructure, setFillFormStructure] = useState()
     const [formData, setFormData] = useState({});
   
-    const handleInputChange = (index, value) => {
-      setFormData(prevData => ({
-        ...prevData,
-        [index]: value
-      }));
-    };
-
-    //testing components to be replace entirely once props are passed
-    // Passed on as formDescription
-    // const describe = 'test'
-
-
-    // const describe = description || 'test'
-
+    //API call functions
     const fetchFormTemplate = async () => {
         try {
             if (!formData) {
@@ -51,59 +39,7 @@ export default function FillOutForm({formName, formDescription}) {
     };
     
 
-    const patchFavourites = async (favourites) => {
-        try {
-            const response = await fetch(`${apiUrl}/users/favourites`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'jwt': jwt
-                },
-                body: JSON.stringify({
-                    favourite: favourites,
-                })
-            });
-            const data = await response.json();
-            console.log('Favourites updated:', data.favourites);
-        } catch (error) {
-            console.error('Error updating favourites:', error);
-        }
-    };
-    //favourites toggle functionality
-    const handleFavCheckboxChange = () => {
-        try {
-            const newCheckedState = !isChecked;
-            setIsChecked(newCheckedState);
-    
-            let updatedFavourites = [...favourites];
-    
-            if (newCheckedState && !favourites.includes(formName)) {
-                updatedFavourites.push(formName);
-            } else if (!newCheckedState) {
-                updatedFavourites = favourites.filter(form => form !== formName);
-            }
-    
-            setFavourites(updatedFavourites);
-            patchFavourites(updatedFavourites);
-        } catch (error) {
-            console.error('Error handling checkbox change:', error);
-        }
-    };
-
-    const getFavourites = async () => {
-        const response = await fetch(`${apiUrl}/users/favourites`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'jwt': jwt
-            }
-        })
-        const data = await response.json()
-        
-        return data
-    }
-
-    //page init
+    //use Effects
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -126,6 +62,36 @@ export default function FillOutForm({formName, formDescription}) {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formName]);
+
+
+    //handles
+
+    const handleInputChange = (index, value) => {
+        setFormData(prevData => ({
+          ...prevData,
+          [index]: value
+        }));
+      };
+
+    const handleFavCheckboxChange = () => {
+        try {
+            const newCheckedState = !isChecked;
+            setIsChecked(newCheckedState);
+    
+            let updatedFavourites = [...favourites];
+    
+            if (newCheckedState && !favourites.includes(formName)) {
+                updatedFavourites.push(formName);
+            } else if (!newCheckedState) {
+                updatedFavourites = favourites.filter(form => form !== formName);
+            }
+    
+            setFavourites(updatedFavourites);
+            patchFavourites(updatedFavourites);
+        } catch (error) {
+            console.error('Error handling checkbox change:', error);
+        }
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault()
