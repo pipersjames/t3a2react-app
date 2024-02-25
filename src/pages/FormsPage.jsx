@@ -98,7 +98,6 @@ export default function FormPage() {
     window.alert('its working')
   }
 
-  // eslint-disable-next-line
   const handleOpenDeleteModal = () => {
     setDeleteModalVisible(true);
   };
@@ -114,6 +113,7 @@ export default function FormPage() {
     handleCloseDeleteModal();
   };
 
+  // eslint-disable-next-line 
   const handleDeleteForm = () => {
     // Placeholder implementation for now
     console.log("Delete button clicked");
@@ -216,7 +216,7 @@ export default function FormPage() {
                     <span style={{ margin: 'auto' }}>Edit</span>
                   </Button>
                     {/* Add Delete button */}
-                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleDeleteForm}>
+                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleOpenDeleteModal}>
                     <span style={{ margin: 'auto' }}>Delete</span>
                   </Button>
                 </div>
