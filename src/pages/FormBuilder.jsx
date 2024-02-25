@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useContext } from 'react';
 import Layout from '../components/layouts/Layout';
 import SelectionTable from '../components/FormBuilderSelections';
 import { ApiContext } from "../contexts/ApiProvider"
-import { FormComponentContext } from '../contexts/FormComponentProvider';
+import { FormTemplateContext } from '../contexts/FormTemplateProvider';
 import Select from 'react-select'
 
 const FormBuilder = () => {
@@ -16,7 +16,7 @@ const FormBuilder = () => {
   const [assignedOptions, setAssignedOptions] = useState() // options for assigned dropdown filter
   const [questionHeaders, setQuestionHeaders] = useState([])
 
-  const { formComponents } = useContext(FormComponentContext)
+  const { formComponents } = useContext(FormTemplateContext)
   
   const fetchUsernamesFromDatabase = async () => {
     const response = await fetch(`${apiUrl}/users/`)

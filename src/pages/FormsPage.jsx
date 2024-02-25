@@ -2,22 +2,19 @@ import React, { useState, useEffect, useContext } from "react";
 import { Table } from "antd";
 import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
-import Cookies from "js-cookie";
 import moment from 'moment'
 
 export default function FormPage() {
-
-  const { apiUrl } = useContext(ApiContext);
-
+  //contexts
+  const { apiUrl, jwt } = useContext(ApiContext);
+  //useStates
   const [formNames, setFormNames] = useState([]);
   const [selectedForm, setSelectedForm] = useState(null);
   const [formDescription, setFormDescription] = useState("");
   const [creatingForm, setCreatingForm] = useState(false); // New state
   const [userForms, setUserForms] = useState([])
 
-
-  const jwt = Cookies.get('jwt')
-
+  //API call functions
   const fetchUserForms = async (formId) => {
       try {
         const response = await fetch(`${apiUrl}/forms/currentUser`, {
@@ -38,30 +35,31 @@ export default function FormPage() {
       }
   }
 
-      const fetchFormNames = async () => {
-        try {
-          const response = await fetch(`${apiUrl}/formTemplates/formspage`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-          if (!response.ok) {
-            throw new Error('Failed to fetch form template data');
-          }
-          const data = await response.json();
-          setFormNames(data.result);
-        } catch (error) {
-          console.error("Error fetching form template data:", error);
+  const fetchFormNames = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/formTemplates/formspage`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
         }
-      };
-
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch form template data');
+      }
+      const data = await response.json();
+      setFormNames(data.result);
+    } catch (error) {
+      console.error("Error fetching form template data:", error);
+    }
+  };
+  //useEffects
   useEffect(() => {
     
     fetchFormNames()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //handles
   const handleFormTemplateSelect = (record) => {
     setSelectedForm({ formName: record.formName }); // Pass form name as an object
     setCreatingForm(false); // Reset creatingForm state to false
@@ -85,6 +83,7 @@ export default function FormPage() {
     window.alert('its working')
   }
 
+  //table render formats
   const selectionColumns = [
     {
       title: "Form Name",

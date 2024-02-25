@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 import { ApiProvider } from './contexts/ApiProvider';
-import { FormComponentProvider } from './contexts/FormComponentProvider';
+import { FormTemplateProvider } from './contexts/FormTemplateProvider';
 import { FavouritesProvider } from './contexts/FavouritesProvider';
 
 
@@ -14,13 +14,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <FormComponentProvider>
-        <ApiProvider>
+      <ApiProvider>
+        <FormTemplateProvider>
           <FavouritesProvider>
             <App/>
           </FavouritesProvider>
-        </ApiProvider>
-      </FormComponentProvider>
+        </FormTemplateProvider>
+      </ApiProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
