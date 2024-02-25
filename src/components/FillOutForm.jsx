@@ -3,14 +3,16 @@ import { ApiContext } from "../contexts/ApiProvider"
 import { FormTemplateContext } from "../contexts/FormTemplateProvider"
 import { useNavigate } from "react-router-dom";
 import { FavouritesContext } from "../contexts/FavouritesProvider";
+import Cookies from "js-cookie";
 
 
 export default function FillOutForm({formName, formDescription}) {
 
 
     const navigate = useNavigate()
+    const jwt = Cookies.get('jwt')
 
-    const {apiUrl, jwt} = useContext(ApiContext)
+    const {apiUrl} = useContext(ApiContext)
     const {formComponents, formTemplate, fetchFormTemplate } = useContext(FormTemplateContext)
     const {getFavourites, patchFavourites, favourites, setFavourites} = useContext(FavouritesContext)
 
@@ -26,7 +28,7 @@ export default function FillOutForm({formName, formDescription}) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const favouritesData = await getFavourites();
+                const favouritesData = await getFavourites(jwt);
                 setFavourites(favouritesData.favourites);
                 await fetchFormTemplate(formName)
             } catch (error) {
@@ -60,9 +62,12 @@ export default function FillOutForm({formName, formDescription}) {
         try {
             const newCheckedState = !isChecked;
             setIsChecked(newCheckedState);
-    
+
             let updatedFavourites = [...favourites];
-    
+            
+            if (!favourites) {
+                updatedFavourites.push(formName);
+            }
             if (newCheckedState && !favourites.includes(formName)) {
                 updatedFavourites.push(formName);
             } else if (!newCheckedState) {
@@ -70,7 +75,7 @@ export default function FillOutForm({formName, formDescription}) {
             }
     
             setFavourites(updatedFavourites);
-            patchFavourites(updatedFavourites);
+            patchFavourites(updatedFavourites, jwt);
         } catch (error) {
             console.error('Error handling checkbox change:', error);
         }

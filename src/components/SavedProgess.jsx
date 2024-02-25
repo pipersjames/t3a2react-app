@@ -22,7 +22,7 @@ function SavedProgress() {
     
       return (
         <Container>
-          <h2>Saved In Progress</h2>
+          <h2 className='text-center'>Saved In Progress</h2>
           <Table striped bordered hover>
             <thead>
               <tr>

@@ -3,13 +3,20 @@ import { Table } from "antd";
 import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
 import moment from 'moment'
+import Cookies from "js-cookie";
+import {useNavigate, useParams} from 'react-router-dom'
 
 export default function FormPage() {
+  
+  const jwt = Cookies.get('jwt')
+  const navigate = useNavigate()
   //contexts
-  const { apiUrl, jwt } = useContext(ApiContext);
+  const { apiUrl } = useContext(ApiContext);
+  //useParams
+  const { fav } = useParams()
   //useStates
   const [formNames, setFormNames] = useState([]);
-  const [selectedForm, setSelectedForm] = useState(null);
+  const [selectedForm, setSelectedForm] = useState(fav || null);
   const [formDescription, setFormDescription] = useState("");
   const [creatingForm, setCreatingForm] = useState(false); // New state
   const [userForms, setUserForms] = useState([])
@@ -37,7 +44,7 @@ export default function FormPage() {
 
   const fetchFormNames = async () => {
     try {
-      const response = await fetch(`${apiUrl}/formTemplates/formspage`, {
+      const response = await fetch(`${apiUrl}/formTemplates/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -52,19 +59,40 @@ export default function FormPage() {
       console.error("Error fetching form template data:", error);
     }
   };
+
+  const fetchSelectedFormName = async () => {
+    try {
+      if (!selectedForm) return null
+      const response = await fetch(`${apiUrl}/formTemplates/${fav}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch form template data');
+      }
+      const data = await response.json();
+      fetchUserForms(data.template._id);
+    } catch (error) {
+      console.error("Error fetching form template data:", error);
+    }
+  };
   //useEffects
   useEffect(() => {
     
     fetchFormNames()
+    fetchSelectedFormName()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //handles
   const handleFormTemplateSelect = (record) => {
-    setSelectedForm({ formName: record.formName }); // Pass form name as an object
-    setCreatingForm(false); // Reset creatingForm state to false
-    setFormDescription(""); // Reset formDescription
-    fetchUserForms(record._id) 
+    navigate(`/forms/${record.formName}`)
+    setSelectedForm(record.formName); 
+    setCreatingForm(false);
+    setFormDescription(""); 
+    fetchUserForms(record._id)
   }
 
   const handleDescriptionChange = (e) => {
@@ -156,7 +184,7 @@ export default function FormPage() {
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-start">
           {selectedForm && !creatingForm && (
             <div className="text-center mb-4">
-              <h2>{selectedForm.formName}</h2>
+              <h2>{selectedForm}</h2>
               <div className="form-description-container">
                 <div className="row">
                   <div className="col">
@@ -178,7 +206,7 @@ export default function FormPage() {
           )}
           {selectedForm && creatingForm &&(
             <FillOutForm 
-              formName={selectedForm.formName}
+              formName={selectedForm}
               formDescription={formDescription}
             />
           )}

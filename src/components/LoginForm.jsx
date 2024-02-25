@@ -6,11 +6,14 @@ import { ApiContext } from "../contexts/ApiProvider"
 export default function LoginForm() {
     
     const navigate = useNavigate()
+    
+    //context
     const { apiUrl } = useContext(ApiContext)
-
+    //useState
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+    //useEffect
+    //handles
     const handleSubmit  = async (event) => {
         event.preventDefault()
     
