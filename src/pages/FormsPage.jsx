@@ -4,7 +4,6 @@ import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
 import Cookies from "js-cookie";
 import moment from 'moment'
-import Cookies from "js-cookie";
 import {useNavigate, useParams} from 'react-router-dom'
 
 
