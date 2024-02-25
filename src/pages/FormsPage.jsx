@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Table, Button } from "antd";
+import { Table, Button, Modal } from "antd";
 import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
 import Cookies from "js-cookie";
@@ -20,7 +20,9 @@ export default function FormPage() {
   const [selectedForm, setSelectedForm] = useState(fav || null);
   const [formDescription, setFormDescription] = useState("");
   const [creatingForm, setCreatingForm] = useState(false); // New state
-  const [userForms, setUserForms] = useState([])
+  const [userForms, setUserForms] = useState([]);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State for delete confirmation modal visibility
+
 
   //API call functions
   const fetchUserForms = async (formId) => {
@@ -121,6 +123,29 @@ export default function FormPage() {
     window.alert('its working')
   }
 
+  const handleOpenDeleteModal = () => {
+    setDeleteModalVisible(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteModalVisible(false);
+  };
+
+  const handleDelete = () => {
+    // Perform the delete action here
+    // You may need to make a request to your backend API to delete the form template and associated forms
+    // Once the delete action is completed, you can close the modal
+    handleCloseDeleteModal();
+  };
+
+  // eslint-disable-next-line 
+  const handleDeleteForm = () => {
+    // Placeholder implementation for now
+    console.log("Delete button clicked");
+  };
+  
+
+
   //table render formats
   const selectionColumns = [
     {
@@ -215,6 +240,10 @@ export default function FormPage() {
                   <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleEditForm}>
                     <span style={{ margin: 'auto' }}>Edit</span>
                   </Button>
+                    {/* Add Delete button */}
+                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleOpenDeleteModal}>
+                    <span style={{ margin: 'auto' }}>Delete</span>
+                  </Button>
                 </div>
                 </div>
               </div>
@@ -236,6 +265,15 @@ export default function FormPage() {
                 onClick: handleFormRowSelect
             })}
         />)}
+          {/* Delete confirmation modal */}
+          <Modal
+            title="Confirm Delete"
+            open={deleteModalVisible}
+            onOk={handleDelete}
+            onCancel={handleCloseDeleteModal}
+          >
+            <p>Are you sure you want to delete this form template and all associated forms?</p>
+          </Modal>
         </div>
       </div>
     </div>
