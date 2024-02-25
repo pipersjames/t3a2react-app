@@ -27,6 +27,7 @@ export default function HomePage() {
         };
 
         fetchFavourites();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
