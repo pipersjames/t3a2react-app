@@ -5,6 +5,8 @@ import Cookies from 'js-cookie';
 
 export default function Navbar() {
 
+    const auth = Cookies.get('auth')
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleNavbar = () => {
@@ -14,6 +16,7 @@ export default function Navbar() {
     const handleLogout = async () => {
         try {
             Cookies.remove('jwt');
+            Cookies.remove('auth')
         } catch (error) {
             console.error('Error logging out:', error);
         }
@@ -31,9 +34,9 @@ export default function Navbar() {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/home" activeclassname="active">Home</NavLink>
                         </li>
-                        <li className="nav-item">
+                        {(auth === 'admin' || auth === 'manager') && (<li className="nav-item">
                             <NavLink className="nav-link" to="/FormBuilder" activeclassname="active">Form Builder</NavLink>
-                        </li>
+                        </li>)}
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/Forms" activeclassname="active">Forms</NavLink>
                         </li>

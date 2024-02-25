@@ -4,8 +4,13 @@ import SelectionTable from '../components/FormBuilderSelections';
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormTemplateContext } from '../contexts/FormTemplateProvider';
 import Select from 'react-select'
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router';
 
 const FormBuilder = () => {
+
+  const navigate = useNavigate()
+  const auth = Cookies.get('auth')
   //Context
   const { apiUrl } = useContext(ApiContext)
   // State variables
@@ -30,6 +35,9 @@ const FormBuilder = () => {
 
   // useEffect to set up core data on page render
   useEffect(() => {
+    if (auth !== 'admin' || auth !== 'manager'){
+      navigate('/')
+    }
     fetchUsernamesFromDatabase()
     setAccordionItems([...Object.keys(formComponents)]);
   // eslint-disable-next-line react-hooks/exhaustive-deps

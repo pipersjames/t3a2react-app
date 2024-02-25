@@ -29,15 +29,14 @@ export default function LoginForm() {
                 })
             })
 
-            console.log(response)
-
-
             if (response.ok) {
                 const data = await response.json()
                 const jwt = data.jwt
+                const auth = data.auth
 
                 Cookies.set('jwt', jwt, { secure: true, sameSite: 'Strict', expires: 3 })
-
+                Cookies.set('auth', auth, { secure: true, sameSite: 'Strict', expires: 3 })
+                console.log('successfully logged in')
                 navigate('/home')
 
             } else {

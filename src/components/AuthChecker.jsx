@@ -13,14 +13,22 @@ export default function AuthChecker() {
 
         const jwt = Cookies.get('jwt')
 
+        if (!jwt) {
+            navigate('/')
+            console.log('no token present, returning to login...')
+            return
+        }
+
         try{
             const response = await fetch(`${apiUrl}/users/auth-checker`, {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'jwt': jwt
                 }
             })
+            const data = await response.json()
+            console.log(data)
     
             if(!response.ok) {
                 if (response.status === 401) {
