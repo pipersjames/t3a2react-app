@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { ApiProvider } from './contexts/ApiProvider';
 import { FormComponentProvider } from './contexts/FormComponentProvider';
+import { FavouritesProvider } from './contexts/FavouritesProvider';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,7 +16,9 @@ root.render(
     <BrowserRouter>
       <FormComponentProvider>
         <ApiProvider>
-          <App/>
+          <FavouritesProvider>
+            <App/>
+          </FavouritesProvider>
         </ApiProvider>
       </FormComponentProvider>
     </BrowserRouter>
