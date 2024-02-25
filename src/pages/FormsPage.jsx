@@ -89,7 +89,7 @@ export default function FormPage() {
     queryParams.append('formName', selectedForm.formName);
     // Append other form details as needed
   
-    window.location.href = `/form-builder?${queryParams.toString()}`;
+    window.location.href = `/formbuilder?${queryParams.toString()}`;
   };
 
   const handleFormRowSelect = () => {
