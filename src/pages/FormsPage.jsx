@@ -89,6 +89,7 @@ export default function FormPage() {
 
   useEffect(() => {
     fetchSelectedFormName()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[userForms])
 
   //handles
