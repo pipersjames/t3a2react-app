@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ApiContext } from "../contexts/ApiProvider"
-import { FormComponentContext } from "../contexts/FormComponentProvider"
+import { FormTemplateContext } from "../contexts/FormTemplateProvider"
 import { useNavigate } from "react-router-dom";
 import { FavouritesContext } from "../contexts/FavouritesProvider";
 
@@ -11,32 +11,15 @@ export default function FillOutForm({formName, formDescription}) {
     const navigate = useNavigate()
 
     const {apiUrl, jwt} = useContext(ApiContext)
-    const {formComponents} = useContext(FormComponentContext)
+    const {formComponents, formTemplate, fetchFormTemplate } = useContext(FormTemplateContext)
     const {getFavourites, patchFavourites, favourites, setFavourites} = useContext(FavouritesContext)
 
     
     const [isChecked, setIsChecked] = useState(false);
-    const [fillFormStructure, setFillFormStructure] = useState()
     const [formData, setFormData] = useState({});
   
     //API call functions
-    const fetchFormTemplate = async () => {
-        try {
-            if (!formData) {
-                console.error('Form data is undefined');
-                return;
-            }
     
-            const response = await fetch(`${apiUrl}/formTemplates/${formName}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch form template');
-            }
-            const data = await response.json();
-            setFillFormStructure(data);
-        } catch (error) {
-            console.error('Error fetching form template:', error);
-        }
-    };
     
 
     //use Effects
@@ -45,7 +28,7 @@ export default function FillOutForm({formName, formDescription}) {
             try {
                 const favouritesData = await getFavourites();
                 setFavourites(favouritesData.favourites);
-                await fetchFormTemplate()
+                await fetchFormTemplate(formName)
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -98,7 +81,7 @@ export default function FillOutForm({formName, formDescription}) {
 
         const form = {
             description: formDescription,
-            formTemplate: fillFormStructure.template._id,
+            formTemplate: formTemplate.template._id,
             formData: formData
         }
         console.log(formData)
@@ -129,7 +112,7 @@ export default function FillOutForm({formName, formDescription}) {
         <div className="container">
             <div className="row justify-content-center mt-5">
                 <div className="col-md-6"> 
-                    {fillFormStructure && fillFormStructure.template && (
+                    {formTemplate && formTemplate.template && (
                         <div className=""> 
                             <div className="d-flex justify-content-center align-items-baseline mb-4"> 
                                 <h1 className="text-md-center text-lg-left display-1 mx-3">{formName}</h1>
@@ -145,27 +128,17 @@ export default function FillOutForm({formName, formDescription}) {
                                 </div>
                             </div>
                                 <div className="form-description-container">
-                                    <div className="row">
-                                    <div className="col">
-                                        <p>{formDescription}</p> {/* Render formDescription */}
-                                        {/* <textarea 
-                                        className="mb-3 form-control" 
-                                        placeholder="Enter form description" 
-                                        onChange={handleDescriptionChange}
-                                        value={formDescription}
-                                        /> */}
-                                    </div>
-                                    </div>
+                                    <h2 className="text-center border-bottom p-3">{formDescription}</h2>
                                 </div>
-                                {fillFormStructure.template.components && 
-                                  fillFormStructure.template.components.map((component, index) => (
+                                {formTemplate.template.components && 
+                                  formTemplate.template.components.map((component, index) => (
                                     <div key={index} className="mb-3"> 
                                         {React.createElement(formComponents[component][0], {
                                             fill : true, 
                                             index : index, 
                                             handleInputChange : handleInputChange, 
                                             formData : formData,
-                                            questionHeader: fillFormStructure.template.questionHeaders[index]
+                                            questionHeader: formTemplate.template.questionHeaders[index]
                                             })}
                                     </div>    
                             ))}

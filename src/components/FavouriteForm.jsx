@@ -1,9 +1,26 @@
 
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import { FavouritesContext } from '../contexts/FavouritesProvider';
 
-function FavouriteForm({favourites}) {
+export default function FavouriteForm() {
+
+    const {setFavourites, getFavourites} = useContext(FavouritesContext)
+
+    useEffect(() => {
+        const fetchFavouritesData = async () => {
+            try {
+                const favouritesData = await getFavourites();
+                setFavourites(favouritesData.favourites);
+               // await fetchFormTemplate()
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchFavouritesData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
   return (
     <Container>
@@ -28,12 +45,9 @@ function FavouriteForm({favourites}) {
                     </div>
                 </div>
                 </div>
-                {/* Add more form cards as needed */}
             </div>
         </div>
     </Container>
   );
 }
-
-export default FavouriteForm;
 
