@@ -89,6 +89,11 @@ export default function FormPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    fetchSelectedFormName()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[userForms])
+
   //handles
   const handleFormTemplateSelect = (record) => {
     navigate(`/forms/${record.formName}`)
@@ -250,9 +255,11 @@ export default function FormPage() {
             </div>
           )}
           {selectedForm && creatingForm &&(
-            <FillOutForm 
+            <FillOutForm
+              setCreatingForm= {setCreatingForm} 
               formName={selectedForm}
               formDescription={formDescription}
+              setFormDescripton={setFormDescription}
             />
           )}
           {!creatingForm && userForms.length > 0 && (

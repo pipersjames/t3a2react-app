@@ -1,15 +1,12 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormTemplateContext } from "../contexts/FormTemplateProvider"
-import { useNavigate } from "react-router-dom";
 import { FavouritesContext } from "../contexts/FavouritesProvider";
 import Cookies from "js-cookie";
 
 
-export default function FillOutForm({formName, formDescription}) {
+export default function FillOutForm({formName, formDescription, setCreatingForm, setFormDescription}) {
 
-
-    const navigate = useNavigate()
     const jwt = Cookies.get('jwt')
 
     const {apiUrl} = useContext(ApiContext)
@@ -21,8 +18,6 @@ export default function FillOutForm({formName, formDescription}) {
     const [formData, setFormData] = useState({});
   
     //API call functions
-    
-    
 
     //use Effects
     useEffect(() => {
@@ -80,7 +75,7 @@ export default function FillOutForm({formName, formDescription}) {
             console.error('Error handling checkbox change:', error);
         }
     };
-
+    //Api Handle
     const handleSubmit = async (event) => {
         event.preventDefault()
 
@@ -102,7 +97,8 @@ export default function FillOutForm({formName, formDescription}) {
             })
 
             if (response.ok) {
-                navigate('/forms')
+                setCreatingForm(false)
+                setFormDescription('')
             } else {
                 console.error('Form submission failed')
             }
