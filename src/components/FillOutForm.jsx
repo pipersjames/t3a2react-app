@@ -5,7 +5,7 @@ import { FavouritesContext } from "../contexts/FavouritesProvider";
 import Cookies from "js-cookie";
 
 
-export default function FillOutForm({formName, formDescription, setCreatingForm, setFormDescription}) {
+export default function FillOutForm({formName, formDescription, setCreatingForm, setFormDescription, renderedFormComponents, questionHeaders}) {
 
     const jwt = Cookies.get('jwt')
 

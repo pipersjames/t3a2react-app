@@ -4,8 +4,15 @@ import SelectionTable from '../components/FormBuilderSelections';
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormTemplateContext } from '../contexts/FormTemplateProvider';
 import Select from 'react-select'
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router';
+import { Modal } from 'react-bootstrap';
+import FillOutForm from '../components/FillOutForm';
 
 const FormBuilder = () => {
+
+  const navigate = useNavigate()
+  const auth = Cookies.get('auth')
   //Context
   const { apiUrl } = useContext(ApiContext)
   // State variables
@@ -15,6 +22,7 @@ const FormBuilder = () => {
   const [assignedTo, setAssignedTo] = useState(); // State for assignedTo input value
   const [assignedOptions, setAssignedOptions] = useState() // options for assigned dropdown filter
   const [questionHeaders, setQuestionHeaders] = useState([])
+  const [showOverlay, setShowOverlay] = useState(false);
 
   const { formComponents } = useContext(FormTemplateContext)
   
@@ -30,6 +38,10 @@ const FormBuilder = () => {
 
   // useEffect to set up core data on page render
   useEffect(() => {
+    console.log(auth)
+    if (auth !== 'admin' && auth !== 'manager'){
+      navigate('/')
+    }
     fetchUsernamesFromDatabase()
     setAccordionItems([...Object.keys(formComponents)]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,6 +55,11 @@ const FormBuilder = () => {
   const handleAssignedToChange = (selectedOption) => {
     setAssignedTo(selectedOption);
   };
+
+  const handleToggleOverlayPreview = () => {
+    setShowOverlay(!showOverlay);
+  };
+
 
 
   const handleAddComponent = useCallback((componentName) => {
@@ -188,6 +205,25 @@ const FormBuilder = () => {
               <div className="row mt-3">
                 <div className="col-md-12 text-center">
                   <button className="btn btn-primary" onClick={handleCreateForm}>Save Template</button>
+                  <button className='btn btn-secondary' onClick={handleToggleOverlayPreview}>Preview Form</button>
+                  <div>
+                    <Modal show={showOverlay} onHide={handleToggleOverlayPreview} backdrop="static">
+                      <Modal.Header closeButton>
+                        <Modal.Title>Overlay Title</Modal.Title>
+                          </Modal.Header>
+                            <Modal.Body>
+                              <FillOutForm 
+                                formName={formName} 
+                                formDescription='PlaceHolder for User Description' 
+                                renderedFormComponent={renderedFormComponents}
+                                questionHeaders={questionHeaders}
+                                />
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <button onClick={handleToggleOverlayPreview}>Close</button>
+                            </Modal.Footer>
+                          </Modal>
+                    </div>
                 </div>
               </div>
             </div>
