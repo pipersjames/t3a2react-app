@@ -16,25 +16,29 @@ export function FormTemplateProvider(props) {
     const [formTemplate, setFormTemplate] = useState()
 
     const formComponents = {
-        'Full Name' : [FullNameInput],
-        'Email' : [EmailInput],
-        'Short Question and Answer' : [ShortQA],
-        'Long Question and Answer' : [LongQA],
-        'File Upload' : [FileUpload],
-        'Date and Time' : [DateTimeInput]
+        'Full Name' : FullNameInput,
+        'Email' : EmailInput,
+        'Short Question and Answer' : ShortQA,
+        'Long Question and Answer' : LongQA,
+        'File Upload' : FileUpload,
+        'Date and Time' : DateTimeInput
     }
 
-    const fetchFormTemplate = async (formName) => {
-      try {
+    const fetchFormTemplate = async (formName, renderedFormComponents) => {
+      if (renderedFormComponents === undefined) {
+        try {
           const response = await fetch(`${apiUrl}/formTemplates/${formName}`);
           if (!response.ok) {
               throw new Error('Failed to fetch form template');
           }
           const data = await response.json();
-          setFormTemplate(data);
+          setFormTemplate(data.template);
       } catch (error) {
           console.error('Error fetching form template:', error);
       }
+      } else {
+        setFormTemplate(renderedFormComponents)
+    } 
   };
 
   return (

@@ -15,6 +15,7 @@ const FormBuilder = () => {
   const auth = Cookies.get('auth')
   //Context
   const { apiUrl } = useContext(ApiContext)
+  const { formComponents } = useContext(FormTemplateContext)
   // State variables
   const [formName, setFormName] = useState('');
   const [accordionItems, setAccordionItems] = useState([]);
@@ -23,8 +24,7 @@ const FormBuilder = () => {
   const [assignedOptions, setAssignedOptions] = useState() // options for assigned dropdown filter
   const [questionHeaders, setQuestionHeaders] = useState([])
   const [showOverlay, setShowOverlay] = useState(false);
-
-  const { formComponents } = useContext(FormTemplateContext)
+  const [ previewTemplate, setPreviewTemplate] = useState({})
   
   const fetchUsernamesFromDatabase = async () => {
     const response = await fetch(`${apiUrl}/users/`)
@@ -38,7 +38,6 @@ const FormBuilder = () => {
 
   // useEffect to set up core data on page render
   useEffect(() => {
-    console.log(auth)
     if (auth !== 'admin' && auth !== 'manager'){
       navigate('/')
     }
@@ -57,7 +56,15 @@ const FormBuilder = () => {
   };
 
   const handleToggleOverlayPreview = () => {
+
+    setPreviewTemplate({
+      formName: formName,
+      assignedTo: assignedTo ? assignedTo.value : '',
+      components: renderedFormComponents.map((comp => comp.componentName)),
+      questionHeaders: questionHeaders
+    })
     setShowOverlay(!showOverlay);
+    
   };
 
 
@@ -72,7 +79,7 @@ const FormBuilder = () => {
       ...renderedFormComponents, 
       { 
         componentName: componentName,
-        type: componentArray[0], 
+        type: componentArray, 
         key: renderedFormComponents.length,
         index: renderedFormComponents.length, 
         edit: true,
@@ -97,7 +104,7 @@ const FormBuilder = () => {
 
     // Function to handle form submission
     const handleCreateForm = async () => {
-
+      
       if (!formName) {
         window.alert('The Form Needs a Name')
         return
@@ -204,8 +211,9 @@ const FormBuilder = () => {
               {/* Add a submit button */}
               <div className="row mt-3">
                 <div className="col-md-12 text-center">
+                <button className='btn btn-secondary mx-2' onClick={handleToggleOverlayPreview}>Preview Form</button>
                   <button className="btn btn-primary" onClick={handleCreateForm}>Save Template</button>
-                  <button className='btn btn-secondary' onClick={handleToggleOverlayPreview}>Preview Form</button>
+                  
                   <div>
                     <Modal show={showOverlay} onHide={handleToggleOverlayPreview} backdrop="static">
                       <Modal.Header closeButton>
@@ -214,9 +222,8 @@ const FormBuilder = () => {
                             <Modal.Body>
                               <FillOutForm 
                                 formName={formName} 
-                                formDescription='PlaceHolder for User Description' 
-                                renderedFormComponent={renderedFormComponents}
-                                questionHeaders={questionHeaders}
+                                renderedFormComponents={previewTemplate}
+                                preview={true}
                                 />
                             </Modal.Body>
                             <Modal.Footer>

@@ -27,8 +27,6 @@ export default function AuthChecker() {
                     'jwt': jwt
                 }
             })
-            const data = await response.json()
-            console.log(data)
     
             if(!response.ok) {
                 if (response.status === 401) {
