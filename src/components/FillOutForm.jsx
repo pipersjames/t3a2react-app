@@ -5,7 +5,7 @@ import { FavouritesContext } from "../contexts/FavouritesProvider";
 import Cookies from "js-cookie";
 
 
-export default function FillOutForm({formName, formDescription, setCreatingForm, setFormDescription, renderedFormComponents, questionHeaders}) {
+export default function FillOutForm({formName, formDescription, setCreatingForm, setFormDescription, renderedFormComponents, preview}) {
 
     const jwt = Cookies.get('jwt')
 
@@ -25,7 +25,7 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
             try {
                 const favouritesData = await getFavourites(jwt);
                 setFavourites(favouritesData.favourites);
-                await fetchFormTemplate(formName)
+                await fetchFormTemplate(formName, renderedFormComponents)
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -81,7 +81,7 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
 
         const form = {
             description: formDescription,
-            formTemplate: formTemplate.template._id,
+            formTemplate: formTemplate._id,
             formData: formData
         }
         console.log(formData)
@@ -113,7 +113,7 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
         <div className="container">
             <div className="row justify-content-center mt-5">
                 <div className="col-md-6"> 
-                    {formTemplate && formTemplate.template && (
+                    {formTemplate && (
                         <div className=""> 
                             <div className="d-flex justify-content-center align-items-baseline mb-4"> 
                                 <h1 className="text-md-center text-lg-left display-1 mx-3">{formName}</h1>
@@ -124,6 +124,7 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
                                         id="favCheckBox"
                                         checked={isChecked}
                                         onChange={handleFavCheckboxChange} 
+                                        disabled={preview}
                                         />
                                     <label className="form-check-label" htmlFor="favCheckBox">Favourite</label>
                                 </div>
@@ -131,20 +132,20 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
                                 <div className="form-description-container">
                                     <h2 className="text-center border-bottom p-3">{formDescription}</h2>
                                 </div>
-                                {formTemplate.template.components && 
-                                  formTemplate.template.components.map((component, index) => (
+                                {formTemplate.components && 
+                                  formTemplate.components.map((component, index) => (
                                     <div key={index} className="mb-3"> 
-                                        {React.createElement(formComponents[component][0], {
+                                        {React.createElement(formComponents[component], {
                                             fill : true, 
                                             index : index, 
                                             handleInputChange : handleInputChange, 
                                             formData : formData,
-                                            questionHeader: formTemplate.template.questionHeaders[index]
+                                            questionHeader: formTemplate.questionHeaders[index]
                                             })}
                                     </div>    
                             ))}
                             <div className="d-flex justify-content-center">
-                                <button onClick={handleSubmit} type="submit" className="btn btn-primary px-5">Submit</button> 
+                                <button onClick={handleSubmit} type="submit" className="btn btn-primary px-5" disabled={preview}>Submit</button> 
                             </div>
                         </div>
                     )}
