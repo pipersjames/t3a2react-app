@@ -259,7 +259,7 @@ export default function FormPage() {
               setCreatingForm= {setCreatingForm} 
               formName={selectedForm}
               formDescription={formDescription}
-              setFormDescripton={setFormDescription}
+              setFormDescription={setFormDescription}
             />
           )}
           {!creatingForm && userForms.length > 0 && (
