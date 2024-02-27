@@ -4,7 +4,7 @@ import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
 import Cookies from "js-cookie";
 import moment from 'moment'
-import {useNavigate, useParams} from 'react-router-dom'
+import {useNavigate, useParams, NavLink} from 'react-router-dom'
 
 
 export default function FormPage() {
@@ -115,16 +115,6 @@ export default function FormPage() {
     } else {
       alert("Please enter a form description.");
     }
-  };
-
-  const handleEditForm = () => {
-    // Set selected form details in query parameters and navigate to FormBuilder page
-    const queryParams = new URLSearchParams();
-    queryParams.append('formName', selectedForm.formName);
-    // Append other form details as needed
-  
-    //look into favourites
-    window.location.href = `/formbuilder?${queryParams.toString()}`;
   };
 
   const handleFormRowSelect = () => {
@@ -251,8 +241,10 @@ export default function FormPage() {
                     <span style={{ margin: 'auto' }}>Create Form</span>
                   </Button>
                   {/* Add Edit button */}
-                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleEditForm}>
-                    <span style={{ margin: 'auto' }}>Edit</span>
+                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }}>
+                    <NavLink to={`/formbuilder?formName=${selectedForm}`}style={{ textDecoration: 'none' }}>
+                      <span style={{ margin: 'auto' }}>Edit</span>
+                    </NavLink>
                   </Button>
                     {/* Add Delete button */}
                   <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleDelete}>
