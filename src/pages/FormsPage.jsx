@@ -22,6 +22,8 @@ export default function FormPage() {
   const [creatingForm, setCreatingForm] = useState(false); // New state
   const [userForms, setUserForms] = useState([]);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State for delete confirmation modal visibility
+  const [deleteClicked, setDeleteClicked] = useState(false);
+
 
 
   //API call functions
@@ -148,12 +150,14 @@ export default function FormPage() {
       const data = await response.json();
       console.log(data.message); // Log success message
       handleCloseDeleteModal(); // Close the delete modal
+      setDeleteClicked(true); // Set deleteClicked state to true
       // You may also want to refresh the form templates list after deletion
       fetchFormNames();
     } catch (error) {
       console.error("Error deleting form template:", error);
     }
   };
+  
 
 
   //table render formats
@@ -227,7 +231,7 @@ export default function FormPage() {
           />
         </div>
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-start">
-          {selectedForm && !creatingForm && (
+          {selectedForm && !creatingForm && !deleteClicked && (
             <div className="text-center mb-4">
               <h2>{selectedForm}</h2>
               <div className="form-description-container">
@@ -258,6 +262,9 @@ export default function FormPage() {
                 </div>
               </div>
             </div>
+          )}
+          {deleteClicked && (
+          <p className="text-center">No form selected after deletion.</p>
           )}
           {selectedForm && creatingForm &&(
             <FillOutForm
