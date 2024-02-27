@@ -121,6 +121,7 @@ export default function FormPage() {
     queryParams.append('formName', selectedForm.formName);
     // Append other form details as needed
   
+    //look into favourites
     window.location.href = `/formbuilder?${queryParams.toString()}`;
   };
 
@@ -128,27 +129,31 @@ export default function FormPage() {
     window.alert('its working')
   }
 
-  const handleOpenDeleteModal = () => {
-    setDeleteModalVisible(true);
-  };
 
   const handleCloseDeleteModal = () => {
     setDeleteModalVisible(false);
   };
 
-  const handleDelete = () => {
-    // Perform the delete action here
-    // You may need to make a request to your backend API to delete the form template and associated forms
-    // Once the delete action is completed, you can close the modal
-    handleCloseDeleteModal();
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/formTemplates/${selectedForm}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete form template');
+      }
+      const data = await response.json();
+      console.log(data.message); // Log success message
+      handleCloseDeleteModal(); // Close the delete modal
+      // You may also want to refresh the form templates list after deletion
+      fetchFormNames();
+    } catch (error) {
+      console.error("Error deleting form template:", error);
+    }
   };
-
-  // eslint-disable-next-line 
-  const handleDeleteForm = () => {
-    // Placeholder implementation for now
-    console.log("Delete button clicked");
-  };
-  
 
 
   //table render formats
@@ -246,7 +251,7 @@ export default function FormPage() {
                     <span style={{ margin: 'auto' }}>Edit</span>
                   </Button>
                     {/* Add Delete button */}
-                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleOpenDeleteModal}>
+                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleDelete}>
                     <span style={{ margin: 'auto' }}>Delete</span>
                   </Button>
                 </div>
