@@ -65,36 +65,14 @@ export default function FormPage() {
     }
   };
 
-  const fetchSelectedFormName = async () => {
-    try {
-      if (!selectedForm) return null
-      const response = await fetch(`${apiUrl}/formTemplates/${fav}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      if (!response.ok) {
-        throw new Error('Failed to fetch form template data');
-      }
-      const data = await response.json();
-      fetchUserForms(data.template._id);
-    } catch (error) {
-      console.error("Error fetching form template data:", error);
-    }
-  };
   //useEffects
   useEffect(() => {
     
     fetchFormNames()
-    fetchSelectedFormName()
+    //fetchSelectedFormName()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    fetchSelectedFormName()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[userForms])
 
   //handles
   const handleFormTemplateSelect = (record) => {
