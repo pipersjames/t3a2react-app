@@ -16,7 +16,7 @@ export default function FormPage() {
   //useParams
   const { fav } = useParams()
   //useStates
-  const [formNames, setFormNames] = useState([]);
+  const [formTemplates, setFormTemplates] = useState([]);
   const [selectedForm, setSelectedForm] = useState(fav || null);
   const [formDescription, setFormDescription] = useState("");
   const [creatingForm, setCreatingForm] = useState(false); // New state
@@ -47,7 +47,7 @@ export default function FormPage() {
       }
   }
 
-  const fetchFormNames = async () => {
+  const fetchFormTemplates = async () => {
     try {
       const response = await fetch(`${apiUrl}/formTemplates/`, {
         method: 'GET',
@@ -59,7 +59,7 @@ export default function FormPage() {
         throw new Error('Failed to fetch form template data');
       }
       const data = await response.json();
-      setFormNames(data.result);
+      setFormTemplates(data.result);
     } catch (error) {
       console.error("Error fetching form template data:", error);
     }
@@ -68,7 +68,7 @@ export default function FormPage() {
   //useEffects
   useEffect(() => {
     
-    fetchFormNames()
+    fetchFormTemplates()
     //fetchSelectedFormName()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -90,6 +90,7 @@ export default function FormPage() {
   const handleCreateForm = () => {
     if (formDescription.trim() !== "") { // Check if form description is not empty
       setCreatingForm(true); // Set creatingForm state to true
+      console.log(formTemplates, selectedForm)
     } else {
       alert("Please enter a form description.");
     }
@@ -120,7 +121,7 @@ export default function FormPage() {
       handleCloseDeleteModal(); // Close the delete modal
       setDeleteClicked(true); // Set deleteClicked state to true
       // You may also want to refresh the form templates list after deletion
-      fetchFormNames();
+      fetchFormTemplates();
     } catch (error) {
       console.error("Error deleting form template:", error);
     }
@@ -188,7 +189,7 @@ export default function FormPage() {
         <div className="col-md-3">
           <h1>Form Page</h1>
           <Table 
-            dataSource={formNames} 
+            dataSource={formTemplates} 
             columns={selectionColumns} 
             rowKey="_id"
             rowClassName='hoverPointer'
@@ -242,9 +243,10 @@ export default function FormPage() {
               formName={selectedForm}
               formDescription={formDescription}
               setFormDescription={setFormDescription}
+              fetchUserForms={fetchUserForms}
             />
           )}
-          {!creatingForm && userForms.length > 0 && (
+          {!creatingForm && userForms.length > 0 && formTemplates.find(template => template.formName === selectedForm) && (
             <Table 
             dataSource={userForms} 
             columns={formColumns} 
