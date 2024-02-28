@@ -14,7 +14,8 @@ export default function CompletedForm() {
     //useStates
     const [formId] = useState(id || '')
     const [formData, setFormData] = useState(null);
-
+    const [status, setStatus] = useState('')
+    //Api Calls
     const fetchForm = async () => {
         try {
           const response = await fetch(`${apiUrl}/forms/${formId}`, {
@@ -28,11 +29,34 @@ export default function CompletedForm() {
           }
           const data = await response.json();
           setFormData(data.result);
+          setStatus(data.result.status)
           console.log(data.result)
         } catch (error) {
           console.error("Error fetching form template data:", error);
         }
       };
+      const closeForm = async () => {
+        try {
+          const response = await fetch (`${apiUrl}/forms/${formId}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              status: 'closed'
+            })
+          })
+          if (!response.ok) {
+            throw new Error('failed to close the form')
+          }
+          const data = await response.json()
+          console.log(data.result)
+          setStatus(data.result)
+        } catch (error) {
+          console.error("Error closing the form")
+        }
+      }
+      // useEffects
       useEffect(() => {
         fetchForm()
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,19 +88,31 @@ export default function CompletedForm() {
                                             })}
                                     </div>    
                             ))}
-                            {formData && (formData.status === 'open' || formData.status === 'pending') && 
+                            {formData && (
                               <div className="text-center">
                                 <div>
-                                <img src={lineImage} alt="line" className="img-fluid" />
-                                  <label htmlFor="">Add Comment Here</label>
-                                  <textarea className="form-control mb-4"></textarea>        
-                                </div>                                
-                                  <div>
-                                    <button onClick='' type="submit" className="btn btn-primary px-5">Re-assign</button>
-                                    <button onClick='' type="button" className='btn btn-secondary px-5'>Close Form</button>
-                                  </div>
-                                
-                              </div>}
+                                  <img src={lineImage} alt="line" className="img-fluid" />
+                                </div>
+                                {status === 'closed' ? (
+                                  <button type="submit" className="btn btn-primary px-5">
+                                    Return
+                                  </button>
+                                ) : (
+                                  <>
+                                    <label htmlFor="">Add Comment Here</label>
+                                    <textarea className="form-control mb-4"></textarea>
+                                    <div>
+                                      <button type="submit" className="btn btn-primary px-5">
+                                        Re-assign
+                                      </button>
+                                      <button onClick={closeForm} type="button" className='btn btn-secondary px-5'>
+                                        Close Form
+                                      </button>
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                            )}
                         </div>
                     )}
                 </div>
