@@ -1,5 +1,5 @@
 
-export default function FullNameInput({edit , index, handleInputChange, formData}) {
+export default function FullNameInput({edit , index, handleInputChange, formData, submittedFormData, action}) {
 
   const value = formData && formData[index] !== undefined ? formData[index] : ''
 
@@ -12,7 +12,9 @@ export default function FullNameInput({edit , index, handleInputChange, formData
     <div>
       <div className="form-group">
         <label>Full Name:</label>
-        <input
+        {action ? <p className="mt-2 border">{submittedFormData} 
+        </p>
+        : <input
           type="text"
           className="form-control"
           id="fullName"
@@ -20,7 +22,7 @@ export default function FullNameInput({edit , index, handleInputChange, formData
           onChange={handleFullNameChange}
           placeholder=""
           disabled={edit}
-        />
+        />}
         </div>
     </div>
   );

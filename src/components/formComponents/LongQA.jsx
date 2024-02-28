@@ -2,7 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const ShortQA = ({ setQuestionHeaders, edit , fill, index, handleInputChange, formData, questionHeader}) => {
+const ShortQA = ({ 
+  setQuestionHeaders, 
+  edit, 
+  fill, 
+  index, 
+  handleInputChange, 
+  formData, 
+  questionHeader, 
+  submittedFormData, 
+  action
+}) => {
   const [title, setTitle] = useState(questionHeader || "");
   const [editMode, setEditMode] = useState(edit);
   const [placeHolder, setPlaceHolder] = useState('')
@@ -58,7 +68,8 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index, handleInputChange, fo
           onChange={handleTitleChange}
           disabled={!editMode} // Disable editing if not in edit mode
         />}
-        {!editMode && (
+        {action ? (<p className="mt-2 border">{submittedFormData}</p>)
+          : (!editMode && (
           <textarea
             className="form-control"
             value={value || ''}
@@ -66,7 +77,7 @@ const ShortQA = ({ setQuestionHeaders, edit , fill, index, handleInputChange, fo
             rows="3"
             placeholder={placeHolder}
             disabled={!fill} 
-          />
+          />)
         )}
       </div>
       {/* Show Save button when in edit mode */}

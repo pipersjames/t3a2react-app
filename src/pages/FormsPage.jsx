@@ -96,8 +96,10 @@ export default function FormPage() {
     }
   };
 
-  const handleFormRowSelect = () => {
-    window.alert('its working')
+  const handleFormRowSelect = (record) => {
+    const id = record._id
+    
+    navigate(`/actions/${id}`)
   }
 
 
@@ -252,8 +254,8 @@ export default function FormPage() {
             columns={formColumns} 
             rowClassName='hoverPointer'
             rowKey='_id'
-            onRow={() => ({
-                onClick: handleFormRowSelect
+            onRow={(record) => ({
+                onClick: () => handleFormRowSelect(record)
             })}
         />)}
           {/* Delete confirmation modal */}
