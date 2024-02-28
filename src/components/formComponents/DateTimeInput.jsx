@@ -1,5 +1,5 @@
 
-export default function DateTimeInput({edit, index, handleInputChange, formData}) {
+export default function DateTimeInput({edit, index, handleInputChange, formData, submittedFormData, action}) {
   
   const value = formData && formData[index] !== undefined ? formData[index] : ''
 
@@ -13,12 +13,15 @@ export default function DateTimeInput({edit, index, handleInputChange, formData}
     <div>
         <label>Date and Time:</label>
           <div>
-            <input 
-              type="datetime-local" 
-              value={value || ''} 
-              onChange={handleDateTimeChange} 
-              disabled={edit}
-              />
+          {action ? <p className="mt-2 border">{submittedFormData}</p>
+          : 
+          <input 
+            type="datetime-local" 
+            value={value || ''} 
+            onChange={handleDateTimeChange} 
+            disabled={edit}
+          />
+  }
           </div>
     </div>
   );

@@ -1,5 +1,5 @@
 
-export default function EmailInput({edit , index, handleInputChange, formData}){
+export default function EmailInput({edit , index, handleInputChange, formData, submittedFormData, action}){
 
   const value = formData && formData[index] !== undefined ? formData[index] : ''
 
@@ -12,7 +12,8 @@ export default function EmailInput({edit , index, handleInputChange, formData}){
     <div>
       <div className="form-group">
         <label htmlFor="email">Email:</label>
-        <input
+        {action ? <p className="mt-2 border">{submittedFormData}</p>
+          : <input
           type="email"
           className="form-control"
           id="email"
@@ -21,6 +22,7 @@ export default function EmailInput({edit , index, handleInputChange, formData}){
           placeholder=""
           disabled={edit}
         />
+  }
         </div>
     </div>
   );
