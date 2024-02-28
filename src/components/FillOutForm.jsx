@@ -5,7 +5,7 @@ import { FavouritesContext } from "../contexts/FavouritesProvider";
 import Cookies from "js-cookie";
 
 
-export default function FillOutForm({formName, formDescription, setCreatingForm, setFormDescription, renderedFormComponents, preview}) {
+export default function FillOutForm({formName, formDescription, setCreatingForm, setFormDescription, renderedFormComponents, preview, fetchUserForms}) {
 
     const jwt = Cookies.get('jwt')
 
@@ -99,6 +99,7 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
             if (response.ok) {
                 setCreatingForm(false)
                 setFormDescription('')
+                fetchUserForms(formTemplate._id)
             } else {
                 console.error('Form submission failed')
             }
