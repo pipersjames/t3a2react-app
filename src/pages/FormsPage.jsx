@@ -4,7 +4,7 @@ import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
 import Cookies from "js-cookie";
 import moment from 'moment'
-import {useNavigate, useParams} from 'react-router-dom'
+import {useNavigate, useParams, NavLink} from 'react-router-dom'
 
 
 export default function FormPage() {
@@ -22,6 +22,8 @@ export default function FormPage() {
   const [creatingForm, setCreatingForm] = useState(false); // New state
   const [userForms, setUserForms] = useState([]);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State for delete confirmation modal visibility
+  const [deleteClicked, setDeleteClicked] = useState(false);
+
 
 
   //API call functions
@@ -115,38 +117,35 @@ export default function FormPage() {
     }
   };
 
-  const handleEditForm = () => {
-    // Set selected form details in query parameters and navigate to FormBuilder page
-    const queryParams = new URLSearchParams();
-    queryParams.append('formName', selectedForm.formName);
-    // Append other form details as needed
-  
-    window.location.href = `/formbuilder?${queryParams.toString()}`;
-  };
-
   const handleFormRowSelect = () => {
     window.alert('its working')
   }
 
-  const handleOpenDeleteModal = () => {
-    setDeleteModalVisible(true);
-  };
 
   const handleCloseDeleteModal = () => {
     setDeleteModalVisible(false);
   };
 
-  const handleDelete = () => {
-    // Perform the delete action here
-    // You may need to make a request to your backend API to delete the form template and associated forms
-    // Once the delete action is completed, you can close the modal
-    handleCloseDeleteModal();
-  };
-
-  // eslint-disable-next-line 
-  const handleDeleteForm = () => {
-    // Placeholder implementation for now
-    console.log("Delete button clicked");
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/formTemplates/${selectedForm}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete form template');
+      }
+      const data = await response.json();
+      console.log(data.message); // Log success message
+      handleCloseDeleteModal(); // Close the delete modal
+      setDeleteClicked(true); // Set deleteClicked state to true
+      // You may also want to refresh the form templates list after deletion
+      fetchFormNames();
+    } catch (error) {
+      console.error("Error deleting form template:", error);
+    }
   };
   
 
@@ -222,7 +221,7 @@ export default function FormPage() {
           />
         </div>
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-start">
-          {selectedForm && !creatingForm && (
+          {selectedForm && !creatingForm && !deleteClicked && (
             <div className="text-center mb-4">
               <h2>{selectedForm}</h2>
               <div className="form-description-container">
@@ -242,17 +241,22 @@ export default function FormPage() {
                     <span style={{ margin: 'auto' }}>Create Form</span>
                   </Button>
                   {/* Add Edit button */}
-                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleEditForm}>
-                    <span style={{ margin: 'auto' }}>Edit</span>
+                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }}>
+                    <NavLink to={`/formbuilder?formName=${selectedForm}`}style={{ textDecoration: 'none' }}>
+                      <span style={{ margin: 'auto' }}>Edit</span>
+                    </NavLink>
                   </Button>
                     {/* Add Delete button */}
-                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleOpenDeleteModal}>
+                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleDelete}>
                     <span style={{ margin: 'auto' }}>Delete</span>
                   </Button>
                 </div>
                 </div>
               </div>
             </div>
+          )}
+          {deleteClicked && (
+          <p className="text-center">No form selected after deletion.</p>
           )}
           {selectedForm && creatingForm &&(
             <FillOutForm
