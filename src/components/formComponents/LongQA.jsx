@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const ShortQA = ({ 
+const LongQA = ({ 
   setQuestionHeaders, 
   edit, 
   fill, 
@@ -94,4 +94,4 @@ const ShortQA = ({
   );
 };
 
-export default ShortQA;
+export default LongQA;
