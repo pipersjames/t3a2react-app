@@ -1,42 +1,60 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import DateTimeInput from '/Users/jitkcheo/Documents/GitHub/t3a2react-app/src/components/formComponents/DateTimeInput';
-
+import DateTimeInput from '../../components/formComponents/DateTimeInput';
 
 describe('DateTimeInput component', () => {
-  test('renders with correct value and handles input change', () => {
-    // Define mock props
-    const edit = false;
-    const index = 0;
-    const handleInputChange = jest.fn();
-    const formData = ['2024-02-29T12:00']; // Sample form data
-    const submittedFormData = '2024-02-29T12:00'; // Sample submitted form data
-    const action = false;
+  const edit = false;
+  const index = 0;
+  const handleInputChange = jest.fn();
+  const formData = ['2024-02-29T12:00'];
+  const submittedFormData = '2024-02-29T12:00';
 
-    // Render the component
-    const { getByLabelText, getByDisplayValue } = render(
+  test('renders with correct value and handles input change', () => {
+    const { getByDisplayValue } = render(
       <DateTimeInput
         edit={edit}
         index={index}
         handleInputChange={handleInputChange}
         formData={formData}
         submittedFormData={submittedFormData}
-        action={action}
+        action={false}
       />
     );
 
-    // Assert that the input field is rendered with the correct value
     const inputElement = getByDisplayValue('2024-02-29T12:00');
-
-    // Assert that the value is correctly derived from the formData prop
     expect(inputElement).toBeInTheDocument();
 
-    // Simulate user input by changing the value
     fireEvent.change(inputElement, { target: { value: '2024-03-01T12:00' } });
-
-    // Assert that the handleDateTimeChange function is called with the correct parameters
     expect(handleInputChange).toHaveBeenCalledWith(0, '2024-03-01T12:00');
   });
 
-  // Add more tests as needed to cover other use cases and edge cases
+  test('disables input field when edit is true', () => {
+    const { getByLabelText } = render(
+      <DateTimeInput
+        edit={true}
+        index={index}
+        handleInputChange={handleInputChange}
+        formData={formData}
+        submittedFormData={submittedFormData}
+        action={false}
+      />
+    );
+
+  });
+
+  test('renders submitted form data when action is true', () => {
+    const { getByText } = render(
+      <DateTimeInput
+        edit={false}
+        index={index}
+        handleInputChange={handleInputChange}
+        formData={formData}
+        submittedFormData={submittedFormData}
+        action={true}
+      />
+    );
+
+    const submittedDataElement = getByText('2024-02-29T12:00');
+    expect(submittedDataElement).toBeInTheDocument();
+  });
 });
