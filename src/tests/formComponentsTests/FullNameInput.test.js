@@ -34,4 +34,30 @@ describe('FullNameInput component', () => {
     // Assert that the handleFullNameChange function is called with the correct parameters
     expect(handleInputChange).toHaveBeenCalledWith(0, 'Jane Doe');
   });
+
+  test('renders submitted form data when action is true', () => {
+    // Define mock props with action set to true
+    const edit = false;
+    const index = 0;
+    const handleInputChange = jest.fn();
+    const formData = ['John Doe']; // Sample form data
+    const submittedFormData = 'John Doe'; // Sample submitted form data
+    const action = true;
+
+    // Render the component
+    const { getByText } = render(
+      <FullNameInput
+        edit={edit}
+        index={index}
+        handleInputChange={handleInputChange}
+        formData={formData}
+        submittedFormData={submittedFormData}
+        action={action}
+      />
+    );
+
+    // Assert that the submitted form data is rendered
+    const submittedDataElement = getByText('John Doe');
+    expect(submittedDataElement).toBeInTheDocument();
+  });
 });
