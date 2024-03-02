@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import Layout from '../components/layouts/Layout';
+import Layout from '../components/Layout';
 import SelectionTable from '../components/FormBuilderSelections';
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormTemplateContext } from '../contexts/FormTemplateProvider';
@@ -30,7 +30,7 @@ const FormBuilder = () => {
     const response = await fetch(`${apiUrl}/users/`)
     const data = await response.json()
     const userNames = data.result.map(user => ({
-      value: `${user.fname} ${user.lname}`,
+      value: `${user._id}`,
       label: `${user.fname} ${user.lname}`
     }))
     setAssignedOptions(userNames)
