@@ -30,8 +30,10 @@ const ShortQA = ({
 
   // Function to handle title change
   const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-};
+    const newTitle = event.target.value;
+    setTitle(newTitle);
+    handleInputChange(index, newTitle); // Trigger handleInputChange with the updated title
+  };
 
   // Function to handle description change
   const handleDescriptionChange = (event) => {
@@ -41,7 +43,8 @@ const ShortQA = ({
         handleInputChange(index, value)
       } else {
         // Truncate the description if it exceeds the character limit
-        handleInputChange(index, value.slice(0, maxCharacters))
+        const truncatedValue = value.slice(0, maxCharacters);
+        handleInputChange(index, truncatedValue);
     }
   };
 
@@ -76,7 +79,7 @@ const ShortQA = ({
             value={value || ''}
             onChange={handleDescriptionChange}
             rows="3"
-            placeholder={placeHolder}
+            placeholder={placeHolder || 'Answer'}
             disabled={!fill} 
           />)
         )}
