@@ -42,6 +42,7 @@ export default function FormPage() {
         }
         const data = await response.json();
         setUserForms(data.result)
+        console.log(data)
       } catch (error) {
         console.error("Error fetching form data:", error);
       }
@@ -77,7 +78,8 @@ export default function FormPage() {
   //handles
   const handleFormTemplateSelect = (record) => {
     navigate(`/forms/${record.formName}`)
-    setSelectedForm(record.formName); 
+    setSelectedForm(record.formName);
+    setDeleteClicked(false);  
     setCreatingForm(false);
     setFormDescription(""); 
     fetchUserForms(record._id)
@@ -98,7 +100,6 @@ export default function FormPage() {
 
   const handleFormRowSelect = (record) => {
     const id = record._id
-    
     navigate(`/actions/${id}`)
   }
 
@@ -121,8 +122,7 @@ export default function FormPage() {
       const data = await response.json();
       console.log(data.message); // Log success message
       handleCloseDeleteModal(); // Close the delete modal
-      setDeleteClicked(true); // Set deleteClicked state to true
-      // You may also want to refresh the form templates list after deletion
+      setDeleteClicked(true); 
       fetchFormTemplates();
     } catch (error) {
       console.error("Error deleting form template:", error);
@@ -170,7 +170,7 @@ export default function FormPage() {
       dataIndex: 'formTemplate',
       key: 'formTemplate',
       render: (formTemplate) => {
-        return formTemplate.assignedTo
+        return formTemplate.assignedTo.fname
       }
     },
     {
