@@ -31,6 +31,7 @@ const LongQA = ({
   // Function to handle title change
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
+    handleInputChange(index,event.target.value)
 };
 
   // Function to handle description change
@@ -88,7 +89,7 @@ const LongQA = ({
       )}
       {/* Show pencil icon to enable editing */}
       {!editMode && !fill && (
-        <FontAwesomeIcon icon={faPencilAlt} className="text-muted ml-2" onClick={handleEditClick} />
+        <FontAwesomeIcon icon={faPencilAlt} className="text-muted ml-2" onClick={handleEditClick} data-testid="edit-icon" />
       )}
     </div>
   );
