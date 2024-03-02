@@ -53,7 +53,7 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
         }));
       };
 
-    const handleFavCheckboxChange = () => {
+    const handleFavCheckboxChange = (formName) => {
         try {
             const newCheckedState = !isChecked;
             setIsChecked(newCheckedState);
