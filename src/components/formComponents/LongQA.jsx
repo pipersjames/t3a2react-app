@@ -89,7 +89,7 @@ const LongQA = ({
       )}
       {/* Show pencil icon to enable editing */}
       {!editMode && !fill && (
-        <FontAwesomeIcon icon={faPencilAlt} className="text-muted ml-2" onClick={handleEditClick} />
+        <FontAwesomeIcon icon={faPencilAlt} className="text-muted ml-2" onClick={handleEditClick} data-testid="edit-icon" />
       )}
     </div>
   );
