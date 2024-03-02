@@ -31,6 +31,7 @@ const LongQA = ({
   // Function to handle title change
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
+    handleInputChange(index,event.target.value)
 };
 
   // Function to handle description change
