@@ -3,7 +3,7 @@ import { useState, useContext } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
 import { ApiContext } from "../contexts/ApiProvider"
 
-export default function CreateAccount() {
+export default function CreateAccountPage() {
     
   const navigate = useNavigate()
 
@@ -58,7 +58,7 @@ export default function CreateAccount() {
   }
 
     return (
-      <div className="createAccountContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5 overflow-auto">
+      <div className="createAccountPageContainer pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5 overflow-auto">
         <div className="container">
       <div className="accountBox row justify-content-center border rounded p-4">
         <div className="col-md-5">
@@ -130,7 +130,7 @@ export default function CreateAccount() {
                 </button>
                 <div className="d-flex mt-4 justify-content-center">
                 <p>Have an account?</p>
-                <NavLink to="/">Sign up</NavLink>
+                <NavLink to="/">Login</NavLink>
                 </div>
             </div>
           </form>
