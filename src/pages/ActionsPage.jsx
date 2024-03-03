@@ -143,7 +143,7 @@ export default function CompletedForm() {
   return (
       <div className="container">
           <div className="row justify-content-center mt-5">
-            <div className="col-md-3">
+            <div className={formData ? 'col-md-3' : 'col-md-6'}>
             <h1 className="text-center">Prevously Submitted Forms</h1>
 
               <ActionsMenu setFormId={setFormId}/>

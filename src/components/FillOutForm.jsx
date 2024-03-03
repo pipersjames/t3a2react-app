@@ -109,7 +109,7 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
     return (
         <div data-testid="fill-out-form-container" className="container">
             <div className="row justify-content-center mt-5">
-                <div className="col-md-6"> 
+                <div className="col-md-9"> 
                     {formTemplate && (
                         <div className=""> 
                             <div className="d-flex justify-content-center align-items-baseline mb-4"> 

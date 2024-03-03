@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
 
-export default function FavouriteForm(fav) {
+export default function FavouriteForms(fav) {
 
 
 
@@ -14,8 +14,8 @@ export default function FavouriteForm(fav) {
                 <div>
                 <div className="card bg-primary text-white mb-3">
                     <div className="card-body">
-                        <h3 className="card-title">{fav.fav}</h3>
-                    <p className="card-text">Click here to fill out the {fav.fav} Form:</p>
+                        <h3 className="card-title">{fav.fav} Form</h3>
+                    <p className="card-text">Click here to fill out the {fav.fav} Form</p>
                     </div>
                 </div>
                 </div>
