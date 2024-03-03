@@ -1,50 +1,20 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormTemplateContext } from "../contexts/FormTemplateProvider"
-import { FavouritesContext } from "../contexts/FavouritesProvider";
 import Cookies from "js-cookie";
+import FavouritesCheckBox from "./FavouritesCheckBox";
 
 
 export default function FillOutForm({formName, formDescription, setCreatingForm, setFormDescription, renderedFormComponents, preview, fetchUserForms}) {
-
+    //cookies
     const jwt = Cookies.get('jwt')
-
+    //contexts
     const {apiUrl} = useContext(ApiContext)
     const {formComponents, formTemplate, fetchFormTemplate } = useContext(FormTemplateContext)
-    const {getFavourites, patchFavourites, favourites} = useContext(FavouritesContext)
-
-    
-    const [isChecked, setIsChecked] = useState(false);
+    //useStates
     const [formData, setFormData] = useState({});
   
-    //API call functions
-
-    //use Effects
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await getFavourites(jwt)
-                await fetchFormTemplate(formName, renderedFormComponents)
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (formName && favourites.includes(formName)) {
-            setIsChecked(true);
-        } else {
-            setIsChecked(false);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formName]);
-
-
     //handles
-
     const handleInputChange = (index, value) => {
         setFormData(prevData => ({
           ...prevData,
@@ -52,27 +22,6 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
         }));
       };
 
-    const handleFavCheckboxChange = () => {
-        try {
-            const newCheckedState = !isChecked;
-            setIsChecked(newCheckedState);
-
-            let updatedFavourites = [...favourites];
-            console.log(updatedFavourites)
-            
-            if (favourites.length === 0) {
-                updatedFavourites.push(formName);
-            } else if (newCheckedState && !favourites.includes(formName)) {
-                updatedFavourites.push(formName);
-            } else if (!newCheckedState) {
-                updatedFavourites = favourites.filter(form => form !== formName);
-            }
-            patchFavourites(updatedFavourites, jwt);
-        } catch (error) {
-            console.error('Error handling checkbox change:', error);
-        }
-    };
-    //Api Handle
     const handleSubmit = async (event) => {
         event.preventDefault()
 
@@ -104,6 +53,18 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
         }
     
     }
+    //use Effects
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await fetchFormTemplate(formName, renderedFormComponents)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
 
     return (
@@ -114,17 +75,7 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
                         <div className=""> 
                             <div className="d-flex justify-content-center align-items-baseline mb-4"> 
                                 <h1 className="text-md-center text-lg-left display-1 mx-3">{formName}</h1>
-                                <div className="form-check mx-3 ">
-                                    <input 
-                                        className="form-check-input" 
-                                        type="checkbox" 
-                                        id="favCheckBox"
-                                        checked={isChecked}
-                                        onChange={handleFavCheckboxChange} 
-                                        disabled={preview}
-                                        />
-                                    <label className="form-check-label" htmlFor="favCheckBox">Favourite</label>
-                                </div>
+                                <FavouritesCheckBox formName={formName} preview={preview}/>
                             </div>
                                 <div className="form-description-container">
                                     <h2 className="text-center border-bottom p-3">{formDescription}</h2>
