@@ -62,10 +62,7 @@ describe('FormTemplateProvider', () => {
         expect(parsedTemplate.property1).toBeDefined();
         expect(parsedTemplate.property2).toBeDefined();
         // Add more assertions as needed
-    } else {
-        // Handle the case when formTemplateContent is empty
     }
-    
 });
 
   it('sets formTemplate correctly without fetching', () => {
@@ -87,9 +84,6 @@ describe('FormTemplateProvider', () => {
       const parsedTemplate = JSON.parse(formTemplateContent);
       expect(parsedTemplate.property1).toBeDefined();
       expect(parsedTemplate.property2).toBeDefined();
-      // Add more assertions as needed
-    } else {
-      // Handle the case when formTemplateContent is empty
-      // You can add an assertion here if needed, or handle it according to your test requirements
+
     }});
 });
