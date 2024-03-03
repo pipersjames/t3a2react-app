@@ -58,8 +58,7 @@ export default function CompletedForm() {
     const handleMessageChange = (event) => {
       setMessage(event.target.value)
     }
-
-
+    
     const handleCloseForm = async () => {
       try {
         const response = await fetch (`${apiUrl}/forms/${formId}`, {
@@ -124,6 +123,10 @@ export default function CompletedForm() {
         console.error("Error re-assigning the form")
       }
     }
+
+    const handleClosedFormReturn = () => { 
+      setFormData(null)
+    }
     
     // useEffects
     useEffect(() => {
@@ -144,8 +147,6 @@ export default function CompletedForm() {
       <div className="container">
           <div className="row justify-content-center mt-5">
             <div className={formData ? 'col-md-3' : 'col-md-6'}>
-            <h1 className="text-center">Prevously Submitted Forms</h1>
-
               <ActionsMenu setFormId={setFormId}/>
             </div>
               <div className="col-md-9"> 
@@ -185,7 +186,7 @@ export default function CompletedForm() {
                                 <img src={lineImage} alt="line" className="img-fluid" />
                               </div>
                               {status === 'closed' ? (
-                                <button type="submit" className="btn btn-primary px-5">
+                                <button type="button" onClick={handleClosedFormReturn} className="btn btn-primary px-5">
                                   Return
                                 </button>
                               ) : (
