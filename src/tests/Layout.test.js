@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Layout from '../components/layouts/Layout';
+import Layout from '../components/Layout'
 
 describe('Layout component', () => {
     test('renders children inside a responsive container', () => {
