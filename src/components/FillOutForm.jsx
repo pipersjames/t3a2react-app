@@ -82,10 +82,9 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
         const form = {
             description: formDescription,
             formTemplate: formTemplate._id,
-            formData: formData
+            formData: formData,
+            assignedTo: formTemplate.assignedTo
         }
-        console.log(formData)
-
         try {
             const response = await fetch(`${apiUrl}/forms/submit`, {
                 method: 'POST',

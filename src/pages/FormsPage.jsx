@@ -175,13 +175,12 @@ export default function FormPage() {
     },
     {
       title: 'tasked user',
-      dataIndex: 'actions',
-      key: 'actions',
-      render: (actions) => {
-        return actions ? actions.user : null
+      dataIndex: 'taskedUser',
+      key: 'taskedUser',
+      render: (taskedUser) => {
+         return taskedUser ? `${taskedUser.fname} ${taskedUser.lname}` : null
       }
     }
-
   ]
 
   return (
@@ -201,7 +200,7 @@ export default function FormPage() {
           }
           />
         </div>
-        <div className="col-md-6 d-flex flex-column align-items-center justify-content-start">
+        <div className="col-md-9 d-flex flex-column align-items-center justify-content-start">
           {selectedForm && !creatingForm && !deleteClicked && (
             <div className="text-center mb-4">
               <h2>{selectedForm}</h2>
@@ -249,15 +248,19 @@ export default function FormPage() {
             />
           )}
           {!creatingForm && userForms.length > 0 && formTemplates.find(template => template.formName === selectedForm) && (
-            <Table 
-            dataSource={userForms} 
-            columns={formColumns} 
-            rowClassName='hoverPointer'
-            rowKey='_id'
-            onRow={(record) => ({
-                onClick: () => handleFormRowSelect(record)
-            })}
-        />)}
+            <>
+              <h1>Prevously Submitted Forms</h1>
+              <Table 
+                dataSource={userForms} 
+                columns={formColumns} 
+                rowClassName='hoverPointer'
+                rowKey='_id'
+                onRow={(record) => ({
+                    onClick: () => handleFormRowSelect(record)
+                })}
+              />
+            </>
+            )}
           {/* Delete confirmation modal */}
           <Modal
             title="Confirm Delete"
