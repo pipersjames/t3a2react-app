@@ -24,7 +24,6 @@ export function FavouritesProvider(props) {
                 })
             });
             const data = await response.json();
-            console.log(data)
             //setFavourites(data)
             console.log('Favourites updated:', data);
         } catch (error) {

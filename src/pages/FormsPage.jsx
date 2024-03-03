@@ -5,6 +5,7 @@ import FillOutForm from "../components/FillOutForm";
 import Cookies from "js-cookie";
 import moment from 'moment'
 import {useNavigate, useParams, NavLink} from 'react-router-dom'
+import FavouritesCheckBox from "../components/FavouritesCheckBox";
 
 
 export default function FormPage() {
@@ -122,7 +123,7 @@ export default function FormPage() {
       const data = await response.json();
       console.log(data.message); // Log success message
       handleCloseDeleteModal(); // Close the delete modal
-      setDeleteClicked(true); 
+      setSelectedForm(null)
       fetchFormTemplates();
     } catch (error) {
       console.error("Error deleting form template:", error);
@@ -201,10 +202,10 @@ export default function FormPage() {
           />
         </div>
         {selectedForm && !deleteClicked && (
-        <div className="col-md-9 d-flex flex-column align-items-center justify-content-start">
-          
+        <div className="col-md-9 d-flex justify-content-center"> 
           {!creatingForm && <div className="text-center mb-4">
               <h2>{selectedForm}</h2>
+              <FavouritesCheckBox formName={selectedForm} />
               <div className="form-description-container">
                 <div className="row">
                   <div className="col">
@@ -235,10 +236,6 @@ export default function FormPage() {
                 </div>
               </div>
             </div>}
-          
-          {deleteClicked && (
-          <p className="text-center">No form selected after deletion.</p>
-          )}
           {selectedForm && creatingForm &&(
             <FillOutForm
               setCreatingForm= {setCreatingForm} 
