@@ -188,7 +188,7 @@ export default function FormPage() {
 
       <div className="row">
         <div className="col-md-3">
-          <h1>Form Page</h1>
+          <h1 className="te">Form Page</h1>
           <Table 
             dataSource={formTemplates} 
             columns={selectionColumns} 
