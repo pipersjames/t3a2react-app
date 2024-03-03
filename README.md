@@ -6,9 +6,26 @@ https://stream-lined.netlify.app/
 
 https://stream-linedd-8391d4c8cf39.herokuapp.com
 
-#### added packages
+#### added packages/libraries
 
 react-router-dom
+
+
+#### User Tests
+
+Round 1 
+
+Login Page
+ - Can i navigate to the create a new user page?
+ yes
+ - if a jwt exists does it automatically log me in?
+ no
+ - does the layout of the page match the wireframes?
+
+ Formbuilder Page
+ - did the side menu render properly? 
+ - did the side menu have a clean loading implentation?
+ - what does it look like in mobile view?
 
 
 #### Attributions

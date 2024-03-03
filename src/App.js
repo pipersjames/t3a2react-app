@@ -1,7 +1,7 @@
 import { Outlet, Route, Routes } from 'react-router-dom';
 import './App.css';
-import CreateAccount from './components/CreateAccount';
-import LoginForm from './components/LoginForm';
+import CreateAccountPage from './pages/CreateAccountPage';
+import LoginPage from './pages/LoginPage';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import AuthChecker from './components/AuthChecker';
@@ -25,14 +25,14 @@ function App() {
         <Route path ='/home' element={<HomePage/>}/>
         <Route path ='/formbuilder' element={<FormBuilder/>}/>
         <Route path ='/forms' element={<FormsPage/>}>
-          <Route path=':fav' element={<FormsPage />}/>
+          <Route path=':fav' element={<FormsPage/>}/>
         </Route>
         <Route path = '/actions' element={<CompletedForm/>}>
           <Route path=':id' element={<CompletedForm/>}/>
         </Route>  
       </Route>
-        <Route path="/" element={<LoginForm/>}/>
-        <Route path='/create-new-user' element={<CreateAccount/>}/>
+        <Route path="/" element={<LoginPage/>}/>
+        <Route path='/create-new-user' element={<CreateAccountPage/>}/>
       </Routes>
     </div>
   );

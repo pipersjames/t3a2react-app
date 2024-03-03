@@ -11,6 +11,6 @@ test('renders login form when the path is "/"', () => {
         </ApiProvider> 
       </MemoryRouter>
     );
-    const loginFormElement = screen.getByTestId('login-form'); // Assuming you set a data-testid for the LoginForm component
-    expect(loginFormElement).toBeInTheDocument();
+    const loginPageElement = screen.getByTestId('login-form'); // Assuming you set a data-testid for the LoginForm component
+    expect(loginPageElement).toBeInTheDocument();
   });
