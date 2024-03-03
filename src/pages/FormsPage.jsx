@@ -186,8 +186,8 @@ export default function FormPage() {
   return (
     <div className="container">
 
-      <div className="row">
-        <div className="col-md-3">
+      <div className="row d-flex justify-content-center">
+        <div className={selectedForm ? 'col-md-3' : 'col-md-6'}>
           <h1 className="te">Form Page</h1>
           <Table 
             dataSource={formTemplates} 
@@ -200,9 +200,10 @@ export default function FormPage() {
           }
           />
         </div>
+        {selectedForm && !deleteClicked && (
         <div className="col-md-9 d-flex flex-column align-items-center justify-content-start">
-          {selectedForm && !creatingForm && !deleteClicked && (
-            <div className="text-center mb-4">
+          
+          {!creatingForm && <div className="text-center mb-4">
               <h2>{selectedForm}</h2>
               <div className="form-description-container">
                 <div className="row">
@@ -216,25 +217,25 @@ export default function FormPage() {
                   </div>
                 </div>
                 <div className="row">
-                <div className="col d-flex flex-column align-items-center">
-                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleCreateForm}>
-                    <span style={{ margin: 'auto' }}>Create Form</span>
+                <div className="col d-flex flex-column align-items-center border-bottom">
+                  <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center" onClick={handleCreateForm}>
+                    <span>Create Form</span>
                   </Button>
                   {/* Add Edit button */}
-                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }}>
+                  <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center">
                     <NavLink to={`/formbuilder?formName=${selectedForm}`}style={{ textDecoration: 'none' }}>
-                      <span style={{ margin: 'auto' }}>Edit</span>
+                      <span>Edit</span>
                     </NavLink>
                   </Button>
                     {/* Add Delete button */}
-                  <Button className="btn btn-primary mb-2" style={{ display: 'flex', alignItems: 'center' }} onClick={handleDelete}>
-                    <span style={{ margin: 'auto' }}>Delete</span>
+                  <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center" onClick={handleDelete}>
+                    <span>Delete</span>
                   </Button>
                 </div>
                 </div>
               </div>
-            </div>
-          )}
+            </div>}
+          
           {deleteClicked && (
           <p className="text-center">No form selected after deletion.</p>
           )}
@@ -270,7 +271,7 @@ export default function FormPage() {
           >
             <p>Are you sure you want to delete this form template and all associated forms?</p>
           </Modal>
-        </div>
+        </div>)}
       </div>
     </div>
   );

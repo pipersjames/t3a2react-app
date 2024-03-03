@@ -21,7 +21,7 @@ const FormBuilder = () => {
   const [accordionItems, setAccordionItems] = useState([]);
   const [renderedFormComponents, setRenderedFormComponents] = useState([]); // State to store form components
   const [assignedTo, setAssignedTo] = useState(); // State for assignedTo input value
-  const [assignedOptions, setAssignedOptions] = useState() // options for assigned dropdown filter
+  const [assignedOptions, setAssignedOptions] = useState([]) // options for assigned dropdown filter
   const [questionHeaders, setQuestionHeaders] = useState([])
   const [showOverlay, setShowOverlay] = useState(false);
   const [ previewTemplate, setPreviewTemplate] = useState({})
@@ -103,7 +103,7 @@ const FormBuilder = () => {
     //test funciton
 
     // Function to handle form submission
-    const handleCreateForm = async () => {
+    const handleCreateFormTemplate = async () => {
       
       if (!formName) {
         window.alert('The Form Needs a Name')
@@ -137,7 +137,7 @@ const FormBuilder = () => {
         if (response.ok) {
           // Form submitted successfully, clear the form
           setFormName('');
-          setAssignedTo();
+          setAssignedTo('');
           setRenderedFormComponents([]);
           setQuestionHeaders([])
           console.log('Form template created successfully');
@@ -193,7 +193,8 @@ const FormBuilder = () => {
               </div>
               {/* Render added form components */}
               {renderedFormComponents.map((component, index) => (
-                <div key={index} className="col-md-5 mb-3 border rounded m-2">
+                <div key={index} className="col-md-5 mb-3 border rounded m-2 d-flex flex-column">
+                  <p>{index+1}</p>
                   {/* Render the component */}
                   {React.createElement(
                     component.type, 
@@ -212,7 +213,7 @@ const FormBuilder = () => {
               <div className="row mt-3">
                 <div className="col-md-12 text-center">
                 <button className='btn btn-secondary mx-2' onClick={handleToggleOverlayPreview}>Preview Form</button>
-                  <button className="btn btn-primary" onClick={handleCreateForm}>Save Template</button>
+                  <button className="btn btn-primary" onClick={handleCreateFormTemplate}>Save Template</button>
                   
                   <div>
                     <Modal show={showOverlay} onHide={handleToggleOverlayPreview} backdrop="static">
