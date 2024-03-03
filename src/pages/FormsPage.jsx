@@ -202,7 +202,7 @@ export default function FormPage() {
           />
         </div>
         {selectedForm && !deleteClicked && (
-        <div className="col-md-9 d-flex justify-content-center"> 
+        <div className="col-md-9 d-flex justify-content-center flex-column align-items-center"> 
           {!creatingForm && <div className="text-center mb-4">
               <h2>{selectedForm}</h2>
               <FavouritesCheckBox formName={selectedForm} />
