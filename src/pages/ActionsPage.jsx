@@ -1,18 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormTemplateContext } from "../contexts/FormTemplateProvider"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import lineImage from '../assets/divider.png';
 import Select from 'react-select'
-import Cookies from "js-cookie";
-import { Table } from "antd";
+import ActionsMenu from "../components/ActionsMenu";
 
 
 export default function CompletedForm() {
-  
-  const navigate = useNavigate()
-  //cookies  
-  const jwt = Cookies.get('jwt')
+   
   //params
   const { id } = useParams()
   //contexts
@@ -25,7 +21,6 @@ export default function CompletedForm() {
   const [assignedTo, setAssignedTo] = useState()
   const [assignedOptions, setAssignedOptions] = useState()
   const [message, setMessage] = useState("")
-  const [assignedToCurrentUser, setAssignedToCurrentUser] = useState([])
   //Api Calls
   const fetchForm = async () => {
       try {
@@ -53,22 +48,8 @@ export default function CompletedForm() {
         value: `${user._id}`,
         label: `${user.fname} ${user.lname}`
       }))
-      console.log(data)
       setAssignedOptions(userNames)
     };
-
-    const fetchActions = async () => {
-      const response = await fetch(`${apiUrl}/forms/actions`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'jwt': jwt
-        }
-      })
-      const data = await response.json()
-      setAssignedToCurrentUser(data.result)
-      console.log(data.result)
-    }
     //handles
     const handleAssignedToChange = (selectedOption) => {
       setAssignedTo(selectedOption);
@@ -78,11 +59,6 @@ export default function CompletedForm() {
       setMessage(event.target.value)
     }
 
-    const handleActionRowSelect = (record) => {
-      const id = record._id
-      setFormId(id)
-      navigate(`/actions/${id}`)
-    } 
 
     const handleCloseForm = async () => {
       try {
@@ -152,11 +128,9 @@ export default function CompletedForm() {
     // useEffects
     useEffect(() => {
       if(!formId){
-        fetchActions()
         return
       }
       const fetchFormData = async () => {
-        await fetchActions()
         await fetchForm();
         await fetchUsernamesFromDatabase();
       };
@@ -165,32 +139,15 @@ export default function CompletedForm() {
     },[formId])
 
     //tablerender formats
-
-    const actionSelections = [
-      {
-        title: "Actions",
-        dataIndex: "description",
-        key: "_id",
-      },
-    ];
   
   return (
       <div className="container">
           <div className="row justify-content-center mt-5">
             <div className="col-md-3">
             <h1>Prevously Submitted Forms</h1>
-              <Table 
-                dataSource={assignedToCurrentUser} 
-                columns={actionSelections} 
-                rowClassName='hoverPointer'
-                rowKey='_id'
-                 onRow={(record) => ({
-                     onClick: () => handleActionRowSelect(record)
-                 })}
-              />
 
+              <ActionsMenu setFormId={setFormId}/>
             </div>
-            
               <div className="col-md-9"> 
               
                   {formData && (
