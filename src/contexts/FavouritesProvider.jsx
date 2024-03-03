@@ -11,7 +11,7 @@ export function FavouritesProvider(props) {
     const [favourites, setFavourites] = useState([])
 
     //API call functions
-    const patchFavourites = async (favourites, jwt) => {
+    const patchFavourites = async (updatedFavourites, jwt) => {
         try {
             const response = await fetch(`${apiUrl}/users/favourites`, {
                 method: 'PATCH',
@@ -20,10 +20,12 @@ export function FavouritesProvider(props) {
                     'jwt': jwt
                 },
                 body: JSON.stringify({
-                    favourite: favourites,
+                    favourite: updatedFavourites,
                 })
             });
             const data = await response.json();
+            console.log(data)
+            //setFavourites(data)
             console.log('Favourites updated:', data);
         } catch (error) {
             console.error('Error updating favourites:', error);
@@ -39,12 +41,11 @@ export function FavouritesProvider(props) {
             }
         })
         const data = await response.json()
-        
-        return data
+        setFavourites(data.favourites)
     }
 
     return (
-        <FavouritesContext.Provider value={{getFavourites, patchFavourites, favourites, setFavourites}}>
+        <FavouritesContext.Provider value={{getFavourites, patchFavourites, favourites}}>
             {props.children}
         </FavouritesContext.Provider>
     )

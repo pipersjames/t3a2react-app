@@ -10,23 +10,12 @@ export default function HomePage() {
     
     const jwt = Cookies.get('jwt')
     
-    const { getFavourites, setFavourites, favourites } = useContext(FavouritesContext);
+    const { getFavourites, favourites } = useContext(FavouritesContext);
     const [loading, setLoading] = useState(true); // State to track loading status
 
     useEffect(() => {
-        const fetchFavourites = async () => {
-            try {
-                const favouritesData = await getFavourites(jwt);
-                setFavourites(favouritesData.favourites);
-                setLoading(false); // Set loading to false after favourites are fetched
-                console.log(favouritesData.favourites);
-            } catch (error) {
-                console.error('Error fetching Favourites:', error);
-                setLoading(false); // Set loading to false on error
-            }   
-        };
-
-        fetchFavourites();
+        getFavourites(jwt)
+        setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -45,7 +34,7 @@ export default function HomePage() {
                             ) : (
                                 favourites && favourites.length > 0 ? (
                                     favourites.map((fav, index) => (
-                                        <div key={index} className="w-50 p-2"> {/* Adjust width and padding as needed */}
+                                        <div key={index} className="w-50 p-2">
                                             <FavouriteForm
                                                 fill={true}
                                                 index={index}
@@ -54,7 +43,7 @@ export default function HomePage() {
                                         </div>
                                     ))
                                 ) : (
-                                    <p>No favourite forms found.</p> // Show message if no favourites are available
+                                    <p>No favourite forms found.</p> 
                                 )
                             )}
                         </div>
