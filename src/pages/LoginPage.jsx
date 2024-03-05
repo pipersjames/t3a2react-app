@@ -50,22 +50,28 @@ export default function LoginPage() {
         }
      }
 
-     const autoLogin = async () => {
-        const response = await fetch(`${apiUrl}/users/auth-checker`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'jwt': jwt
-            }
-        });
+    const autoLogin = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/users/auth-checker`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'jwt': jwt
+                }
+            });
     
-        if (response.ok) {   
-            console.log('Token still valid');
-            navigate('/home');
-        } else {
-            setPreviousSession(true)
+            if (response && response.ok) { // Add a check for response existence
+                console.log('Token still valid');
+                navigate('/home');
+            } else {
+                setPreviousSession(true);
+            }
+        } catch (error) {
+            console.error('Error during autoLogin:', error);
+            setPreviousSession(true); // Set previousSession to true in case of error
         }
     }
+    
 
      useEffect(()=> {
         if (!previousSession) {
