@@ -27,15 +27,35 @@ const FormBuilder = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [ previewTemplate, setPreviewTemplate] = useState({})
   
+  // const fetchUsernamesFromDatabase = async () => {
+  //   const response = await fetch(`${apiUrl}/users/`)
+  //   const data = await response.json()
+  //   const userNames = data.result.map(user => ({
+  //     value: `${user._id}`,
+  //     label: `${user.fname} ${user.lname}`
+  //   }))
+  //   setAssignedOptions(userNames)
+  // };
+
   const fetchUsernamesFromDatabase = async () => {
-    const response = await fetch(`${apiUrl}/users/`)
-    const data = await response.json()
-    const userNames = data.result.map(user => ({
-      value: `${user._id}`,
-      label: `${user.fname} ${user.lname}`
-    }))
-    setAssignedOptions(userNames)
+    try {
+      const response = await fetch(`${apiUrl}/users/`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+      const data = await response.json();
+      const userNames = data.result.map(user => ({
+        value: `${user._id}`,
+        label: `${user.fname} ${user.lname}`
+      }));
+      setAssignedOptions(userNames);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
   };
+  
+
+  
 
   // useEffect to set up core data on page render
   useEffect(() => {
