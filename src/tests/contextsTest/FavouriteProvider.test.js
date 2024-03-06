@@ -82,8 +82,6 @@ it('calls getFavourites correctly', async () => {
   });
 
   // Assert the result
-  // const found = Object.values(result).find(item => item.name === 'Favourite 1');
-  // expect(result).toContainEqual(expectedFavourite);
   const expectedFavourite = { id: 1, name: 'Favourite 1' };
   expect(result).toBeTruthy();
 

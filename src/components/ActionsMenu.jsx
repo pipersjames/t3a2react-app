@@ -4,6 +4,8 @@ import { Menu } from 'antd';
 import Cookies from 'js-cookie';
 import { ApiContext } from '../contexts/ApiProvider';
 import { useNavigate } from 'react-router-dom';
+import { act } from 'react-dom/test-utils';
+
 
 
 function getItem(label, key, icon, children, type) {
@@ -101,10 +103,4 @@ export default function ActionsMenu({setFormId}) {
       />
     </>
   );
-    
-    
-    
-    
-    
-    
 };
