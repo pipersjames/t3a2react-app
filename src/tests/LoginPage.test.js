@@ -4,11 +4,6 @@ import LoginPage from '../pages/LoginPage';
 import { MemoryRouter } from 'react-router-dom';
 import { ApiProvider } from '../contexts/ApiProvider';
 
-// // Mocking the useNavigate hook
-// jest.mock('react-router-dom', () => ({
-//   ...jest.requireActual('react-router-dom'),
-//   useNavigate: () => jest.fn(),
-// }));
 
 // Mocking the fetch function
 global.fetch = jest.fn(() =>
