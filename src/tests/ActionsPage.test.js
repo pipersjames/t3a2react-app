@@ -28,13 +28,11 @@ jest.mock('react-router', () => ({
 }));
 
 
-// Mock the useParams hook
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useParams: () => ({
-    id: 'mock-form-id', // Set mock form ID
-  }),
-}));
+// Mock the fetch function
+global.fetch = jest.fn().mockResolvedValueOnce({
+  ok: true,
+  json: () => Promise.resolve({ result: mockFormData }) // Provide a mock response with JSON method
+});
 
 
 describe('CompletedForm component', () => {
