@@ -25,12 +25,20 @@ export default function HomePage() {
         <div className="d-flex align-items-center justify-content-center">
             <Container>
                 <Row className="justify-content-center">
+                    <Col xs={12} lg={3} className="border rounded mt-5">
+                    <h3>Step by Step</h3>
+                    <p>1. Navigate to the forms page</p>
+                    <p>2. Select the form you would like to submit</p>
+                    <p>3. Complete and submit your form</p>
+                    <p>4. Comment on forms assigned to you on the Actions Page</p>
+                    </Col>
+                    
                 {savedInProgress.length > 0 && <Col xs={12} md={3} className="my-3"> 
                           <SavedProgress/>
                     </Col>}
                     <Col xs={12} md={9} className="my-3">
                         <h2 className="text-center">Favourite Forms</h2>
-                        <div className="d-flex flex-wrap"> 
+                        <div className="d-flex flex-wrap justify-content-center"> 
                             {loading ? (
                                 <p>Loading...</p>
                             ) : (
@@ -45,7 +53,7 @@ export default function HomePage() {
                                         </Col>
                                     ))
                                 ) : (
-                                    <p>No favourite forms found.</p> 
+                                    <p className="text-center">No favourite forms found.</p> 
                                 )
                             )}
                         </div>
