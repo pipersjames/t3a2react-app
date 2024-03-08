@@ -30,10 +30,7 @@ const ShortQA = ({
 
   // Function to handle title change
   const handleTitleChange = (event) => {
-    const newTitle = event.target.value;
-    setTitle(newTitle);
-    handleInputChange(index, newTitle); // Trigger handleInputChange with the updated title
-    console.log(`${index}${newTitle}`)
+    setTitle(event.target.value);
   };
 
   // Function to handle description change
@@ -87,7 +84,7 @@ const ShortQA = ({
       </div>
       {/* Show Save button when in edit mode */}
       {editMode && (
-        <button className="btn btn-sm btn-primary mt-1 mr-2" onClick={handleSave}>
+        <button className="btn btn-sm btn-primary mt-1 mr-2 w-100" onClick={handleSave}>
           Save
         </button>
       )}

@@ -183,7 +183,7 @@ const FormBuilder = () => {
                   <label htmlFor="formName">Form Name:</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control text-center"
                     id="formName"
                     value={formName}
                     onChange={handleFormNameChange}
@@ -220,7 +220,7 @@ const FormBuilder = () => {
                     })}
 
                   {/* Render delete button for each component */}
-                  <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Remove</button>
+                  <button className="btn btn-sm btn-primary mt-1 mb-2" onClick={() => handleDeleteComponent(index)}>Remove</button>
                 </div>
               ))}
               <div className="row mt-3">
