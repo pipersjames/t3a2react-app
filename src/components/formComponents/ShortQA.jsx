@@ -33,6 +33,7 @@ const ShortQA = ({
     const newTitle = event.target.value;
     setTitle(newTitle);
     handleInputChange(index, newTitle); // Trigger handleInputChange with the updated title
+    console.log(`${index}${newTitle}`)
   };
 
   // Function to handle description change

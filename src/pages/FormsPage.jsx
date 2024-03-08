@@ -220,7 +220,7 @@ export default function FormPage() {
                 <div className="row">
                 <div className="col d-flex flex-column align-items-center border-bottom">
                   <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center" onClick={handleCreateForm}>
-                    <span>Create Form</span>
+                    <span>Submit New Form</span>
                   </Button>
                   {/* Add Edit button */}
                   <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center">
@@ -230,7 +230,7 @@ export default function FormPage() {
                   </Button>
                     {/* Add Delete button */}
                   <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center" onClick={handleDelete}>
-                    <span>Delete</span>
+                    <span>Delete Template</span>
                   </Button>
                 </div>
                 </div>
