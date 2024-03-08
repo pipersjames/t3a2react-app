@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import FavouriteForms from '../components/FavouriteForms';
 import { BrowserRouter as Router } from 'react-router-dom';
 
