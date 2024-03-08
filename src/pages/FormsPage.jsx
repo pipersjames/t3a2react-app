@@ -195,8 +195,9 @@ export default function FormPage() {
             columns={selectionColumns} 
             rowKey="_id"
             rowClassName='hoverPointer'
-            onRow={(record) => ({
-              onClick: () => handleFormTemplateSelect(record)
+            onRow={(record, index) => ({
+              onClick: () => handleFormTemplateSelect(record),
+              'data-testid': `form-template-row-${index + 1}` // Add data-testid attribute
             })
           }
           />
