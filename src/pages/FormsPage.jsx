@@ -9,13 +9,15 @@ import FavouritesCheckBox from "../components/FavouritesCheckBox";
 
 
 export default function FormPage() {
-  
+  //Cookies
   const jwt = Cookies.get('jwt')
+  const auth = Cookies.get('auth')
+  //router
   const navigate = useNavigate()
+  const { fav } = useParams()
   //contexts
   const { apiUrl } = useContext(ApiContext);
   //useParams
-  const { fav } = useParams()
   //useStates
   const [formTemplates, setFormTemplates] = useState([]);
   const [selectedForm, setSelectedForm] = useState(fav || null);
@@ -157,6 +159,7 @@ export default function FormPage() {
       title: 'submitted by',
       dataIndex: 'user',
       key: 'user',
+      className: 'd-none d-sm-table-cell',
       render: (user) => {
         return `${user.fname} ${user.lname}`
       }
@@ -170,6 +173,7 @@ export default function FormPage() {
       title: 'assigned',
       dataIndex: 'formTemplate',
       key: 'formTemplate',
+      className: 'd-none d-sm-table-cell',
       render: (formTemplate) => {
         return formTemplate.assignedTo.fname
       }
@@ -178,6 +182,7 @@ export default function FormPage() {
       title: 'tasked user',
       dataIndex: 'taskedUser',
       key: 'taskedUser',
+      className: 'd-none d-sm-table-cell',
       render: (taskedUser) => {
          return taskedUser ? `${taskedUser.fname} ${taskedUser.lname}` : null
       }
@@ -186,7 +191,6 @@ export default function FormPage() {
 
   return (
     <div className="container">
-
       <div className="row d-flex justify-content-center">
         <div className={selectedForm ? 'col-md-3' : 'col-md-6'}>
           <h1 className="te">Form Page</h1>
@@ -204,11 +208,14 @@ export default function FormPage() {
         </div>
         {selectedForm && !deleteClicked && (
         <div className="col-md-9 d-flex justify-content-center flex-column align-items-center"> 
-          {!creatingForm && <div className="text-center mb-4">
+          
+          {!creatingForm && 
+          <div className="d-flex border-bottom mt-5 mb-5">
+          <div className="d-flex align-items-center flex-column mb-4 mx-5">
               <h2>{selectedForm}</h2>
               <FavouritesCheckBox formName={selectedForm} />
-              <div className="form-description-container">
-                <div className="row">
+              
+                
                   <div className="col">
                     <textarea 
                       className="mb-3 form-control" 
@@ -216,27 +223,28 @@ export default function FormPage() {
                       onChange={handleDescriptionChange}
                       value={formDescription}
                     />
-                  </div>
-                </div>
-                <div className="row">
-                <div className="col d-flex flex-column align-items-center border-bottom">
-                  <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center" onClick={handleCreateForm}>
+               </div>
+               </div>   
+                
+                <div className="col d-flex flex-column justify-content-around">
+                  <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center justify-content-center" onClick={handleCreateForm}>
                     <span>Submit New Form</span>
                   </Button>
-                  {/* Add Edit button */}
-                  <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center">
+                  
+                  {(auth === 'admin' || auth === 'manager') 
+                    && <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center justify-content-center">
                     <NavLink to={`/formbuilder?formName=${selectedForm}`}style={{ textDecoration: 'none' }}>
                       <span>Edit</span>
                     </NavLink>
-                  </Button>
-                    {/* Add Delete button */}
-                  <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center" onClick={handleDelete}>
+                  </Button>}
+              
+                  {(auth === 'admin' || auth === 'manager') 
+                    && <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center justify-content-center" onClick={handleDelete}>
                     <span>Delete Template</span>
-                  </Button>
+                  </Button>}
                 </div>
                 </div>
-              </div>
-            </div>}
+            }
           {selectedForm && creatingForm &&(
             <FillOutForm
               setCreatingForm= {setCreatingForm} 
