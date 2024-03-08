@@ -26,11 +26,13 @@ export default function HomePage() {
             <Container>
                 <Row className="justify-content-center">
                     <Col xs={12} lg={3} className="border rounded mt-5">
-                    <h3>Step by Step</h3>
-                    <p>1. Navigate to the forms page</p>
-                    <p>2. Select the form you would like to submit</p>
-                    <p>3. Complete and submit your form</p>
-                    <p>4. Comment on forms assigned to you on the Actions Page</p>
+                    <h3 className="text-center mb-4 mt-4">Step by Step</h3>
+                    <ol>
+                        <li className="mb-3">Navigate to the forms page</li>
+                        <li className="mb-3">Select the form you would like to submit</li>
+                        <li className="mb-3">Complete and submit your form</li>
+                        <li className="mb-3">Comment on forms assigned to you on the Actions Page</li>
+                    </ol>
                     </Col>
                     
                 {savedInProgress.length > 0 && <Col xs={12} md={3} className="my-3"> 

@@ -6,14 +6,15 @@ import { FormTemplateContext } from '../contexts/FormTemplateProvider';
 import Select from 'react-select'
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router';
-import { Modal } from 'react-bootstrap';
+import { Modal, Col, Row } from 'react-bootstrap';
 import FillOutForm from '../components/FillOutForm';
 
 
 const FormBuilder = () => {
-
-  const navigate = useNavigate()
+  //cookies
   const auth = Cookies.get('auth')
+  //navigation
+  const navigate = useNavigate()
   //Context
   const { apiUrl } = useContext(ApiContext)
   const { formComponents } = useContext(FormTemplateContext)
@@ -27,16 +28,7 @@ const FormBuilder = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [ previewTemplate, setPreviewTemplate] = useState({})
   
-  // const fetchUsernamesFromDatabase = async () => {
-  //   const response = await fetch(`${apiUrl}/users/`)
-  //   const data = await response.json()
-  //   const userNames = data.result.map(user => ({
-  //     value: `${user._id}`,
-  //     label: `${user.fname} ${user.lname}`
-  //   }))
-  //   setAssignedOptions(userNames)
-  // };
-
+  //Api functions
   const fetchUsernamesFromDatabase = async () => {
     try {
       const response = await fetch(`${apiUrl}/users/`);
@@ -55,9 +47,7 @@ const FormBuilder = () => {
   };
   
 
-  
-
-  // useEffect to set up core data on page render
+  // useEffects
   useEffect(() => {
     if (auth !== 'admin' && auth !== 'manager'){
       navigate('/')
@@ -67,7 +57,7 @@ const FormBuilder = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Function to handle form name input change
+  //handles
   const handleFormNameChange = (event) => {
     setFormName(event.target.value);
   };
@@ -87,8 +77,6 @@ const FormBuilder = () => {
     setShowOverlay(!showOverlay);
     
   };
-
-
 
   const handleAddComponent = useCallback((componentName) => {
     //console.log("Adding component:", componentName); // log the component name, troubleshooting
@@ -121,8 +109,6 @@ const FormBuilder = () => {
     setRenderedFormComponents([])
   }
 
-    //test funciton
-
     // Function to handle form submission
     const handleCreateFormTemplate = async () => {
       
@@ -146,7 +132,7 @@ const FormBuilder = () => {
       //console.log(formTemplate) //troubleshooting
     
       try {
-        // to make changes to this link (check with CreateAccount.jsx as example)
+      
         const response = await fetch(`${apiUrl}/formTemplates/add`, {
           method: 'POST',
           headers: {
@@ -174,13 +160,20 @@ const FormBuilder = () => {
     
   return (
     <Layout>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-3">
-            {/* Pass handleAddComponent as a prop to AccordionTable */}
+      <div className="container mx-1 text-center">
+        <Row className='d-flex justify-content-end'>
+        <Col xs={12} sm={12} md={12} lg={8}> 
+          <h1 className='text-center'>Build a New Form</h1>
+          <p>Select Elements from the Left Pane to Include in your Form. When you are done preview the form and confirm it's creation if you are happy with the result.</p>
+        </Col>
+        </Row>
+        
+        
+        <div className="row ">
+          <div className="col-md-4 d-flex justify-content-center">
             <SelectionTable items={accordionItems} onItemClick={handleAddComponent} />
           </div>
-          <div className="col-md-9">
+          <div className="col-md-8">
             <div className="row justify-content-around">
               <div className='mb-4'>
                 <button className='btn btn-secondary float-left' onClick={handleReset}>Reset</button>
@@ -230,7 +223,6 @@ const FormBuilder = () => {
                   <button className="btn btn-sm btn-primary mt-1" onClick={() => handleDeleteComponent(index)}>Remove</button>
                 </div>
               ))}
-              {/* Add a submit button */}
               <div className="row mt-3">
                 <div className="col-md-12 text-center">
                 <button className='btn btn-secondary mx-2' onClick={handleToggleOverlayPreview}>Preview Form</button>
