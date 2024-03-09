@@ -17,7 +17,7 @@ const FormBuilder = () => {
   const navigate = useNavigate()
   //Context
   const { apiUrl } = useContext(ApiContext)
-  const { formComponents } = useContext(FormTemplateContext)
+  const { formComponents, resetTemplateData } = useContext(FormTemplateContext)
   // State variables
   const [formName, setFormName] = useState('');
   const [accordionItems, setAccordionItems] = useState([]);
@@ -57,6 +57,7 @@ const FormBuilder = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
   //handles
   const handleFormNameChange = (event) => {
     setFormName(event.target.value);
@@ -66,17 +67,18 @@ const FormBuilder = () => {
     setAssignedTo(selectedOption);
   };
 
-  const handleToggleOverlayPreview = () => {
 
-    setPreviewTemplate({
+const handleToggleOverlayPreview = () => {
+  resetTemplateData() 
+  setPreviewTemplate({
       formName: formName,
       assignedTo: assignedTo ? assignedTo.value : '',
       components: renderedFormComponents.map((comp => comp.componentName)),
       questionHeaders: questionHeaders
-    })
-    setShowOverlay(!showOverlay);
-    
-  };
+  });
+
+  setShowOverlay(!showOverlay);
+};
 
   const handleAddComponent = useCallback((componentName) => {
     //console.log("Adding component:", componentName); // log the component name, troubleshooting
@@ -103,6 +105,15 @@ const FormBuilder = () => {
   // Function to handle deleting a component from the form
   const handleDeleteComponent = (index) => {
     setRenderedFormComponents(renderedFormComponents.filter((_, i) => i !== index));
+
+    const updatedQuestionHeaders = { ...questionHeaders };
+    for (const key in updatedQuestionHeaders) {
+        if (parseInt(key) === index) {
+            delete updatedQuestionHeaders[key];
+            break
+        }
+    }
+    setQuestionHeaders(updatedQuestionHeaders);
   };
   //reset all components
   const handleReset = (event) => {
