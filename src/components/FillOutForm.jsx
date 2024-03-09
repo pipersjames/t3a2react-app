@@ -27,6 +27,11 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
     const handleSubmit = async (event) => {
         event.preventDefault()
 
+        if (Object.keys(formData).length === 0) {
+            window.alert('please fill in the form before submitting')
+            return; 
+        }
+
         if (isSubmitting) {
             return
         } else {

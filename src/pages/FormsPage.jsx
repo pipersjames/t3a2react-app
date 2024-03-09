@@ -5,7 +5,7 @@ import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
 import Cookies from "js-cookie";
 import moment from 'moment'
-import {useNavigate, useParams, NavLink} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import FavouritesCheckBox from "../components/FavouritesCheckBox";
 
 

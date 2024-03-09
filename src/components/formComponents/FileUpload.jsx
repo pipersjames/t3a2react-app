@@ -11,7 +11,7 @@ export default function FileUpload({ edit, index, handleInputChange, formData, s
   return (
     <div className="file-upload-component">
       <label>File Upload:</label>
-      {action ? <p className="mt-2 border">{submittedFormData}</p> :
+      {action ? <p className="mt-2 border-bottom">{submittedFormData}</p> :
         <input
           type="file"
           disabled={edit}

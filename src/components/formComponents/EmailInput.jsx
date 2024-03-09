@@ -12,7 +12,7 @@ export default function EmailInput({edit , index, handleInputChange, formData, s
     <div>
       <div className="form-group">
         <label htmlFor="email">Email:</label>
-        {action ? <p className="mt-2 border">{submittedFormData}</p>
+        {action ? <p className="mt-2 border-bottom">{submittedFormData}</p>
           : <input
           type="email"
           className="form-control"
