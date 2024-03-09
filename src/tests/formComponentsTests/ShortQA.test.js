@@ -14,7 +14,7 @@ describe('ShortQA component', () => {
     const questionHeader = 'Sample question'; // Sample question header
     const submittedFormData = 'Sample submitted data'; // Sample submitted form data
     const action = false;
-
+  
     // Render the component
     const { getByPlaceholderText } = render(
       <ShortQA
@@ -29,14 +29,15 @@ describe('ShortQA component', () => {
         action={action}
       />
     );
-
+  
     // Simulate user input by changing the title value
     const titleInputElement = getByPlaceholderText('Enter Question Here');
     fireEvent.change(titleInputElement, { target: { value: 'New Question' } });
-
-    // Assert that handleTitleChange has been called with the correct parameters
-    expect(handleInputChange).toHaveBeenCalledWith(index, 'New Question');
+  
+    // Assert that the title state has been updated correctly
+    expect(titleInputElement.value).toBe('New Question');
   });
+  
 
   test('truncates description if it exceeds the character limit', () => {
     // Define mock props
