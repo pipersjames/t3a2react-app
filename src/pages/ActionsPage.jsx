@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import lineImage from '../assets/divider.png';
 import Select from 'react-select'
 import ActionsMenu from "../components/ActionsMenu";
+import moment from "moment";
 
 
 export default function CompletedForm() {
@@ -181,7 +182,7 @@ export default function CompletedForm() {
                             <div key={index} className="mb-3">
                                   <h5>comment {index+1}</h5>
                                   <p>{action.message}</p>
-                                  <p>{action.sender.fname}, {action.timestamp}</p>
+                                  <p>{action.sender.fname}, {moment(action.timestamp).format('h:mm a - MMM Do YYYY')}</p>
                                 </div>
                           ))}
                           {formData && (
