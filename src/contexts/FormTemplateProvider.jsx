@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import FullNameInput from "../components/formComponents/FullNameInput";
 import EmailInput from "../components/formComponents/EmailInput";
 import ShortQA from "../components/formComponents/ShortQA";
@@ -24,6 +24,10 @@ export function FormTemplateProvider(props) {
         'Date and Time' : DateTimeInput
     }
 
+    const resetTemplateData = () => {
+      setFormTemplate(null)
+    }
+
     const fetchFormTemplate = async (formName, renderedFormComponents) => {
       if (renderedFormComponents === undefined) {
         try {
@@ -42,7 +46,7 @@ export function FormTemplateProvider(props) {
   };
 
   return (
-    <FormTemplateContext.Provider value={{formComponents, fetchFormTemplate, formTemplate, setFormTemplate}}>
+    <FormTemplateContext.Provider value={{formComponents, fetchFormTemplate, formTemplate, setFormTemplate, resetTemplateData}}>
       {props.children}
     </FormTemplateContext.Provider>
   );
