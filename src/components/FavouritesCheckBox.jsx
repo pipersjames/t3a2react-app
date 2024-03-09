@@ -43,7 +43,7 @@ export default function FavouritesCheckBox({formName, preview}) {
             setIsChecked(false);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formName]);
+    }, [formName,favourites]);
     return (
         <div className="form-check mx-3 ">
                                     <input 

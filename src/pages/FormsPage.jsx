@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Table, Button, Modal } from "antd";
+import { Table, Button } from "antd";
+import { Modal } from "react-bootstrap";
 import { ApiContext } from "../contexts/ApiProvider";
 import FillOutForm from "../components/FillOutForm";
 import Cookies from "js-cookie";
@@ -106,12 +107,17 @@ export default function FormPage() {
     navigate(`/actions/${id}`)
   }
 
+  const handleOpenDeleteModal = () => {
+    setDeleteModalVisible(true);
+  }
+  
 
   const handleCloseDeleteModal = () => {
     setDeleteModalVisible(false);
   };
 
   const handleDelete = async () => {
+    
     try {
       const response = await fetch(`${apiUrl}/formTemplates/${selectedForm}`, {
         method: 'DELETE',
@@ -123,8 +129,8 @@ export default function FormPage() {
         throw new Error('Failed to delete form template');
       }
       const data = await response.json();
-      console.log(data.message); // Log success message
-      handleCloseDeleteModal(); // Close the delete modal
+      console.log(data.message);
+      setDeleteModalVisible(false)
       setSelectedForm(null)
       fetchFormTemplates();
     } catch (error) {
@@ -137,7 +143,7 @@ export default function FormPage() {
   //table render formats
   const selectionColumns = [
     {
-      title: "Form Name",
+      title: "Available Forms",
       dataIndex: "formName",
       key: "formName",
     },
@@ -192,8 +198,7 @@ export default function FormPage() {
   return (
     <div className="container">
       <div className="row d-flex justify-content-center">
-        <div className={selectedForm ? 'col-md-3' : 'col-md-6'}>
-          <h1 className="te">Form Page</h1>
+        <div className={selectedForm ? 'col-md-3 mt-3' : 'col-md-6 mt-3'}>
           <Table 
             dataSource={formTemplates} 
             columns={selectionColumns} 
@@ -231,15 +236,16 @@ export default function FormPage() {
                     <span>Submit New Form</span>
                   </Button>
                   
-                  {(auth === 'admin' || auth === 'manager') 
+                  {/* Commented until functionality is implemented
+                   {(auth === 'admin' || auth === 'manager') 
                     && <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center justify-content-center">
-                    <NavLink to={`/formbuilder?formName=${selectedForm}`}style={{ textDecoration: 'none' }}>
+                    <NavLink to={`/formbuilder`}style={{ textDecoration: 'none' }}>
                       <span>Edit</span>
                     </NavLink>
-                  </Button>}
+                  </Button>} */}
               
                   {(auth === 'admin' || auth === 'manager') 
-                    && <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center justify-content-center" onClick={handleDelete}>
+                    && <Button className="btn btn-primary mb-2 p-3 d-flex align-items-center justify-content-center" onClick={handleOpenDeleteModal}>
                     <span>Delete Template</span>
                   </Button>}
                 </div>
@@ -269,13 +275,21 @@ export default function FormPage() {
             </>
             )}
           {/* Delete confirmation modal */}
-          <Modal
-            title="Confirm Delete"
-            open={deleteModalVisible}
-            onOk={handleDelete}
-            onCancel={handleCloseDeleteModal}
-          >
-            <p>Are you sure you want to delete this form template and all associated forms?</p>
+          <Modal show={deleteModalVisible} onHide={handleCloseDeleteModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Warning! Are you sure? Deleting a template will delete all previously submitted forms associated with it.</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={handleDelete}>
+                Delete
+              </Button>
+            </Modal.Footer>
           </Modal>
         </div>)}
       </div>
