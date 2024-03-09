@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router';
 import { Modal, Col, Row } from 'react-bootstrap';
 import FillOutForm from '../components/FillOutForm';
+import { Button } from 'antd';
 
 
 const FormBuilder = () => {
@@ -27,6 +28,7 @@ const FormBuilder = () => {
   const [questionHeaders, setQuestionHeaders] = useState([])
   const [showOverlay, setShowOverlay] = useState(false);
   const [ previewTemplate, setPreviewTemplate] = useState({})
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false)
   
   //Api functions
   const fetchUsernamesFromDatabase = async () => {
@@ -168,6 +170,7 @@ const handleToggleOverlayPreview = () => {
           setRenderedFormComponents([]);
           setQuestionHeaders([])
           console.log('Form template created successfully');
+          setIsConfirmationModalOpen(true)
         } else {
           // Handle error
           console.error('Form template creation failed');
@@ -187,8 +190,6 @@ const handleToggleOverlayPreview = () => {
           <p>Select Elements from the Left Pane to Include in your Form. When you are done, preview the form and save the new template if you are happy with your creation.</p>
         </Col>
         </Row>
-        
-        
         <div className="row ">
           <div className="col-md-4 d-flex justify-content-center">
             <SelectionTable items={accordionItems} onItemClick={handleAddComponent} />
@@ -265,12 +266,23 @@ const handleToggleOverlayPreview = () => {
                             </Modal.Footer>
                           </Modal>
                     </div>
+                    <Modal show={isConfirmationModalOpen} onHide={() => setIsConfirmationModalOpen(false)}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Success!</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <p>You have created a new Template. Check it out on the Forms Page.</p>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setIsConfirmationModalOpen(false)}>Close</Button>
+                      </Modal.Footer>
+                    </Modal>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
     </Layout>
   );
 };
