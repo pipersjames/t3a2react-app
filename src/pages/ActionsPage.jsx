@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from "react"
 import { ApiContext } from "../contexts/ApiProvider"
 import { FormTemplateContext } from "../contexts/FormTemplateProvider"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import lineImage from '../assets/divider.png';
 import Select from 'react-select'
 import ActionsMenu from "../components/ActionsMenu";
 
 
 export default function CompletedForm() {
-   
+  //navigation
+  const navigate = useNavigate()
   //params
   const { id } = useParams()
   //contexts
@@ -78,6 +79,7 @@ export default function CompletedForm() {
         setStatus(data.result)
         setFormId('')
         setFormData(null)
+        navigate('/actions')
       } catch (error) {
         console.error("Error closing the form")
       }
@@ -148,6 +150,7 @@ export default function CompletedForm() {
           <div className="row justify-content-center mt-5">
             <div className={formData ? 'col-md-3' : 'col-md-6'}>
               <ActionsMenu setFormId={setFormId}/>
+              
             </div>
               <div className="col-md-9"> 
               
@@ -171,8 +174,9 @@ export default function CompletedForm() {
                                           submittedFormData: formData.formData[index],
                                           questionHeader: formData.formTemplate.questionHeaders[index]
                                           })}
-                                  </div>    
+                                  </div>      
                           ))}
+                          <h2 className="text-center">End</h2>
                           {formData.actions && formData.actions.map((action, index) => (
                             <div key={index} className="mb-3">
                                   <h5>comment {index+1}</h5>

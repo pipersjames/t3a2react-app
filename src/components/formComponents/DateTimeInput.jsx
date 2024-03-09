@@ -13,7 +13,7 @@ export default function DateTimeInput({edit, index, handleInputChange, formData,
     <div>
         <label>Date and Time:</label>
           <div>
-          {action ? <p className="mt-2 border">{submittedFormData}</p>
+          {action ? <p className="mt-2 border-bottom">{submittedFormData}</p>
           : 
           <input 
             type="datetime-local" 

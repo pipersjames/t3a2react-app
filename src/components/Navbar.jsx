@@ -26,7 +26,7 @@ export default function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
             <div className="container">
-            <NavLink className="navbar-brand d-flex align-items-center" to="/">
+            <NavLink className="navbar-brand d-flex align-items-center" to="/home">
                     <img src={logo} alt="Stream-Lined Logo" height="30" className="me-2" />
                     Stream-Lined
                 </NavLink>

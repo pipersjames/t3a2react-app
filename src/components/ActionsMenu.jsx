@@ -4,6 +4,7 @@ import { Menu } from 'antd';
 import Cookies from 'js-cookie';
 import { ApiContext } from '../contexts/ApiProvider';
 import { useNavigate } from 'react-router-dom';
+import restRobot from '../assets/coffee-robot.jpg'
 
 
 
@@ -38,22 +39,18 @@ export default function ActionsMenu({setFormId}) {
         }
       })
   
-      if (!response.ok) {
-        throw new Error('Failed to fetch actions')
-      }
-  
       const data = await response.json()
       setAssigned(data.assignments)
       setTasked(data.tasks)
     } catch (error) {
-      console.error('Error fetching actions:', error.message)
+      console.error(error)
     }
   }
-
-    useEffect(() => {
-        fetchActions()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+  //useEffects
+  useEffect(() => {
+    fetchActions()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[assigned,tasked])
 
     const items = [];
 
@@ -89,17 +86,23 @@ export default function ActionsMenu({setFormId}) {
           navigate(`/actions/${clickedItem._id}`);
         }
       };
-  return (
-    <>
-      <h1 className="text-center">Actions</h1>
-      <Menu
-        onClick={onClick}
-        className=''
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode="inline"
-        items={items}
-      />
-    </>
-  );
-};
+      return (
+        
+        !assigned && !tasked ? (
+        <div className="container">
+          <h1 className='text-center'>Well done! You've completed all outstanding actions.</h1>
+          <img src={restRobot} alt="Robot Sipping coffee" className="img-fluid" />
+        </div>
+        ) : (<div>
+              <h1 className="text-center">Actions</h1>
+              <Menu
+                onClick={onClick}
+                className=''
+                defaultSelectedKeys={['1']}
+                defaultOpenKeys={['sub1']}
+                mode="inline"
+                items={items}
+              />
+            </div>) 
+        )
+    }

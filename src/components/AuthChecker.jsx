@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiContext } from "../contexts/ApiProvider";
 import Cookies from "js-cookie";
 
 export default function AuthChecker() {
     const navigate = useNavigate()
-    const [isloading, setIsLoading] = useState(true)
     const { apiUrl } = useContext(ApiContext) 
 
     useEffect(() => {
@@ -44,16 +43,10 @@ export default function AuthChecker() {
             }
         } catch (error) {
             console.error('error:', error.message)
-        } finally {
-            setIsLoading(false)
         }
     }        
         checkAuthentication()
     },[apiUrl,navigate])
-
-    if (isloading) {
-        return <div>Loading...</div>
-    }
 
     return null
 }

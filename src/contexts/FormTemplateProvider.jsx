@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import FullNameInput from "../components/formComponents/FullNameInput";
 import EmailInput from "../components/formComponents/EmailInput";
 import ShortQA from "../components/formComponents/ShortQA";

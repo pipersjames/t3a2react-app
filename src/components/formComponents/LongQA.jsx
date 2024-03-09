@@ -68,7 +68,7 @@ const LongQA = ({
           onChange={handleTitleChange}
           disabled={!editMode} // Disable editing if not in edit mode
         />}
-        {action ? (<p className="mt-2 border">{submittedFormData}</p>)
+        {action ? (<p className="mt-2 border-bottom">{submittedFormData}</p>)
           : (!editMode && (
           <textarea
             className="form-control"
@@ -82,7 +82,7 @@ const LongQA = ({
       </div>
       {/* Show Save button when in edit mode */}
       {editMode && (
-        <button className="btn btn-sm btn-primary mt-1 mr-2" onClick={handleSave}>
+        <button className="btn btn-sm btn-primary mt-1 mr-2 w-100" onClick={handleSave}>
           Save
         </button>
       )}

@@ -70,7 +70,7 @@ const ShortQA = ({
           onChange={handleTitleChange}
           disabled={!editMode} // Disable editing if not in edit mode
         />}
-        {action ? (<p className="mt-2 border">{submittedFormData}</p>)
+        {action ? (<p className="mt-2 border-bottom">{submittedFormData}</p>)
           : (!editMode && (
           <input
             className="form-control"

@@ -22,8 +22,21 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
         }));
       };
 
+    let isSubmitting = false
+
     const handleSubmit = async (event) => {
         event.preventDefault()
+
+        if (Object.keys(formData).length === 0) {
+            window.alert('please fill in the form before submitting')
+            return; 
+        }
+
+        if (isSubmitting) {
+            return
+        } else {
+            isSubmitting = true
+        }
 
         const form = {
             description: formDescription,
@@ -50,8 +63,9 @@ export default function FillOutForm({formName, formDescription, setCreatingForm,
             }
         } catch (error) {
             console.error('Error submitting form', error)
-        }
-    
+        } finally {
+            isSubmitting = false
+        }  
     }
     //use Effects
     useEffect(() => {

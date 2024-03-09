@@ -12,7 +12,7 @@ export default function FullNameInput({edit , index, handleInputChange, formData
     <div>
       <div className="form-group">
         <label>Full Name:</label>
-        {action ? <p className="mt-2 border">{submittedFormData} 
+        {action ? <p className="mt-2 border-bottom">{submittedFormData} 
         </p>
         : <input
           type="text"
