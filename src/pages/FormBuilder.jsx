@@ -107,6 +107,8 @@ const FormBuilder = () => {
   //reset all components
   const handleReset = (event) => {
     setRenderedFormComponents([])
+    setFormName('')
+    setAssignedTo('')
   }
 
     // Function to handle form submission
@@ -122,10 +124,17 @@ const FormBuilder = () => {
         return
       }
 
+      const components = renderedFormComponents.map((comp => comp.componentName))
+      if (components.length < 1) {
+        window.alert('Must have atleast 1 form component added to Save a Template')
+        return
+      }
+      console.log(components)
+
       const formTemplate = {
         formName: formName,
         assignedTo: assignedTo.value,
-        components: renderedFormComponents.map((comp => comp.componentName)),
+        components: components,
         questionHeaders: questionHeaders
       };
 
@@ -164,7 +173,7 @@ const FormBuilder = () => {
         <Row className='d-flex justify-content-end'>
         <Col xs={12} sm={12} md={12} lg={8}> 
           <h1 className='text-center'>Build a New Form</h1>
-          <p>Select Elements from the Left Pane to Include in your Form. When you are done preview the form and confirm it's creation if you are happy with the result.</p>
+          <p>Select Elements from the Left Pane to Include in your Form. When you are done, preview the form and save the new template if you are happy with your creation.</p>
         </Col>
         </Row>
         
@@ -180,7 +189,7 @@ const FormBuilder = () => {
               </div>
               <div className="col-md-6 mb-3">
                 <div className="form-group">
-                  <label htmlFor="formName">Form Name:</label>
+                  <label htmlFor="formName" className='fw-bold'>Form Name:</label>
                   <input
                     type="text"
                     className="form-control text-center"
@@ -192,7 +201,7 @@ const FormBuilder = () => {
               </div>
               <div className="col-md-6 mb-3">
                 <div className="form-group">
-                  <label htmlFor="assignedTo">Assigned To:</label>
+                  <label htmlFor="assignedTo" className='fw-bold'>Assigned To:</label>
                   <Select
                     className="basic-single"
                     id="assignedTo"
@@ -208,7 +217,7 @@ const FormBuilder = () => {
               {/* Render added form components */}
               {renderedFormComponents.map((component, index) => (
                 <div key={index} className="col-md-5 mb-3 border rounded m-2 d-flex flex-column">
-                  <p>{index+1}</p>
+                  <p className='text-start fw-bold'>{index+1}</p>
                   {/* Render the component */}
                   {React.createElement(
                     component.type, 

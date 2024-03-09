@@ -16,12 +16,39 @@ export default function CreateAccountPage() {
   const [passwordConfirm, setPasswordConfirm] = useState('')
 
   const handleSubmit  = async (event) => {
-      event.preventDefault()
+  event.preventDefault()
 
-      if (password !== passwordConfirm) {
-          window.alert("password did not match, please try again")
-          return
-      }
+  if (!fname) {
+    window.alert('please enter a first name')
+    return
+  } else if (!lname) {
+      window.alert('please enter a last name')
+      return
+  } else if (!email) {
+      window.alert('please enter an email address')
+      return
+  } else if (!/\S+@\S+\.\S+/.test(email)) {
+    window.alert('Please enter a valid email address');
+    return;
+  } else if (!password) {
+      window.alert('plese enter a password')
+      return
+  } else if (password.length < 8) {
+      window.alert('Password must be at least 8 characters long');
+      return;
+  } else if (!/\d/.test(password)) {
+      window.alert('Password must contain at least one digit');
+      return;
+  } else if (!/[!@#$%^&*]/.test(password)) {
+      window.alert('Password must contain at least one special character, eg !@#$%^&*');
+      return;
+  } else if (!passwordConfirm) {
+      window.alert('please confirm your password')
+      return
+  } else if (password !== passwordConfirm) {
+      window.alert("password did not match, please try again")
+      return
+  }
 
       const newUserData = {
           fname : fname,

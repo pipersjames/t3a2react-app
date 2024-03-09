@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import Cookies from 'js-cookie'
 import { NavLink, useNavigate} from 'react-router-dom'
 import { ApiContext } from "../contexts/ApiProvider"
+import ForgotPassword from "../components/ForgotPassword"
 
 export default function LoginPage() {
     
@@ -13,11 +14,18 @@ export default function LoginPage() {
     //useState
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [previousSession, setPreviousSession] = useState(false)
-    //useEffect
+    const [previousSessionCheck, setPreviousSessionCheck] = useState(false)
     //handles
     const handleSubmit  = async (event) => {
         event.preventDefault()
+
+        if (!email) {
+            window.alert('no email present. please enter a valid email address')
+            return
+        } else if (!password) {
+            window.alert('no password present. please enter a valid password')
+            return
+        }
     
         try {
             const response = await fetch(`${apiUrl}/users/login`, {
@@ -43,6 +51,7 @@ export default function LoginPage() {
 
             } else {
                 console.error('Authentication failed')
+                window.alert('invalid email or password, pleas try again')
             } 
 
         } catch (error) {
@@ -64,24 +73,24 @@ export default function LoginPage() {
                 console.log('Token still valid');
                 navigate('/home');
             } else {
-                setPreviousSession(true);
+                setPreviousSessionCheck(true);
             }
         } catch (error) {
             console.error('Error during autoLogin:', error);
-            setPreviousSession(true); // Set previousSession to true in case of error
+            setPreviousSessionCheck(true); // Set previousSession to true in case of error
         }
     }
     
-
+    //useEffects
      useEffect(()=> {
-        if (!previousSession) {
+        if (!previousSessionCheck) {
             autoLogin()
         }
      // eslint-disable-next-line react-hooks/exhaustive-deps
      }, [])
 
-     if (!previousSession) {
-        return <p>Loading...</p>;
+     if (!previousSessionCheck) {
+        return <p>checking for previous session...</p>;
     }
 
 
@@ -127,7 +136,7 @@ export default function LoginPage() {
                         </button>
                     </form>
                     <div className="text-center mt-3">
-                        <NavLink to="url">Forgot your password?</NavLink> {/*url link to account recovery page*/}
+                        <ForgotPassword/>
                     </div>
                     <div className="text-center mt-4">
                         <p>Don't have an account? <NavLink to="/create-new-user">Sign up</NavLink></p>
