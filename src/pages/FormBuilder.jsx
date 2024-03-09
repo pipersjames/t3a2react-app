@@ -125,14 +125,16 @@ const FormBuilder = () => {
       }
 
       const components = renderedFormComponents.map((comp => comp.componentName))
-      if (!components) {
+      if (components.length < 1) {
         window.alert('Must have atleast 1 form component added to Save a Template')
+        return
       }
+      console.log(components)
 
       const formTemplate = {
         formName: formName,
         assignedTo: assignedTo.value,
-        components: renderedFormComponents.map((comp => comp.componentName)),
+        components: components,
         questionHeaders: questionHeaders
       };
 
