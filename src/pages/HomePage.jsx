@@ -22,7 +22,7 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div className="d-flex align-items-center justify-content-center">
+        <div className="d-flex mt-md-5 justify-content-center vh-100">
             <Container>
                 <Row className="justify-content-center">
                     <Col xs={12} lg={3} className="border rounded mt-5">

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css'
 import Cookies from 'js-cookie';
+import logo from '../assets/form.png'
 
 export default function Navbar() {
 
@@ -23,28 +24,31 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
             <div className="container">
-                <NavLink className="navbar-brand" to="/">Stream-Lined</NavLink>
+            <NavLink className="navbar-brand d-flex align-items-center" to="/">
+                    <img src={logo} alt="Stream-Lined Logo" height="30" className="me-2" />
+                    Stream-Lined
+                </NavLink>
                 <button className="navbar-toggler" type="button" onClick={toggleNavbar}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/home" activeclassname="active">Home</NavLink>
+                            <NavLink className="nav-link" to="/home">Home</NavLink>
                         </li>
                         {(auth === 'admin' || auth === 'manager') && (<li className="nav-item">
-                            <NavLink className="nav-link" to="/FormBuilder" activeclassname="active">Form Builder</NavLink>
+                            <NavLink className="nav-link" to="/FormBuilder">Form Builder</NavLink>
                         </li>)}
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/Forms" activeclassname="active">Forms</NavLink>
+                            <NavLink className="nav-link" to="/Forms">Forms</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/Actions" activeclassname="active">Actions</NavLink>
+                            <NavLink className="nav-link" to="/Actions">Actions</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/" activeclassname="active" onClick={handleLogout}>Logout</NavLink>
+                            <NavLink className="nav-link" to="/" onClick={handleLogout}>Logout</NavLink>
                         </li>
                     </ul>
                 </div>
