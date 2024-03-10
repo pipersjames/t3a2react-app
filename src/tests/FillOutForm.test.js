@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent} from '@testing-library/react';
 import FillOutForm from '../components/FillOutForm';
 import {  FormTemplateProvider, FormTemplateContext } from '../contexts/FormTemplateProvider';
 
@@ -68,6 +68,7 @@ jest.mock('../contexts/ApiProvider', () => {
           </FormTemplateContext.Provider>
       );
 
+      // eslint-disable-next-line testing-library/prefer-screen-queries
       const submitButton = getByText('Submit');
       fireEvent.click(submitButton);
 

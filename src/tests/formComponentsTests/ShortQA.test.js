@@ -31,6 +31,7 @@ describe('ShortQA component', () => {
     );
   
     // Simulate user input by changing the title value
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const titleInputElement = getByPlaceholderText('Enter Question Here');
     fireEvent.change(titleInputElement, { target: { value: 'New Question' } });
   
@@ -67,6 +68,7 @@ describe('ShortQA component', () => {
     );
 
     // Simulate user input by typing a description exceeding the character limit
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const descriptionInputElement = getByPlaceholderText('Answer');
     fireEvent.change(descriptionInputElement, { target: { value: 'This is a description exceeding the character limit' } });
 

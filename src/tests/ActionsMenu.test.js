@@ -33,6 +33,7 @@ describe('ActionsMenu component', () => {
     
         // Wait for the loading text to disappear
         await waitFor(() => {
+            // eslint-disable-next-line testing-library/prefer-screen-queries
             expect(queryByText('Loading...')).not.toBeInTheDocument();
         });
     });

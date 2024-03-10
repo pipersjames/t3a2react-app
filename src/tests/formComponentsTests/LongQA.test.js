@@ -15,9 +15,6 @@ describe('LongQA component', () => {
     const submittedFormData = 'Sample submitted data'; // Sample submitted form data
     const action = false;
 
-    // Mock the setEditMode function
-    const setEditMode = jest.fn();
-
     // Render the component
     const { getByTestId } = render(
       <LongQA
@@ -34,11 +31,13 @@ describe('LongQA component', () => {
     );
 
     // Simulate click on the pencil icon
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const pencilIcon = getByTestId('edit-icon');
     fireEvent.click(pencilIcon);
 
        
     // Check if the title input field becomes enabled after clicking the pencil icon
+    // eslint-disable-next-line testing-library/no-node-access
     const titleInputElement = document.querySelector('input[placeholder="Enter Question Here"]');
     expect(titleInputElement).not.toHaveAttribute('disabled');
   });
@@ -73,6 +72,7 @@ test('calls handleTitleChange when title input changes', () => {
   );
 
   // Simulate user input by changing the title value
+  // eslint-disable-next-line testing-library/prefer-screen-queries
   const titleInputElement = getByPlaceholderText('Enter Question Here');
   fireEvent.change(titleInputElement, { target: { value: 'New Question' } });
 
@@ -110,10 +110,12 @@ test('calls handleTitleChange when title input changes', () => {
     );
 
     // Simulate click on the pencil icon
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const pencilIcon = getByTestId('edit-icon');
     fireEvent.click(pencilIcon);
 
     // Check if the input field becomes enabled after clicking the pencil icon
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
     const titleInputElement = container.querySelector('input[placeholder="Enter Question Here"]');
     expect(titleInputElement.disabled).toBe(false);
   });

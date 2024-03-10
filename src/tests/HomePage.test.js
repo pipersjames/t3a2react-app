@@ -22,12 +22,14 @@ describe('HomePage component', () => {
     const mockGetFavourites = jest.fn();
     const mockFavourites = [];
 
+    // eslint-disable-next-line no-unused-vars
     const { getByText } = render(
       <FavouritesContext.Provider value={{ getFavourites: mockGetFavourites, favourites: mockFavourites }}>
         <HomePage />
       </FavouritesContext.Provider>
     );
 
+    // eslint-disable-next-line testing-library/no-node-access
     expect(document.querySelector('.loading-indicator')).toBeFalsy();
 });
 
@@ -41,6 +43,7 @@ describe('HomePage component', () => {
         favourites: mockFavourites,
         });
 
+        // eslint-disable-next-line no-unused-vars
         const { getByText } = render(<HomePage />);
 });
 
@@ -55,6 +58,7 @@ describe('HomePage component', () => {
     );
 
     await waitFor(() => {
+      // eslint-disable-next-line testing-library/prefer-screen-queries
       expect(getByText('No favourite forms found.')).toBeInTheDocument();
     });
   });

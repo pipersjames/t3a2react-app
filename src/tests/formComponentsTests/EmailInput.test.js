@@ -13,6 +13,7 @@ describe('EmailInput component', () => {
     const action = false;
 
     // Render the component
+    // eslint-disable-next-line no-unused-vars
     const { getByLabelText, getByDisplayValue } = render(
       <EmailInput
         edit={edit}
@@ -25,6 +26,7 @@ describe('EmailInput component', () => {
     );
 
     // Assert that the input field is rendered with the correct value
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const inputElement = getByDisplayValue('test@example.com');
 
     // Assert that the value is correctly derived from the formData prop
@@ -59,6 +61,7 @@ describe('EmailInput component', () => {
     );
 
     // Assert that the input field is disabled
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const inputElement = getByLabelText('Email:');
     expect(inputElement).toHaveAttribute('disabled');
   });
@@ -85,6 +88,7 @@ describe('EmailInput component', () => {
     );
 
     // Assert that the submitted form data is rendered
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const submittedDataElement = getByText('submitted@example.com');
     expect(submittedDataElement).toBeInTheDocument();
   });

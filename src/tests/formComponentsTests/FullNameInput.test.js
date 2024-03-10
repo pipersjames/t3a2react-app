@@ -25,6 +25,7 @@ describe('FullNameInput component', () => {
     );
 
     // Assert that the input field is rendered
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const inputElement = getByPlaceholderText(''); // Adjust the placeholder text as needed
     expect(inputElement).toBeInTheDocument();
 
@@ -57,6 +58,7 @@ describe('FullNameInput component', () => {
     );
 
     // Assert that the submitted form data is rendered
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const submittedDataElement = getByText('John Doe');
     expect(submittedDataElement).toBeInTheDocument();
   });

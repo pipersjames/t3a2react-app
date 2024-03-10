@@ -113,6 +113,7 @@ describe('AuthChecker component', () => {
     global.fetch = jest.fn().mockRejectedValue(new Error('Mock fetch error'));
   
     // Act
+    // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       render(
         <ApiContext.Provider value={mockApiContext}>

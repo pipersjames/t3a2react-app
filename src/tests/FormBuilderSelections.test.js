@@ -11,6 +11,7 @@ describe('SelectionTable component', () => {
 
     // Check if each item is rendered
     items.forEach(item => {
+      // eslint-disable-next-line testing-library/prefer-screen-queries
       const itemElement = getByText(item);
       expect(itemElement).toBeInTheDocument();
     });
@@ -23,6 +24,7 @@ describe('SelectionTable component', () => {
     const { getByText } = render(<SelectionTable items={items} onItemClick={onItemClick} />);
 
     // Click on the first item
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     fireEvent.click(getByText(items[0]));
 
     // Check if onItemClick is called with the correct item
