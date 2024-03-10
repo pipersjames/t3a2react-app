@@ -27,12 +27,14 @@ describe('FileUpload component', () => {
     );
 
     // Assert that the label is rendered
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const labelElement = getByText('File Upload:');
     expect(labelElement).toBeInTheDocument();
 
     // Simulate file selection by changing the value
     // Mock file
     const file = new File(['file content'], 'sample-file.txt', { type: 'text/plain' });
+    // eslint-disable-next-line testing-library/no-node-access
     const inputElement = document.querySelector('input[type="file"]');
     fireEvent.change(inputElement, { target: { files: [file] } });
 

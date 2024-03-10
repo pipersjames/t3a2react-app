@@ -11,10 +11,15 @@ describe('Navbar component', () => {
       </MemoryRouter>
     );
 
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     expect(getByText('Stream-Lined')).toBeInTheDocument();
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     expect(getByText('Home')).toBeInTheDocument();
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     expect(getByText('Forms')).toBeInTheDocument();
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     expect(getByText('Actions')).toBeInTheDocument();
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     expect(getByText('Logout')).toBeInTheDocument();
   });
 
@@ -26,6 +31,7 @@ describe('Navbar component', () => {
       </MemoryRouter>
     );
 
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const logoutLink = getByText('Logout');
     fireEvent.click(logoutLink);
 

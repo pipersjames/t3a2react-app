@@ -15,16 +15,20 @@ describe('SavedProgress component', () => {
     const { queryByText } = render(<SavedProgress />);
     
     dummySavedData.forEach(item => {
+      // eslint-disable-next-line testing-library/prefer-screen-queries
       const formNameElement = queryByText(item.formType);
+      // eslint-disable-next-line testing-library/prefer-screen-queries
       const descriptionElement = queryByText(item.description);
 
       // Check if formNameElement is not null before asserting its presence
       if (formNameElement) {
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(formNameElement).toBeInTheDocument(); // Check if formName is in the document
       }
 
       // Check if descriptionElement is not null before asserting its presence
       if (descriptionElement) {
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(descriptionElement).toBeInTheDocument(); // Check if description is in the document
       }
     });

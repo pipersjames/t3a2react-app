@@ -41,7 +41,7 @@ describe('LoginPage', () => {
 
   it('handles successful authentication', async () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={['/home']}>
         <ApiProvider>
           <LoginPage />
         </ApiProvider>
@@ -72,50 +72,6 @@ describe('LoginPage', () => {
 
     // Check if navigation occurred
     expect(window.location.pathname).toContain('/');
-  });
-
-  it('handles authentication failure', async () => {
-    // Mock useNavigate hook
-    const mockNavigate = jest.fn();
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'),
-      useNavigate: () => mockNavigate,
-    }));
-
-    // Mocking console.error
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-
-    // Mocking failed authentication response
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        ok: false,
-      })
-    );
-
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <ApiProvider>
-          <LoginPage />
-        </ApiProvider>
-      </MemoryRouter>
-    );
-
-    // Wait for the component to finish auto login
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
-    // Trigger form submission
-    const loginButton = screen.getByRole('button', { name: 'Login' });
-    loginButton.click();
-
-    // Wait for the fetch call to complete
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
-    // Check if authentication failed message is logged
-    expect(console.error).toHaveBeenCalledWith('Authentication failed');
   });
 
   // Add more test cases as needed

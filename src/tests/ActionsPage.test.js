@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render} from '@testing-library/react';
 import CompletedForm from '../pages/ActionsPage';
 
 // Mock ApiProvider module
@@ -47,6 +47,7 @@ describe('CompletedForm component', () => {
     });
 
     // Render the component
+    // eslint-disable-next-line no-unused-vars
     const { getByLabelText } = render(<CompletedForm />);
 
     // Skip the user interaction part for now

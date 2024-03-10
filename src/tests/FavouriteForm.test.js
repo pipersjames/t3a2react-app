@@ -15,12 +15,14 @@ describe('FavouriteForm', () => {
       </Router>
     );
 
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const cardTitle = queryByText((content, element) => {
       return element.tagName.toLowerCase() === 'h3' && content.includes(favourite.fav);
     });
     
     let link;
     try {
+      // eslint-disable-next-line testing-library/prefer-screen-queries
       link = queryByText((content, element) => {
         return element.tagName.toLowerCase() === 'a' && content.includes(`Click here to fill out the ${favourite.fav} Form:`);
       });

@@ -25,6 +25,7 @@ describe('FavouritesProvider', () => {
     const jwt = 'mock-jwt';
     const favouritesData = [{ id: 1, name: 'Favourite 1' }];
 
+    // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       render(
         <FavouritesProvider>
@@ -59,6 +60,7 @@ it('calls getFavourites correctly', async () => {
 
   let result;
 
+  // eslint-disable-next-line testing-library/no-unnecessary-act
   await act(async () => {
     render(
       <FavouritesProvider>
@@ -82,7 +84,6 @@ it('calls getFavourites correctly', async () => {
   });
 
   // Assert the result
-  const expectedFavourite = { id: 1, name: 'Favourite 1' };
   expect(result).toBeTruthy();
 
 });

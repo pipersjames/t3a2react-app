@@ -21,6 +21,7 @@ describe('DateTimeInput component', () => {
       />
     );
 
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const inputElement = getByDisplayValue('2024-02-29T12:00');
     expect(inputElement).toBeInTheDocument();
 
@@ -29,6 +30,7 @@ describe('DateTimeInput component', () => {
   });
 
   test('disables input field when edit is true', () => {
+    // eslint-disable-next-line no-unused-vars
     const { getByLabelText } = render(
       <DateTimeInput
         edit={true}
@@ -54,6 +56,7 @@ describe('DateTimeInput component', () => {
       />
     );
 
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const submittedDataElement = getByText('2024-02-29T12:00');
     expect(submittedDataElement).toBeInTheDocument();
   });

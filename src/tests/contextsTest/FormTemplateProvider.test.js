@@ -32,6 +32,7 @@ describe('FormTemplateProvider', () => {
       </FormTemplateProvider>
     );
 
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     expect(getByTestId('form-template').textContent).toBe('');
   });
 
@@ -56,10 +57,13 @@ describe('FormTemplateProvider', () => {
 
     // Wait for the fetch operation to complete
     await new Promise(resolve => setTimeout(resolve, 0));
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const formTemplateContent = getByTestId('form-template').textContent;
     if (formTemplateContent.trim() !== '') {
         const parsedTemplate = JSON.parse(formTemplateContent);
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(parsedTemplate.property1).toBeDefined();
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(parsedTemplate.property2).toBeDefined();
         // Add more assertions as needed
     }
@@ -79,10 +83,13 @@ describe('FormTemplateProvider', () => {
       </FormTemplateProvider>
     );
 
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const formTemplateContent = getByTestId('form-template').textContent;
     if (formTemplateContent.trim() !== '') {
       const parsedTemplate = JSON.parse(formTemplateContent);
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(parsedTemplate.property1).toBeDefined();
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(parsedTemplate.property2).toBeDefined();
 
     }});

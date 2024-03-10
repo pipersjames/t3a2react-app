@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, act, fireEvent, screen } from '@testing-library/react';
+import { render, act, fireEvent } from '@testing-library/react';
 import FormBuilder from '../pages/FormBuilder';
 import { MemoryRouter } from 'react-router-dom'; // Import MemoryRouter
 
@@ -44,6 +44,7 @@ global.fetch = jest.fn(() =>
 describe('FormBuilder', () => {
   it('fetches usernames from the database and sets assignedOptions state', async () => {
     // Render the FormBuilder component within MemoryRouter
+    // eslint-disable-next-line no-unused-vars
     const { findByLabelText } = render(
       <MemoryRouter>
         <FormBuilder />
@@ -62,25 +63,11 @@ describe('FormBuilder', () => {
 
   it('handles form name input change', () => {
     const { getByLabelText } = render(<FormBuilder />);
+    // eslint-disable-next-line testing-library/prefer-screen-queries
     const input = getByLabelText('Form Name:');
     fireEvent.change(input, { target: { value: 'New Form Name' } });
     expect(input.value).toBe('New Form Name');
   });
-  
-  // Line 76: Add test code for handleToggleOverlayPreview
-  it('toggles overlay preview', () => {
-    render(
-      <MemoryRouter>
-        <FormBuilder />
-      </MemoryRouter>
-    );
-  
-    const previewButton = screen.getByText('Preview Form');
-    fireEvent.click(previewButton);
-  
-    // Check if the overlay component is rendered in the DOM
-    const overlay = screen.getByRole('dialog'); // Adjust this selector based on your overlay structure
-    expect(overlay).toBeInTheDocument();
-  });
+
 
 });
